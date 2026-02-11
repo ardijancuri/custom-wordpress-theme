@@ -15,7 +15,7 @@ class LesnaMax_Mega_Menu_Walker extends Walker_Nav_Menu {
 	/**
 	 * Track if current item has children.
 	 */
-	private $has_children = false;
+	public $has_children = false;
 
 	/**
 	 * Starts the list before the elements are added.
