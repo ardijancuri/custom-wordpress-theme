@@ -12,6 +12,48 @@ defined( 'ABSPATH' ) || exit;
  */
 function lesnamax_customize_register( $wp_customize ) {
 
+	// ---- BRAND COLORS ----
+	$wp_customize->add_section( 'lesnamax_brand_colors', array(
+		'title'    => __( 'Brand Colors', 'lesnamax' ),
+		'priority' => 25,
+	) );
+
+	$wp_customize->add_setting( 'lesnamax_color_primary', array(
+		'default'           => '#00BCD4',
+		'sanitize_callback' => 'sanitize_hex_color',
+		'transport'         => 'postMessage',
+	) );
+
+	$wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'lesnamax_color_primary', array(
+		'label'       => __( 'Primary Brand Color', 'lesnamax' ),
+		'description' => __( 'Main color for buttons, badges, links, and accents.', 'lesnamax' ),
+		'section'     => 'lesnamax_brand_colors',
+	) ) );
+
+	$wp_customize->add_setting( 'lesnamax_color_primary_dark', array(
+		'default'           => '#00ACC1',
+		'sanitize_callback' => 'sanitize_hex_color',
+		'transport'         => 'postMessage',
+	) );
+
+	$wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'lesnamax_color_primary_dark', array(
+		'label'       => __( 'Primary Dark (Hover)', 'lesnamax' ),
+		'description' => __( 'Darker shade used for hover states.', 'lesnamax' ),
+		'section'     => 'lesnamax_brand_colors',
+	) ) );
+
+	$wp_customize->add_setting( 'lesnamax_color_primary_light', array(
+		'default'           => '#B2EBF2',
+		'sanitize_callback' => 'sanitize_hex_color',
+		'transport'         => 'postMessage',
+	) );
+
+	$wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'lesnamax_color_primary_light', array(
+		'label'       => __( 'Primary Light (Focus)', 'lesnamax' ),
+		'description' => __( 'Lighter shade used for focus rings and highlights.', 'lesnamax' ),
+		'section'     => 'lesnamax_brand_colors',
+	) ) );
+
 	// ---- ANNOUNCEMENT BAR ----
 	$wp_customize->add_section( 'lesnamax_announcement', array(
 		'title'    => __( 'Announcement Bar', 'lesnamax' ),
@@ -252,3 +294,68 @@ function lesnamax_customize_register( $wp_customize ) {
 	) );
 }
 add_action( 'customize_register', 'lesnamax_customize_register' );
+
+/**
+ * Output dynamic CSS for brand colors.
+ *
+ * Overrides the :root CSS variables when custom colors are set.
+ */
+function lesnamax_brand_colors_css() {
+	$primary       = get_theme_mod( 'lesnamax_color_primary', '#00BCD4' );
+	$primary_dark  = get_theme_mod( 'lesnamax_color_primary_dark', '#00ACC1' );
+	$primary_light = get_theme_mod( 'lesnamax_color_primary_light', '#B2EBF2' );
+
+	// Only output if colors differ from defaults
+	if ( '#00BCD4' === $primary && '#00ACC1' === $primary_dark && '#B2EBF2' === $primary_light ) {
+		return;
+	}
+
+	$css = ':root {';
+	$css .= '--color-primary: ' . esc_attr( $primary ) . ';';
+	$css .= '--color-primary-dark: ' . esc_attr( $primary_dark ) . ';';
+	$css .= '--color-primary-light: ' . esc_attr( $primary_light ) . ';';
+	$css .= '--color-badge-new: ' . esc_attr( $primary ) . ';';
+	$css .= '--color-badge-sale: ' . esc_attr( $primary ) . ';';
+	$css .= '}';
+
+	printf( '<style id="lesnamax-brand-colors">%s</style>', $css );
+}
+add_action( 'wp_head', 'lesnamax_brand_colors_css', 100 );
+
+/**
+ * Live preview JS for Customizer brand colors.
+ */
+function lesnamax_customize_preview_js() {
+	$script = "
+	( function( $ ) {
+		function updateColor( setting, props ) {
+			wp.customize( setting, function( value ) {
+				value.bind( function( newVal ) {
+					var style = document.getElementById( 'lesnamax-brand-colors' );
+					if ( ! style ) {
+						style = document.createElement( 'style' );
+						style.id = 'lesnamax-brand-colors';
+						document.head.appendChild( style );
+					}
+					var primary      = wp.customize( 'lesnamax_color_primary' ).get();
+					var primaryDark  = wp.customize( 'lesnamax_color_primary_dark' ).get();
+					var primaryLight = wp.customize( 'lesnamax_color_primary_light' ).get();
+					style.textContent = ':root {' +
+						'--color-primary: ' + primary + ';' +
+						'--color-primary-dark: ' + primaryDark + ';' +
+						'--color-primary-light: ' + primaryLight + ';' +
+						'--color-badge-new: ' + primary + ';' +
+						'--color-badge-sale: ' + primary + ';' +
+					'}';
+				} );
+			} );
+		}
+		updateColor( 'lesnamax_color_primary' );
+		updateColor( 'lesnamax_color_primary_dark' );
+		updateColor( 'lesnamax_color_primary_light' );
+	} )( jQuery );
+	";
+
+	wp_add_inline_script( 'customize-preview', $script );
+}
+add_action( 'customize_preview_init', 'lesnamax_customize_preview_js' );

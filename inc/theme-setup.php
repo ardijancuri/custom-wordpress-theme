@@ -74,6 +74,9 @@ function lesnamax_setup() {
 	add_theme_support( 'wc-product-gallery-zoom' );
 	add_theme_support( 'wc-product-gallery-lightbox' );
 	add_theme_support( 'wc-product-gallery-slider' );
+
+	// Elementor support
+	add_theme_support( 'elementor' );
 }
 add_action( 'after_setup_theme', 'lesnamax_setup' );
 

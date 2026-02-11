@@ -25,3 +25,8 @@ if ( class_exists( 'WooCommerce' ) ) {
 	require_once LESNAMAX_DIR . '/inc/woocommerce-hooks.php';
 	require_once LESNAMAX_DIR . '/inc/ajax-handlers.php';
 }
+
+// Elementor compatibility (only if Elementor is active)
+if ( did_action( 'elementor/loaded' ) || defined( 'ELEMENTOR_VERSION' ) ) {
+	require_once LESNAMAX_DIR . '/inc/elementor-compat.php';
+}
