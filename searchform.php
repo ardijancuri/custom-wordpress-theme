@@ -14,7 +14,7 @@ defined( 'ABSPATH' ) || exit;
 			type="search"
 			id="search-form-input"
 			class="header-search__input"
-			placeholder="<?php esc_attr_e( 'kerko produkt?', 'lesnamax' ); ?>"
+			placeholder="<?php esc_attr_e( 'Kerko produkt?', 'lesnamax' ); ?>"
 			value="<?php echo get_search_query(); ?>"
 			name="s"
 		>

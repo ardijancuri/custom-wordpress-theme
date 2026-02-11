@@ -20,7 +20,7 @@ defined( 'ABSPATH' ) || exit;
 				<input
 					type="search"
 					class="header-search__input"
-					placeholder="<?php esc_attr_e( 'kerko produkt?', 'lesnamax' ); ?>"
+					placeholder="<?php esc_attr_e( 'Kerko produkt?', 'lesnamax' ); ?>"
 					value="<?php echo get_search_query(); ?>"
 					name="s"
 					autocomplete="off"

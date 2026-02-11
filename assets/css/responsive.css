@@ -166,11 +166,19 @@
 	.header-search {
 		max-width: none;
 		order: 3;
-		flex-basis: 100%;
+		flex: 0 0 100%;
 	}
 
 	.header-main .container {
 		flex-wrap: wrap;
+	}
+
+	.site-logo {
+		flex: 0 0 auto;
+	}
+
+	.header-icons {
+		flex: 0 0 auto;
 	}
 
 	.site-logo img {

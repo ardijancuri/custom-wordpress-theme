@@ -12,6 +12,25 @@ defined( 'ABSPATH' ) || exit;
  */
 function lesnamax_customize_register( $wp_customize ) {
 
+	// ---- LOGO SIZE ----
+	$wp_customize->add_setting( 'lesnamax_logo_max_height', array(
+		'default'           => 50,
+		'sanitize_callback' => 'absint',
+		'transport'         => 'postMessage',
+	) );
+
+	$wp_customize->add_control( 'lesnamax_logo_max_height', array(
+		'label'       => __( 'Logo Max Height (px)', 'lesnamax' ),
+		'description' => __( 'Resize the site identity logo in the header.', 'lesnamax' ),
+		'section'     => 'title_tagline',
+		'type'        => 'range',
+		'input_attrs' => array(
+			'min'  => 20,
+			'max'  => 200,
+			'step' => 1,
+		),
+	) );
+
 	// ---- BRAND COLORS ----
 	$wp_customize->add_section( 'lesnamax_brand_colors', array(
 		'title'    => __( 'Brand Colors', 'lesnamax' ),
@@ -305,20 +324,24 @@ function lesnamax_brand_colors_css() {
 	$primary_dark  = get_theme_mod( 'lesnamax_color_primary_dark', '#00ACC1' );
 	$primary_light = get_theme_mod( 'lesnamax_color_primary_light', '#B2EBF2' );
 
-	// Only output if colors differ from defaults
-	if ( '#00BCD4' === $primary && '#00ACC1' === $primary_dark && '#B2EBF2' === $primary_light ) {
-		return;
+	if ( '#00BCD4' !== $primary || '#00ACC1' !== $primary_dark || '#B2EBF2' !== $primary_light ) {
+		$css = ':root {';
+		$css .= '--color-primary: ' . esc_attr( $primary ) . ';';
+		$css .= '--color-primary-dark: ' . esc_attr( $primary_dark ) . ';';
+		$css .= '--color-primary-light: ' . esc_attr( $primary_light ) . ';';
+		$css .= '--color-badge-new: ' . esc_attr( $primary ) . ';';
+		$css .= '--color-badge-sale: ' . esc_attr( $primary ) . ';';
+		$css .= '}';
+		printf( '<style id="lesnamax-brand-colors">%s</style>', $css );
 	}
 
-	$css = ':root {';
-	$css .= '--color-primary: ' . esc_attr( $primary ) . ';';
-	$css .= '--color-primary-dark: ' . esc_attr( $primary_dark ) . ';';
-	$css .= '--color-primary-light: ' . esc_attr( $primary_light ) . ';';
-	$css .= '--color-badge-new: ' . esc_attr( $primary ) . ';';
-	$css .= '--color-badge-sale: ' . esc_attr( $primary ) . ';';
-	$css .= '}';
-
-	printf( '<style id="lesnamax-brand-colors">%s</style>', $css );
+	$logo_height = absint( get_theme_mod( 'lesnamax_logo_max_height', 50 ) );
+	if ( 50 !== $logo_height ) {
+		printf(
+			'<style id="lesnamax-logo-size">.site-logo img,.custom-logo{max-height:%dpx;width:auto;}</style>',
+			$logo_height
+		);
+	}
 }
 add_action( 'wp_head', 'lesnamax_brand_colors_css', 100 );
 
@@ -353,6 +376,16 @@ function lesnamax_customize_preview_js() {
 		updateColor( 'lesnamax_color_primary' );
 		updateColor( 'lesnamax_color_primary_dark' );
 		updateColor( 'lesnamax_color_primary_light' );
+
+		wp.customize( 'lesnamax_logo_max_height', function( value ) {
+			value.bind( function( newVal ) {
+				var logos = document.querySelectorAll( '.site-logo img, .custom-logo' );
+				logos.forEach( function( logo ) {
+					logo.style.maxHeight = newVal + 'px';
+					logo.style.width = 'auto';
+				} );
+			} );
+		} );
 	} )( jQuery );
 	";
 
