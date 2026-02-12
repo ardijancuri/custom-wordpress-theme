@@ -166,6 +166,17 @@ function lesnamax_customize_register( $wp_customize ) {
 			'section' => 'lesnamax_hero',
 			'type'    => 'url',
 		) );
+
+		$wp_customize->add_setting( "lesnamax_slide_{$i}_button_text", array(
+			'default'           => 'Shiko me shume',
+			'sanitize_callback' => 'sanitize_text_field',
+		) );
+
+		$wp_customize->add_control( "lesnamax_slide_{$i}_button_text", array(
+			'label'   => sprintf( __( 'Slide %d Button Text', 'lesnamax' ), $i ),
+			'section' => 'lesnamax_hero',
+			'type'    => 'text',
+		) );
 	}
 
 	// ---- PROMO BANNERS ----

@@ -54,7 +54,7 @@ $hours   = get_theme_mod( 'lesnamax_footer_hours', 'E HENE - E PREMTE 08:00 - 20
 				} else {
 					?>
 					<ul class="footer-menu">
-						<li><a href="#"><?php esc_html_e( 'TEKSTIL % PERDE', 'lesnamax' ); ?></a></li>
+						<li><a href="#"><?php esc_html_e( 'TEKSTIL & PERDE', 'lesnamax' ); ?></a></li>
 						<li><a href="#"><?php esc_html_e( 'DEKOR', 'lesnamax' ); ?></a></li>
 						<li><a href="#"><?php esc_html_e( 'DYSHEKE', 'lesnamax' ); ?></a></li>
 					</ul>

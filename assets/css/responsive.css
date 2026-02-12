@@ -230,14 +230,12 @@
 		height: 300px;
 	}
 
-	.hero-slide__content {
-		bottom: 20px;
-		left: 20px;
-		padding: 15px 20px;
+	.hero-slide__title {
+		font-size: var(--font-size-xl);
 	}
 
-	.hero-slide__title {
-		font-size: var(--font-size-lg);
+	.hero-slide__subtitle {
+		font-size: var(--font-size-base);
 	}
 
 	/* By Room */
@@ -343,14 +341,18 @@
 		height: 220px;
 	}
 
-	.hero-slide__content {
-		bottom: 10px;
-		left: 10px;
-		padding: 10px 15px;
+	.hero-slide__title {
+		font-size: var(--font-size-2xl);
 	}
 
-	.hero-slide__title {
-		font-size: var(--font-size-md);
+	.hero-slide__subtitle {
+		font-size: var(--font-size-sm);
+		margin-bottom: var(--space-sm);
+	}
+
+	.hero-slide__btn {
+		font-size: var(--font-size-sm);
+		padding: 8px 16px;
 	}
 
 	/* Category tabs */

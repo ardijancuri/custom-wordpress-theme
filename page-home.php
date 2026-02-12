@@ -2,8 +2,8 @@
 /**
  * Template Name: Homepage
  *
- * If the page is built with Elementor, renders Elementor content.
- * Otherwise, falls back to Customizer-driven template parts.
+ * Renders Customizer-driven template parts.
+ * If built with Elementor, also renders Elementor content after the theme sections.
  *
  * @package LesnaMax
  */
@@ -12,38 +12,35 @@ get_header(); ?>
 
 <main id="main-content" class="site-main">
 
+	<?php get_template_part( 'template-parts/hero-slider' ); ?>
+
+	<div class="container">
+		<?php get_template_part( 'template-parts/featured-products' ); ?>
+	</div>
+
+	<div class="container">
+		<?php get_template_part( 'template-parts/promo-banners' ); ?>
+	</div>
+
+	<?php get_template_part( 'template-parts/category-links' ); ?>
+
+	<div class="container">
+		<?php get_template_part( 'template-parts/by-room' ); ?>
+	</div>
+
+	<div class="container">
+		<?php get_template_part( 'template-parts/by-categories' ); ?>
+	</div>
+
 	<?php
+	// Render Elementor content if the page was built with it
 	if ( function_exists( 'lesnamax_is_elementor_page' ) && lesnamax_is_elementor_page() ) :
-		// Elementor takes over — render its content
 		while ( have_posts() ) :
 			the_post();
 			the_content();
 		endwhile;
-	else :
-		// Default: Customizer-driven homepage sections
+	endif;
 	?>
-
-		<?php get_template_part( 'template-parts/hero-slider' ); ?>
-
-		<div class="container">
-			<?php get_template_part( 'template-parts/featured-products' ); ?>
-		</div>
-
-		<div class="container">
-			<?php get_template_part( 'template-parts/promo-banners' ); ?>
-		</div>
-
-		<?php get_template_part( 'template-parts/category-links' ); ?>
-
-		<div class="container">
-			<?php get_template_part( 'template-parts/by-room' ); ?>
-		</div>
-
-		<div class="container">
-			<?php get_template_part( 'template-parts/by-categories' ); ?>
-		</div>
-
-	<?php endif; ?>
 
 </main>
 

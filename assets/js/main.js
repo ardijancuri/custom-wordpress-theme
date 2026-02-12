@@ -185,6 +185,30 @@
 		slider.addEventListener('mouseleave', function () {
 			startAutoPlay();
 		});
+
+		// Touch swipe support
+		var touchStartX = 0;
+		var touchEndX = 0;
+		var swipeThreshold = 50;
+
+		slider.addEventListener('touchstart', function (e) {
+			touchStartX = e.changedTouches[0].clientX;
+			clearInterval(autoPlayInterval);
+		}, { passive: true });
+
+		slider.addEventListener('touchend', function (e) {
+			touchEndX = e.changedTouches[0].clientX;
+			var diff = touchStartX - touchEndX;
+
+			if (Math.abs(diff) > swipeThreshold) {
+				if (diff > 0) {
+					goToSlide(currentIndex + 1);
+				} else {
+					goToSlide(currentIndex - 1);
+				}
+			}
+			startAutoPlay();
+		}, { passive: true });
 	}
 
 	/**

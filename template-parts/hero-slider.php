@@ -12,10 +12,11 @@ for ( $i = 1; $i <= 5; $i++ ) {
 	$image = get_theme_mod( "lesnamax_slide_{$i}_image" );
 	if ( $image ) {
 		$slides[] = array(
-			'image'    => $image,
-			'title'    => get_theme_mod( "lesnamax_slide_{$i}_title", '' ),
-			'subtitle' => get_theme_mod( "lesnamax_slide_{$i}_subtitle", '' ),
-			'link'     => get_theme_mod( "lesnamax_slide_{$i}_link", '#' ),
+			'image'       => $image,
+			'title'       => get_theme_mod( "lesnamax_slide_{$i}_title", '' ),
+			'subtitle'    => get_theme_mod( "lesnamax_slide_{$i}_subtitle", '' ),
+			'link'        => get_theme_mod( "lesnamax_slide_{$i}_link", '#' ),
+			'button_text' => get_theme_mod( "lesnamax_slide_{$i}_button_text", 'Shiko me shume' ),
 		);
 	}
 }
@@ -23,10 +24,11 @@ for ( $i = 1; $i <= 5; $i++ ) {
 // Fallback: if no slides configured, show a placeholder
 if ( empty( $slides ) ) {
 	$slides[] = array(
-		'image'    => LESNAMAX_URI . '/assets/images/placeholder-hero.jpg',
-		'title'    => 'Karrige Michella',
-		'subtitle' => '',
-		'link'     => '#',
+		'image'       => LESNAMAX_URI . '/assets/images/placeholder-hero.jpg',
+		'title'       => 'Karrige Michella',
+		'subtitle'    => '',
+		'link'        => '#',
+		'button_text' => 'Shiko me shume',
 	);
 }
 
@@ -38,21 +40,28 @@ if ( empty( $slides ) ) {
 	<div class="hero-slider__track">
 		<?php foreach ( $slides as $index => $slide ) : ?>
 			<div class="hero-slide">
-				<a href="<?php echo esc_url( $slide['link'] ); ?>">
+				<a href="<?php echo esc_url( $slide['link'] ); ?>" class="hero-slide__link">
 					<img
 						class="hero-slide__image"
 						src="<?php echo esc_url( $slide['image'] ); ?>"
 						alt="<?php echo esc_attr( $slide['title'] ); ?>"
 						<?php echo $index > 0 ? 'loading="lazy"' : ''; ?>
 					>
-					<?php if ( ! empty( $slide['title'] ) ) : ?>
-						<div class="hero-slide__content">
-							<h2 class="hero-slide__title"><?php echo esc_html( $slide['title'] ); ?></h2>
-							<?php if ( ! empty( $slide['subtitle'] ) ) : ?>
-								<p class="hero-slide__subtitle"><?php echo esc_html( $slide['subtitle'] ); ?></p>
-							<?php endif; ?>
+					<div class="hero-slide__overlay">
+						<div class="container">
+							<div class="hero-slide__content">
+								<?php if ( ! empty( $slide['title'] ) ) : ?>
+									<h2 class="hero-slide__title"><?php echo esc_html( $slide['title'] ); ?></h2>
+								<?php endif; ?>
+								<?php if ( ! empty( $slide['subtitle'] ) ) : ?>
+									<p class="hero-slide__subtitle"><?php echo esc_html( $slide['subtitle'] ); ?></p>
+								<?php endif; ?>
+								<?php if ( ! empty( $slide['button_text'] ) ) : ?>
+									<span class="btn btn--primary hero-slide__btn"><?php echo esc_html( $slide['button_text'] ); ?></span>
+								<?php endif; ?>
+							</div>
 						</div>
-					<?php endif; ?>
+					</div>
 				</a>
 			</div>
 		<?php endforeach; ?>
