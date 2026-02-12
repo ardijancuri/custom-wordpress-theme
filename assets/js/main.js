@@ -320,17 +320,20 @@
 
 			if (!track) return;
 
-			var scrollAmount = 300;
+			function getCardWidth() {
+				var card = track.querySelector('.category-card');
+				return card ? card.offsetWidth : 300;
+			}
 
 			if (prevBtn) {
 				prevBtn.addEventListener('click', function () {
-					track.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
+					track.scrollBy({ left: -getCardWidth(), behavior: 'smooth' });
 				});
 			}
 
 			if (nextBtn) {
 				nextBtn.addEventListener('click', function () {
-					track.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+					track.scrollBy({ left: getCardWidth(), behavior: 'smooth' });
 				});
 			}
 		});

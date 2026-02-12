@@ -941,7 +941,7 @@ h4 { font-size: var(--font-size-lg); }
 	position: relative;
 	overflow: hidden;
 	aspect-ratio: 1;
-	background-color: var(--color-bg-light);
+	background-color: var(--color-white);
 }
 
 .product-card__image {
@@ -1248,11 +1248,11 @@ h4 { font-size: var(--font-size-lg); }
    -------------------------------------------------------------------------- */
 .categories-carousel {
 	position: relative;
+	padding: 0 50px;
 }
 
 .categories-carousel__track {
 	display: flex;
-	gap: var(--space-md);
 	overflow-x: auto;
 	scroll-behavior: smooth;
 	-webkit-overflow-scrolling: touch;
@@ -1265,33 +1265,33 @@ h4 { font-size: var(--font-size-lg); }
 }
 
 .category-card {
-	flex: 0 0 calc(20% - var(--space-md));
-	min-width: 200px;
-	border-radius: var(--radius-md);
-	overflow: hidden;
-	position: relative;
+	flex: 0 0 calc(100% / 7);
+	min-width: 80px;
+	text-align: center;
+	text-decoration: none;
+	border-left: 1px solid var(--color-border-light);
+	border-right: 1px solid var(--color-border-light);
+	margin-right: -1px;
+	padding: var(--space-sm) 0;
+}
+
+.category-card:last-child {
+	margin-right: 0;
 }
 
 .category-card__image {
-	width: 100%;
-	aspect-ratio: 4/3;
-	object-fit: cover;
-	transition: transform var(--transition-base);
-}
-
-.category-card:hover .category-card__image {
-	transform: scale(1.05);
+	width: 40px;
+	height: 40px;
+	object-fit: contain;
+	margin: 0 auto;
+	display: block;
 }
 
 .category-card__name {
-	position: absolute;
-	bottom: 0;
-	left: 0;
-	right: 0;
-	padding: var(--space-sm) var(--space-md);
-	background: linear-gradient(to top, rgba(0,0,0,0.6), transparent);
-	color: var(--color-white);
-	font-size: var(--font-size-sm);
+	display: block;
+	padding-top: var(--space-sm);
+	color: var(--color-text);
+	font-size: var(--font-size-xs);
 	font-weight: var(--font-weight-medium);
 }
 
@@ -1301,30 +1301,27 @@ h4 { font-size: var(--font-size-lg); }
 	transform: translateY(-50%);
 	width: 40px;
 	height: 40px;
-	border-radius: var(--radius-full);
-	background-color: var(--color-bg);
-	box-shadow: var(--shadow-md);
+	background: none;
+	border: none;
 	display: flex;
 	align-items: center;
 	justify-content: center;
 	cursor: pointer;
-	border: none;
 	z-index: 2;
 	color: var(--color-dark);
-	transition: all var(--transition-fast);
+	transition: color var(--transition-fast);
 }
 
 .carousel-arrow:hover {
-	background-color: var(--color-primary);
-	color: var(--color-white);
+	color: var(--color-primary);
 }
 
 .carousel-arrow--prev {
-	left: -20px;
+	left: 0;
 }
 
 .carousel-arrow--next {
-	right: -20px;
+	right: 0;
 }
 
 /* --------------------------------------------------------------------------

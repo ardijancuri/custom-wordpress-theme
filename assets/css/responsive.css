@@ -409,9 +409,44 @@
 	}
 
 	/* Categories carousel */
+	.by-categories {
+		padding: 0;
+	}
+
+	.categories-carousel {
+		padding: 0;
+	}
+
+	.categories-carousel__track {
+		padding-bottom: 0;
+	}
+
 	.category-card {
-		flex: 0 0 70%;
-		min-width: 200px;
+		flex: 0 0 25%;
+		min-width: 60px;
+	}
+
+	.category-card__image {
+		width: 24px;
+		height: 24px;
+	}
+
+	.category-card__name {
+		font-size: 0.625rem;
+		padding-top: var(--space-xs);
+	}
+
+	.carousel-arrow {
+		width: 28px;
+		height: 28px;
+	}
+
+	.carousel-arrow--prev {
+		left: 0;
+	}
+
+	.carousel-arrow--next {
+		right: 0;
 	}
 
 	/* Cart notification */

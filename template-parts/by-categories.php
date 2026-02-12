@@ -13,8 +13,9 @@ if ( ! class_exists( 'WooCommerce' ) ) {
 
 $categories = get_terms( array(
 	'taxonomy'   => 'product_cat',
-	'hide_empty' => true,
+	'hide_empty' => false,
 	'number'     => 12,
+	'exclude'    => array( get_option( 'default_product_cat' ) ),
 ) );
 
 if ( empty( $categories ) || is_wp_error( $categories ) ) {
@@ -22,8 +23,6 @@ if ( empty( $categories ) || is_wp_error( $categories ) ) {
 }
 ?>
 <section class="section by-categories">
-	<h2 class="section-title"><?php esc_html_e( 'By categories', 'lesnamax' ); ?></h2>
-
 	<div class="categories-carousel">
 		<div class="categories-carousel__track">
 			<?php foreach ( $categories as $category ) :
