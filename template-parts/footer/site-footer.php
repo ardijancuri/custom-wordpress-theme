@@ -41,7 +41,7 @@ $hours   = get_theme_mod( 'lesnamax_footer_hours', 'E HENE - E PREMTE 08:00 - 20
 
 			<!-- Column 2 -->
 			<div class="footer-col">
-				<h4 class="footer-col__title"><?php esc_html_e( 'TËPIHE', 'lesnamax' ); ?></h4>
+				<h4 class="footer-col__title"><?php esc_html_e( 'TEPIHE', 'lesnamax' ); ?></h4>
 				<?php
 				if ( has_nav_menu( 'footer_2' ) ) {
 					wp_nav_menu( array(

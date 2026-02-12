@@ -12,24 +12,40 @@ defined( 'ABSPATH' ) || exit;
  */
 function lesnamax_customize_register( $wp_customize ) {
 
-	// ---- LOGO SIZE ----
-	$wp_customize->add_setting( 'lesnamax_logo_max_height', array(
-		'default'           => 50,
-		'sanitize_callback' => 'absint',
-		'transport'         => 'postMessage',
-	) );
-
-	$wp_customize->add_control( 'lesnamax_logo_max_height', array(
-		'label'       => __( 'Logo Max Height (px)', 'lesnamax' ),
-		'description' => __( 'Resize the site identity logo in the header.', 'lesnamax' ),
-		'section'     => 'title_tagline',
-		'type'        => 'range',
-		'input_attrs' => array(
-			'min'  => 20,
-			'max'  => 200,
-			'step' => 1,
+	// ---- LOGO SIZE (per breakpoint) ----
+	$logo_sizes = array(
+		'lesnamax_logo_height_desktop' => array(
+			'label'   => __( 'Logo Height — Desktop (px)', 'lesnamax' ),
+			'default' => 50,
 		),
-	) );
+		'lesnamax_logo_height_tablet' => array(
+			'label'   => __( 'Logo Height — Tablet (px)', 'lesnamax' ),
+			'default' => 40,
+		),
+		'lesnamax_logo_height_mobile' => array(
+			'label'   => __( 'Logo Height — Mobile (px)', 'lesnamax' ),
+			'default' => 35,
+		),
+	);
+
+	foreach ( $logo_sizes as $setting_id => $args ) {
+		$wp_customize->add_setting( $setting_id, array(
+			'default'           => $args['default'],
+			'sanitize_callback' => 'absint',
+			'transport'         => 'postMessage',
+		) );
+
+		$wp_customize->add_control( $setting_id, array(
+			'label'       => $args['label'],
+			'section'     => 'title_tagline',
+			'type'        => 'range',
+			'input_attrs' => array(
+				'min'  => 20,
+				'max'  => 200,
+				'step' => 1,
+			),
+		) );
+	}
 
 	// ---- BRAND COLORS ----
 	$wp_customize->add_section( 'lesnamax_brand_colors', array(
@@ -335,12 +351,15 @@ function lesnamax_brand_colors_css() {
 		printf( '<style id="lesnamax-brand-colors">%s</style>', $css );
 	}
 
-	$logo_height = absint( get_theme_mod( 'lesnamax_logo_max_height', 50 ) );
-	if ( 50 !== $logo_height ) {
-		printf(
-			'<style id="lesnamax-logo-size">.site-logo img,.custom-logo{max-height:%dpx;width:auto;}</style>',
-			$logo_height
-		);
+	$logo_desktop = absint( get_theme_mod( 'lesnamax_logo_height_desktop', 50 ) );
+	$logo_tablet  = absint( get_theme_mod( 'lesnamax_logo_height_tablet', 40 ) );
+	$logo_mobile  = absint( get_theme_mod( 'lesnamax_logo_height_mobile', 35 ) );
+
+	if ( 50 !== $logo_desktop || 40 !== $logo_tablet || 35 !== $logo_mobile ) {
+		$logo_css  = '.site-logo img,.custom-logo{max-height:' . $logo_desktop . 'px;width:auto;}';
+		$logo_css .= '@media(max-width:992px){.site-logo img,.custom-logo{max-height:' . $logo_tablet . 'px;}}';
+		$logo_css .= '@media(max-width:576px){.site-logo img,.custom-logo{max-height:' . $logo_mobile . 'px;}}';
+		printf( '<style id="lesnamax-logo-size">%s</style>', $logo_css );
 	}
 }
 add_action( 'wp_head', 'lesnamax_brand_colors_css', 100 );
@@ -377,15 +396,24 @@ function lesnamax_customize_preview_js() {
 		updateColor( 'lesnamax_color_primary_dark' );
 		updateColor( 'lesnamax_color_primary_light' );
 
-		wp.customize( 'lesnamax_logo_max_height', function( value ) {
-			value.bind( function( newVal ) {
-				var logos = document.querySelectorAll( '.site-logo img, .custom-logo' );
-				logos.forEach( function( logo ) {
-					logo.style.maxHeight = newVal + 'px';
-					logo.style.width = 'auto';
-				} );
-			} );
-		} );
+		function updateLogoSize() {
+			var desktop = wp.customize( 'lesnamax_logo_height_desktop' ).get();
+			var tablet  = wp.customize( 'lesnamax_logo_height_tablet' ).get();
+			var mobile  = wp.customize( 'lesnamax_logo_height_mobile' ).get();
+			var style   = document.getElementById( 'lesnamax-logo-size' );
+			if ( ! style ) {
+				style = document.createElement( 'style' );
+				style.id = 'lesnamax-logo-size';
+				document.head.appendChild( style );
+			}
+			style.textContent =
+				'.site-logo img,.custom-logo{max-height:' + desktop + 'px;width:auto;}' +
+				'@media(max-width:992px){.site-logo img,.custom-logo{max-height:' + tablet + 'px;}}' +
+				'@media(max-width:576px){.site-logo img,.custom-logo{max-height:' + mobile + 'px;}}';
+		}
+		wp.customize( 'lesnamax_logo_height_desktop', function( v ) { v.bind( updateLogoSize ); } );
+		wp.customize( 'lesnamax_logo_height_tablet', function( v ) { v.bind( updateLogoSize ); } );
+		wp.customize( 'lesnamax_logo_height_mobile', function( v ) { v.bind( updateLogoSize ); } );
 	} )( jQuery );
 	";
 

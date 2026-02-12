@@ -11,46 +11,36 @@
 
 	/**
 	 * Sticky Header
+	 *
+	 * Uses CSS position:sticky for the actual sticking.
+	 * JS only adds a shadow class once the header starts sticking.
 	 */
 	function initStickyHeader() {
-		const header = document.getElementById('site-header');
-		const announcementBar = document.getElementById('announcement-bar');
-
+		var header = document.getElementById('site-header');
 		if (!header) return;
 
-		let triggerOffset = 0;
+		// Create a sentinel right before the header to detect when it sticks
+		var sentinel = document.createElement('div');
+		sentinel.setAttribute('aria-hidden', 'true');
+		sentinel.style.height = '0';
+		sentinel.style.width = '0';
+		sentinel.style.overflow = 'hidden';
+		header.parentNode.insertBefore(sentinel, header);
 
-		if (announcementBar) {
-			triggerOffset = announcementBar.offsetHeight;
-		}
-
-		const observer = new IntersectionObserver(
+		var observer = new IntersectionObserver(
 			function (entries) {
 				entries.forEach(function (entry) {
 					if (!entry.isIntersecting) {
 						header.classList.add('is-sticky');
-						document.body.style.paddingTop = header.offsetHeight + 'px';
 					} else {
 						header.classList.remove('is-sticky');
-						document.body.style.paddingTop = '0';
 					}
 				});
 			},
-			{ threshold: 0, rootMargin: '0px' }
+			{ threshold: 0 }
 		);
 
-		// Observe the announcement bar or a sentinel element
-		if (announcementBar) {
-			observer.observe(announcementBar);
-		} else {
-			// Create a sentinel element at the top
-			var sentinel = document.createElement('div');
-			sentinel.style.height = '1px';
-			sentinel.style.position = 'absolute';
-			sentinel.style.top = '0';
-			header.parentNode.insertBefore(sentinel, header);
-			observer.observe(sentinel);
-		}
+		observer.observe(sentinel);
 	}
 
 	/**
@@ -72,11 +62,6 @@
 		closeBtn.addEventListener('click', function () {
 			bar.style.display = 'none';
 			localStorage.setItem('lesnamax_announcement_dismissed', '1');
-			// Re-calculate sticky header if needed
-			var header = document.getElementById('site-header');
-			if (header && header.classList.contains('is-sticky')) {
-				document.body.style.paddingTop = header.offsetHeight + 'px';
-			}
 		});
 	}
 
