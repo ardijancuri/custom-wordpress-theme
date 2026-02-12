@@ -229,3 +229,59 @@ function lesnamax_wishlist_js() {
 	<?php
 }
 add_action( 'wp_footer', 'lesnamax_wishlist_js' );
+
+/**
+ * Auto-open coupon form on block-based cart page.
+ */
+function lesnamax_cart_coupon_auto_open_js() {
+	if ( ! is_cart() ) {
+		return;
+	}
+	?>
+	<script>
+	(function() {
+		'use strict';
+
+		function openCouponForm() {
+			var panel = document.querySelector('.wc-block-components-totals-coupon');
+			if (!panel) return false;
+
+			// Find the panel toggle (the accordion trigger, not the Apply button)
+			var toggle = panel.querySelector(':scope > .wc-block-components-panel__button');
+			if (!toggle) return false;
+
+			// If the panel content is not rendered yet, click toggle to open it
+			var content = panel.querySelector('.wc-block-components-panel__content');
+			if (!content || !content.children.length) {
+				toggle.click();
+				// Remove focus from the coupon input after React renders it
+				setTimeout(function() {
+					if (document.activeElement) document.activeElement.blur();
+				}, 50);
+			} else {
+				toggle.setAttribute('aria-expanded', 'true');
+			}
+
+			return true;
+		}
+
+		// Try on DOMContentLoaded, then retry with observer for React hydration
+		document.addEventListener('DOMContentLoaded', function() {
+			if (openCouponForm()) return;
+
+			// WooCommerce blocks render async via React — observe for the panel
+			var observer = new MutationObserver(function(mutations, obs) {
+				if (openCouponForm()) {
+					obs.disconnect();
+				}
+			});
+			observer.observe(document.body, { childList: true, subtree: true });
+
+			// Safety timeout to disconnect observer
+			setTimeout(function() { observer.disconnect(); }, 10000);
+		});
+	})();
+	</script>
+	<?php
+}
+add_action( 'wp_footer', 'lesnamax_cart_coupon_auto_open_js' );
