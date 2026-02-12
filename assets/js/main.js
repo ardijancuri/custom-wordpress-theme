@@ -471,6 +471,25 @@
 
 		// Expose open function globally so ajax-cart.js can call it
 		window.lesnamaxOpenCartDrawer = openCartDrawer;
+
+		// Recommendation slider arrows (delegated for dynamic content)
+		drawer.addEventListener('click', function (e) {
+			var arrow = e.target.closest('.flyout-recs__arrow');
+			if (!arrow) return;
+
+			var track = drawer.querySelector('.flyout-recs__track');
+			if (!track) return;
+
+			var card = track.querySelector('.flyout-rec-card');
+			if (!card) return;
+
+			var scrollAmount = card.offsetWidth + 8; // card width + gap
+			if (arrow.classList.contains('flyout-recs__arrow--prev')) {
+				track.scrollLeft -= scrollAmount;
+			} else {
+				track.scrollLeft += scrollAmount;
+			}
+		});
 	}
 
 	/**

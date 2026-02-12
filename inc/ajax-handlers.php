@@ -182,6 +182,31 @@ function lesnamax_ajax_filter_products() {
 		$args['tax_query'] = $tax_query;
 	}
 
+	// Price filter
+	if ( ! empty( $filters['price_min'] ) || ! empty( $filters['price_max'] ) ) {
+		$meta_query = array( 'relation' => 'AND' );
+
+		if ( ! empty( $filters['price_min'] ) ) {
+			$meta_query[] = array(
+				'key'     => '_price',
+				'value'   => absint( $filters['price_min'] ),
+				'compare' => '>=',
+				'type'    => 'NUMERIC',
+			);
+		}
+
+		if ( ! empty( $filters['price_max'] ) ) {
+			$meta_query[] = array(
+				'key'     => '_price',
+				'value'   => absint( $filters['price_max'] ),
+				'compare' => '<=',
+				'type'    => 'NUMERIC',
+			);
+		}
+
+		$args['meta_query'] = $meta_query;
+	}
+
 	// Sale filter
 	if ( isset( $filters['flags'] ) && in_array( 'sale', $filters['flags'], true ) ) {
 		$args['post__in'] = wc_get_product_ids_on_sale();
@@ -352,7 +377,17 @@ function lesnamax_render_cart_drawer_recommendations() {
 	}
 	?>
 	<div class="flyout-recs">
-		<span class="flyout-recs__title"><?php esc_html_e( 'Mund te ju pelqeje', 'lesnamax' ); ?></span>
+		<div class="flyout-recs__header">
+			<span class="flyout-recs__title"><?php esc_html_e( 'Mund te ju pelqeje', 'lesnamax' ); ?></span>
+			<div class="flyout-recs__arrows">
+				<button type="button" class="flyout-recs__arrow flyout-recs__arrow--prev" aria-label="<?php esc_attr_e( 'Mbrapa', 'lesnamax' ); ?>">
+					<?php lesnamax_icon( 'chevron-left' ); ?>
+				</button>
+				<button type="button" class="flyout-recs__arrow flyout-recs__arrow--next" aria-label="<?php esc_attr_e( 'Para', 'lesnamax' ); ?>">
+					<?php lesnamax_icon( 'chevron-right' ); ?>
+				</button>
+			</div>
+		</div>
 		<div class="flyout-recs__track">
 			<?php foreach ( $product_ids as $pid ) :
 				$product = wc_get_product( $pid );

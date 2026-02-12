@@ -18,7 +18,22 @@ get_header(); ?>
 			<?php
 			global $product;
 			$product_id = $product->get_id();
+
+			// Recently viewed tracking data
+			$rv_image_url = wp_get_attachment_image_url( $product->get_image_id(), 'lesnamax-product-thumb' );
+			if ( ! $rv_image_url ) {
+				$rv_image_url = wc_placeholder_img_src( 'lesnamax-product-thumb' );
+			}
 			?>
+			<div
+				data-recently-viewed-product
+				data-product-id="<?php echo esc_attr( $product_id ); ?>"
+				data-product-name="<?php echo esc_attr( $product->get_name() ); ?>"
+				data-product-price="<?php echo esc_attr( wp_strip_all_tags( wc_price( $product->get_price() ) ) ); ?>"
+				data-product-image="<?php echo esc_url( $rv_image_url ); ?>"
+				data-product-url="<?php echo esc_url( get_permalink( $product_id ) ); ?>"
+				style="display:none;"
+			></div>
 
 			<div id="product-<?php echo esc_attr( $product_id ); ?>" <?php wc_product_class( '', $product ); ?>>
 

@@ -10,7 +10,71 @@ defined( 'ABSPATH' ) || exit;
 if ( ! class_exists( 'WooCommerce' ) ) {
 	return;
 }
+
+// Get global min/max prices for the price filter (published products only)
+global $wpdb;
+$min_price = floor( (float) $wpdb->get_var(
+	"SELECT MIN( pm.meta_value + 0 )
+	 FROM {$wpdb->postmeta} pm
+	 INNER JOIN {$wpdb->posts} p ON p.ID = pm.post_id
+	 WHERE pm.meta_key = '_price'
+	   AND pm.meta_value != ''
+	   AND p.post_type = 'product'
+	   AND p.post_status = 'publish'"
+) );
+$max_price = ceil( (float) $wpdb->get_var(
+	"SELECT MAX( pm.meta_value + 0 )
+	 FROM {$wpdb->postmeta} pm
+	 INNER JOIN {$wpdb->posts} p ON p.ID = pm.post_id
+	 WHERE pm.meta_key = '_price'
+	   AND pm.meta_value != ''
+	   AND p.post_type = 'product'
+	   AND p.post_status = 'publish'"
+) );
+
+if ( $min_price === $max_price ) {
+	$max_price = $min_price + 100;
+}
 ?>
+
+<!-- Price Filter -->
+<div class="filter-group filter-group--price">
+	<h3 class="filter-group__title">
+		<?php esc_html_e( 'Cmimi', 'lesnamax' ); ?>
+		<?php lesnamax_icon( 'chevron-down' ); ?>
+	</h3>
+	<div class="filter-group__list">
+		<div class="price-filter">
+			<div class="price-filter__slider">
+				<div class="price-filter__track"></div>
+				<div class="price-filter__range" id="price-range-fill"></div>
+				<input
+					type="range"
+					class="price-filter__input price-filter__input--min"
+					id="price-min"
+					min="<?php echo esc_attr( $min_price ); ?>"
+					max="<?php echo esc_attr( $max_price ); ?>"
+					value="<?php echo esc_attr( $min_price ); ?>"
+					step="1"
+				>
+				<input
+					type="range"
+					class="price-filter__input price-filter__input--max"
+					id="price-max"
+					min="<?php echo esc_attr( $min_price ); ?>"
+					max="<?php echo esc_attr( $max_price ); ?>"
+					value="<?php echo esc_attr( $max_price ); ?>"
+					step="1"
+				>
+			</div>
+			<div class="price-filter__values">
+				<span class="price-filter__value" id="price-min-display"><?php echo esc_html( $min_price ); ?>&euro;</span>
+				<span class="price-filter__separator">&mdash;</span>
+				<span class="price-filter__value" id="price-max-display"><?php echo esc_html( $max_price ); ?>&euro;</span>
+			</div>
+		</div>
+	</div>
+</div>
 
 <!-- Flags Filter -->
 <div class="filter-group">
@@ -73,6 +137,17 @@ if ( ! class_exists( 'WooCommerce' ) ) {
 			endforeach;
 		endif;
 		?>
+	</div>
+</div>
+
+<!-- Recently Visited Products -->
+<div class="filter-group filter-group--recently-visited" id="recently-visited-section" style="display:none;">
+	<h3 class="filter-group__title">
+		<?php esc_html_e( 'Shikuar se fundmi', 'lesnamax' ); ?>
+		<?php lesnamax_icon( 'chevron-down' ); ?>
+	</h3>
+	<div class="filter-group__list">
+		<div class="recently-visited" id="recently-visited-products"></div>
 	</div>
 </div>
 

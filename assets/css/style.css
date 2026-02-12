@@ -1678,6 +1678,142 @@ h4 { font-size: var(--font-size-lg); }
 	margin-left: auto;
 }
 
+/* Price Filter */
+.price-filter {
+	padding: var(--space-xs) 0;
+}
+
+.price-filter__slider {
+	position: relative;
+	height: 6px;
+	margin: var(--space-md) 0 var(--space-lg);
+}
+
+.price-filter__track {
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	height: 6px;
+	background-color: var(--color-border-light);
+	border-radius: 3px;
+}
+
+.price-filter__range {
+	position: absolute;
+	top: 0;
+	height: 6px;
+	background-color: var(--color-primary);
+	border-radius: 3px;
+}
+
+.price-filter__input {
+	position: absolute;
+	top: -6px;
+	width: 100%;
+	height: 18px;
+	-webkit-appearance: none;
+	appearance: none;
+	background: transparent;
+	pointer-events: none;
+	margin: 0;
+}
+
+.price-filter__input::-webkit-slider-thumb {
+	-webkit-appearance: none;
+	width: 18px;
+	height: 18px;
+	background-color: var(--color-white);
+	border: 2px solid var(--color-primary);
+	border-radius: var(--radius-full);
+	cursor: pointer;
+	pointer-events: auto;
+}
+
+.price-filter__input::-moz-range-thumb {
+	width: 18px;
+	height: 18px;
+	background-color: var(--color-white);
+	border: 2px solid var(--color-primary);
+	border-radius: var(--radius-full);
+	cursor: pointer;
+	pointer-events: auto;
+}
+
+.price-filter__values {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: var(--space-sm);
+}
+
+.price-filter__value {
+	font-size: var(--font-size-sm);
+	font-weight: var(--font-weight-bold);
+	color: var(--color-dark);
+}
+
+.price-filter__separator {
+	color: var(--color-text-muted);
+}
+
+/* Recently Visited Products */
+.recently-visited {
+	display: flex;
+	flex-direction: column;
+	gap: var(--space-sm);
+}
+
+.recently-visited-item {
+	display: flex;
+	align-items: center;
+	gap: var(--space-sm);
+	padding: var(--space-xs);
+	border-radius: var(--radius-sm);
+	transition: background-color var(--transition-fast);
+}
+
+.recently-visited-item:hover {
+	background-color: var(--color-bg-light);
+}
+
+.recently-visited-item__image {
+	flex-shrink: 0;
+	width: 50px;
+	height: 50px;
+	border-radius: var(--radius-sm);
+	overflow: hidden;
+	background-color: var(--color-bg-light);
+}
+
+.recently-visited-item__image img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+}
+
+.recently-visited-item__info {
+	flex: 1;
+	min-width: 0;
+}
+
+.recently-visited-item__name {
+	font-size: var(--font-size-xs);
+	font-weight: var(--font-weight-medium);
+	color: var(--color-text);
+	line-height: 1.3;
+	display: -webkit-box;
+	-webkit-line-clamp: 2;
+	-webkit-box-orient: vertical;
+	overflow: hidden;
+}
+
+.recently-visited-item__price {
+	font-size: var(--font-size-xs);
+	font-weight: var(--font-weight-bold);
+	color: var(--color-dark);
+}
+
 /* --------------------------------------------------------------------------
    24. Single Product Page
    -------------------------------------------------------------------------- */
@@ -2172,14 +2308,53 @@ h4 { font-size: var(--font-size-lg); }
 	border-bottom: 1px solid var(--color-border-light);
 }
 
+.flyout-recs__header {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	margin-bottom: var(--space-sm);
+}
+
 .flyout-recs__title {
-	display: block;
 	font-size: var(--font-size-sm);
 	font-weight: var(--font-weight-bold);
 	color: var(--color-dark);
-	margin-bottom: var(--space-sm);
 	text-transform: uppercase;
 	letter-spacing: 0.3px;
+}
+
+.flyout-recs__arrows {
+	display: flex;
+	gap: var(--space-xs);
+}
+
+.flyout-recs__arrow {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 28px;
+	height: 28px;
+	border: 1px solid var(--color-border);
+	border-radius: var(--radius-full);
+	color: var(--color-text);
+	background: var(--color-white);
+	cursor: pointer;
+	transition: all var(--transition-fast);
+}
+
+.flyout-recs__arrow:hover {
+	border-color: var(--color-primary);
+	color: var(--color-primary);
+}
+
+.flyout-recs__arrow:disabled {
+	opacity: 0.3;
+	cursor: default;
+}
+
+.flyout-recs__arrow svg {
+	width: 16px;
+	height: 16px;
 }
 
 .flyout-recs__track {
