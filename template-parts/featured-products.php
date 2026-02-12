@@ -27,6 +27,7 @@ $categories = get_terms( array(
 	'hide_empty' => true,
 	'parent'     => 0,
 	'number'     => 7,
+	'exclude'    => array( get_option( 'default_product_cat' ) ),
 ) );
 
 // Featured products
@@ -54,19 +55,8 @@ if ( empty( $featured_products ) ) {
 			<button class="category-tab is-active" data-category="all">
 				<span class="category-tab__label"><?php esc_html_e( 'Te gjitha', 'lesnamax' ); ?></span>
 			</button>
-			<?php foreach ( $categories as $cat ) :
-				$slug     = $cat->slug;
-				$icon_file = isset( $category_icons[ $slug ] ) ? $category_icons[ $slug ] : '';
-			?>
-				<button class="category-tab" data-category="<?php echo esc_attr( $slug ); ?>">
-					<?php if ( $icon_file ) : ?>
-						<img
-							class="category-tab__icon"
-							src="<?php echo esc_url( LESNAMAX_URI . '/assets/images/categories/' . $icon_file ); ?>"
-							alt="<?php echo esc_attr( $cat->name ); ?>"
-							loading="lazy"
-						>
-					<?php endif; ?>
+			<?php foreach ( $categories as $cat ) : ?>
+				<button class="category-tab" data-category="<?php echo esc_attr( $cat->slug ); ?>">
 					<span class="category-tab__label"><?php echo esc_html( $cat->name ); ?></span>
 				</button>
 			<?php endforeach; ?>
