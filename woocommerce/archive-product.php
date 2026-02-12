@@ -90,6 +90,7 @@ get_header(); ?>
 
 						<!-- Pagination info -->
 						<?php
+						global $wp_query;
 						$total = $wp_query->found_posts;
 						$paged = max( 1, get_query_var( 'paged' ) );
 						$start = ( $paged - 1 ) * $current_per_page + 1;

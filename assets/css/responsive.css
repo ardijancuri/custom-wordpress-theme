@@ -283,6 +283,16 @@
 		gap: var(--space-md);
 	}
 
+	.category-link {
+		border-right: none;
+		padding: 0;
+	}
+
+	.category-link::after {
+		left: 0;
+		right: 0;
+	}
+
 	/* Section spacing */
 	.section {
 		padding: var(--space-xl) 0;
