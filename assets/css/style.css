@@ -1555,9 +1555,18 @@ h4 { font-size: var(--font-size-lg); }
 .shop-pagination {
 	display: flex;
 	align-items: center;
-	justify-content: center;
+	justify-content: flex-end;
 	gap: var(--space-xs);
+	flex-wrap: wrap;
 	padding-top: var(--space-xl);
+}
+
+.shop-pagination .nav-links {
+	display: flex;
+	align-items: center;
+	justify-content: flex-end;
+	gap: var(--space-xs);
+	flex-wrap: wrap;
 }
 
 .shop-pagination .page-numbers {
