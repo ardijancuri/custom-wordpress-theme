@@ -94,7 +94,7 @@ $hours   = get_theme_mod( 'lesnamax_footer_hours', 'E HENE - E PREMTE 08:00 - 20
 					<?php lesnamax_icon( 'phone' ); ?>
 					<a href="tel:<?php echo esc_attr( preg_replace( '/[^0-9+]/', '', $phone ) ); ?>"><?php echo esc_html( $phone ); ?></a>
 				</div>
-				<p class="footer-contact__hours"><?php echo esc_html( $hours ); ?></p>
+				<p class="footer-contact__hours"><?php echo wp_kses( str_replace( '/', '<br>', $hours ), array( 'br' => array() ) ); ?></p>
 				<p class="footer-contact__email">
 					<a href="mailto:<?php echo esc_attr( $email ); ?>"><?php echo esc_html( $email ); ?></a>
 				</p>
@@ -108,7 +108,7 @@ $hours   = get_theme_mod( 'lesnamax_footer_hours', 'E HENE - E PREMTE 08:00 - 20
 		</div>
 
 		<div class="footer-bottom">
-			<p>&copy; <?php echo esc_html( date( 'Y' ) ); ?> <?php bloginfo( 'name' ); ?>. <?php esc_html_e( 'Te gjitha te drejtat e rezervuara.', 'lesnamax' ); ?></p>
+			<p>&copy; <?php echo esc_html( date( 'Y' ) ); ?> <?php bloginfo( 'name' ); ?>. <?php esc_html_e( 'Mundësuar nga', 'lesnamax' ); ?> <a href="https://oninova.net" target="_blank" rel="noopener noreferrer">Oninova</a></p>
 		</div>
 	</div>
 </footer>
