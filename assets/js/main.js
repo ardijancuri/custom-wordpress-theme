@@ -137,68 +137,112 @@
 		const track = slider.querySelector('.hero-slider__track');
 		const slides = slider.querySelectorAll('.hero-slide');
 		const dots = slider.querySelectorAll('.hero-slider__dot');
+		var slideCount = slides.length;
 
-		if (slides.length <= 1) return;
+		if (slideCount <= 1) return;
 
-		var currentIndex = 0;
+		// Clone first and last slides for seamless infinite loop
+		var firstClone = slides[0].cloneNode(true);
+		var lastClone = slides[slideCount - 1].cloneNode(true);
+		firstClone.classList.add('hero-slide--clone');
+		lastClone.classList.add('hero-slide--clone');
+		track.appendChild(firstClone);
+		track.insertBefore(lastClone, slides[0]);
+
+		// Position starts at 1 (real first slide, after the prepended clone)
+		var currentIndex = 1;
 		var autoPlayInterval = null;
+		var userInteracted = false;
+		var isTransitioning = false;
+
+		// Set initial position without transition
+		track.style.transition = 'none';
+		track.style.transform = 'translateX(-' + (currentIndex * 100) + '%)';
+		// Force reflow
+		track.offsetHeight;
+		track.style.transition = '';
+
+		function updateDots() {
+			var realIndex = currentIndex - 1;
+			if (realIndex < 0) realIndex = slideCount - 1;
+			if (realIndex >= slideCount) realIndex = 0;
+			dots.forEach(function (dot, i) {
+				dot.classList.toggle('is-active', i === realIndex);
+			});
+		}
 
 		function goToSlide(index) {
-			if (index < 0) index = slides.length - 1;
-			if (index >= slides.length) index = 0;
-
-			track.style.transform = 'translateX(-' + (index * 100) + '%)';
+			if (isTransitioning) return;
+			isTransitioning = true;
 			currentIndex = index;
+			track.style.transform = 'translateX(-' + (currentIndex * 100) + '%)';
+			updateDots();
+		}
 
-			dots.forEach(function (dot, i) {
-				dot.classList.toggle('is-active', i === index);
-			});
+		// After transition ends, snap to real slide if on a clone
+		track.addEventListener('transitionend', function () {
+			isTransitioning = false;
+			// Went past last real slide into first clone
+			if (currentIndex >= slideCount + 1) {
+				track.style.transition = 'none';
+				currentIndex = 1;
+				track.style.transform = 'translateX(-' + (currentIndex * 100) + '%)';
+				track.offsetHeight;
+				track.style.transition = '';
+			}
+			// Went before first real slide into last clone
+			if (currentIndex <= 0) {
+				track.style.transition = 'none';
+				currentIndex = slideCount;
+				track.style.transform = 'translateX(-' + (currentIndex * 100) + '%)';
+				track.offsetHeight;
+				track.style.transition = '';
+			}
+		});
+
+		function stopAutoPlay() {
+			clearInterval(autoPlayInterval);
+			userInteracted = true;
 		}
 
 		// Dot click handlers
 		dots.forEach(function (dot, index) {
 			dot.addEventListener('click', function () {
-				goToSlide(index);
-				resetAutoPlay();
+				stopAutoPlay();
+				goToSlide(index + 1);
 			});
 		});
 
 		// Auto-play
 		function startAutoPlay() {
+			if (userInteracted) return;
 			autoPlayInterval = setInterval(function () {
 				goToSlide(currentIndex + 1);
 			}, 5000);
 		}
 
-		function resetAutoPlay() {
-			clearInterval(autoPlayInterval);
-			startAutoPlay();
-		}
-
 		startAutoPlay();
 
-		// Pause on hover
+		// Pause on hover (only if auto-play still active)
 		slider.addEventListener('mouseenter', function () {
-			clearInterval(autoPlayInterval);
+			if (!userInteracted) clearInterval(autoPlayInterval);
 		});
 
 		slider.addEventListener('mouseleave', function () {
-			startAutoPlay();
+			if (!userInteracted) startAutoPlay();
 		});
 
 		// Touch swipe support
 		var touchStartX = 0;
-		var touchEndX = 0;
 		var swipeThreshold = 50;
 
 		slider.addEventListener('touchstart', function (e) {
 			touchStartX = e.changedTouches[0].clientX;
-			clearInterval(autoPlayInterval);
+			stopAutoPlay();
 		}, { passive: true });
 
 		slider.addEventListener('touchend', function (e) {
-			touchEndX = e.changedTouches[0].clientX;
-			var diff = touchStartX - touchEndX;
+			var diff = touchStartX - e.changedTouches[0].clientX;
 
 			if (Math.abs(diff) > swipeThreshold) {
 				if (diff > 0) {
@@ -207,8 +251,62 @@
 					goToSlide(currentIndex - 1);
 				}
 			}
-			startAutoPlay();
 		}, { passive: true });
+
+		// Mouse drag swipe support (desktop)
+		var mouseStartX = 0;
+		var isDragging = false;
+		var didDrag = false;
+
+		slider.addEventListener('dragstart', function (e) {
+			e.preventDefault();
+		});
+
+		slider.addEventListener('mousedown', function (e) {
+			isDragging = true;
+			didDrag = false;
+			mouseStartX = e.clientX;
+			stopAutoPlay();
+			slider.style.cursor = 'grabbing';
+			e.preventDefault();
+		});
+
+		slider.addEventListener('mousemove', function (e) {
+			if (!isDragging) return;
+			if (Math.abs(mouseStartX - e.clientX) > 5) {
+				didDrag = true;
+			}
+			e.preventDefault();
+		});
+
+		slider.addEventListener('mouseup', function (e) {
+			if (!isDragging) return;
+			isDragging = false;
+			slider.style.cursor = '';
+			var diff = mouseStartX - e.clientX;
+
+			if (Math.abs(diff) > swipeThreshold) {
+				if (diff > 0) {
+					goToSlide(currentIndex + 1);
+				} else {
+					goToSlide(currentIndex - 1);
+				}
+			}
+		});
+
+		slider.addEventListener('mouseleave', function () {
+			if (isDragging) {
+				isDragging = false;
+				slider.style.cursor = '';
+			}
+		});
+
+		slider.addEventListener('click', function (e) {
+			if (didDrag) {
+				e.preventDefault();
+				didDrag = false;
+			}
+		});
 	}
 
 	/**

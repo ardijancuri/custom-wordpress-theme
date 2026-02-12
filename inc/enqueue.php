@@ -14,7 +14,7 @@ function lesnamax_styles() {
 	// Google Fonts - Roboto
 	wp_enqueue_style(
 		'lesnamax-google-fonts',
-		'https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap',
+		'https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600&family=Roboto:wght@300;400;500;700&display=swap',
 		array(),
 		null
 	);
