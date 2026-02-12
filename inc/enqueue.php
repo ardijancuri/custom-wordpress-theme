@@ -51,11 +51,16 @@ add_action( 'wp_enqueue_scripts', 'lesnamax_styles' );
  * Enqueue front-end scripts.
  */
 function lesnamax_scripts() {
-	// Main script
+	// Main script (depends on ajax-cart when WooCommerce is active for drawer functionality)
+	$main_deps = array();
+	if ( class_exists( 'WooCommerce' ) ) {
+		$main_deps[] = 'lesnamax-ajax-cart';
+	}
+
 	wp_enqueue_script(
 		'lesnamax-main',
 		LESNAMAX_URI . '/assets/js/main.js',
-		array(),
+		$main_deps,
 		LESNAMAX_VERSION,
 		true
 	);
@@ -93,9 +98,10 @@ function lesnamax_scripts() {
 			'nonce'     => wp_create_nonce( 'lesnamax_ajax_nonce' ),
 			'cartUrl'   => wc_get_cart_url(),
 			'i18n'      => array(
-				'added'   => esc_html__( 'Shtuar ne shporte', 'lesnamax' ),
-				'error'   => esc_html__( 'Gabim. Provoni perseri.', 'lesnamax' ),
-				'viewCart' => esc_html__( 'Shiko shporten', 'lesnamax' ),
+				'added'          => esc_html__( 'Shtuar ne shporte', 'lesnamax' ),
+				'error'          => esc_html__( 'Gabim. Provoni perseri.', 'lesnamax' ),
+				'viewCart'       => esc_html__( 'Shiko shporten', 'lesnamax' ),
+				'wishlistEmpty'  => esc_html__( 'Lista e deshirave eshte bosh.', 'lesnamax' ),
 			),
 		) );
 	}

@@ -220,3 +220,259 @@ function lesnamax_ajax_filter_products() {
 }
 add_action( 'wp_ajax_lesnamax_filter_products', 'lesnamax_ajax_filter_products' );
 add_action( 'wp_ajax_nopriv_lesnamax_filter_products', 'lesnamax_ajax_filter_products' );
+
+/**
+ * AJAX Get Cart Drawer Contents.
+ */
+function lesnamax_ajax_get_cart_drawer() {
+	check_ajax_referer( 'lesnamax_ajax_nonce', 'nonce' );
+
+	ob_start();
+	lesnamax_render_cart_drawer_items();
+	$body_html = ob_get_clean();
+
+	ob_start();
+	lesnamax_render_cart_drawer_footer();
+	$footer_html = ob_get_clean();
+
+	wp_send_json_success( array(
+		'body'       => $body_html,
+		'footer'     => $footer_html,
+		'cart_count' => WC()->cart->get_cart_contents_count(),
+	) );
+}
+add_action( 'wp_ajax_lesnamax_get_cart_drawer', 'lesnamax_ajax_get_cart_drawer' );
+add_action( 'wp_ajax_nopriv_lesnamax_get_cart_drawer', 'lesnamax_ajax_get_cart_drawer' );
+
+/**
+ * Render cart drawer items HTML.
+ */
+function lesnamax_render_cart_drawer_items() {
+	$cart_items = WC()->cart->get_cart();
+
+	if ( empty( $cart_items ) ) {
+		echo '<div class="flyout-drawer__empty">';
+		echo '<p>' . esc_html__( 'Shporta juaj eshte bosh.', 'lesnamax' ) . '</p>';
+		echo '<a href="' . esc_url( get_permalink( wc_get_page_id( 'shop' ) ) ) . '" class="btn btn--primary">' . esc_html__( 'Bli Tani', 'lesnamax' ) . '</a>';
+		echo '</div>';
+		return;
+	}
+
+	foreach ( $cart_items as $cart_item_key => $cart_item ) {
+		$product   = $cart_item['data'];
+		$quantity  = $cart_item['quantity'];
+		$image_url = wp_get_attachment_image_url( $product->get_image_id(), 'lesnamax-product-thumb' );
+		if ( ! $image_url ) {
+			$image_url = wc_placeholder_img_src( 'lesnamax-product-thumb' );
+		}
+		$product_price = WC()->cart->get_product_price( $product );
+		$product_name  = $product->get_name();
+		$product_link  = get_permalink( $product->get_id() );
+		?>
+		<div class="flyout-item" data-cart-key="<?php echo esc_attr( $cart_item_key ); ?>">
+			<a href="<?php echo esc_url( $product_link ); ?>" class="flyout-item__image">
+				<img src="<?php echo esc_url( $image_url ); ?>" alt="<?php echo esc_attr( $product_name ); ?>">
+			</a>
+			<div class="flyout-item__details">
+				<a href="<?php echo esc_url( $product_link ); ?>" class="flyout-item__name"><?php echo esc_html( $product_name ); ?></a>
+				<div class="flyout-item__price"><?php echo wp_kses_post( $product_price ); ?></div>
+				<div class="flyout-item__quantity">
+					<button type="button" class="flyout-qty-btn flyout-qty-btn--minus" data-cart-key="<?php echo esc_attr( $cart_item_key ); ?>">-</button>
+					<span class="flyout-qty-value"><?php echo esc_html( $quantity ); ?></span>
+					<button type="button" class="flyout-qty-btn flyout-qty-btn--plus" data-cart-key="<?php echo esc_attr( $cart_item_key ); ?>">+</button>
+				</div>
+			</div>
+			<button type="button" class="flyout-item__remove" data-cart-key="<?php echo esc_attr( $cart_item_key ); ?>" aria-label="<?php esc_attr_e( 'Hiq', 'lesnamax' ); ?>">
+				&times;
+			</button>
+		</div>
+		<?php
+	}
+}
+
+/**
+ * Render cart drawer footer HTML.
+ */
+function lesnamax_render_cart_drawer_footer() {
+	$cart = WC()->cart;
+	if ( $cart->is_empty() ) {
+		return;
+	}
+
+	// Similar products slider
+	lesnamax_render_cart_drawer_recommendations();
+	?>
+	<div class="flyout-drawer__total">
+		<span><?php esc_html_e( 'Nentotali', 'lesnamax' ); ?></span>
+		<span class="flyout-drawer__total-amount"><?php echo wp_kses_post( $cart->get_cart_subtotal() ); ?></span>
+	</div>
+	<a href="<?php echo esc_url( wc_get_cart_url() ); ?>" class="btn btn--outline btn--block"><?php esc_html_e( 'Shiko Shporten', 'lesnamax' ); ?></a>
+	<a href="<?php echo esc_url( wc_get_checkout_url() ); ?>" class="btn btn--primary btn--block"><?php esc_html_e( 'Vazhdo me Pagesen', 'lesnamax' ); ?></a>
+	<?php
+}
+
+/**
+ * Render cart drawer product recommendations.
+ */
+function lesnamax_render_cart_drawer_recommendations() {
+	$cart      = WC()->cart;
+	$cart_ids  = array();
+
+	foreach ( $cart->get_cart() as $item ) {
+		$cart_ids[] = $item['product_id'];
+	}
+
+	// Try cross-sells first
+	$product_ids = $cart->get_cross_sells();
+
+	// Fallback: get related products from cart items
+	if ( empty( $product_ids ) && ! empty( $cart_ids ) ) {
+		$product_ids = wc_get_related_products( $cart_ids[0], 8, $cart_ids );
+	}
+
+	// Fallback: popular products
+	if ( empty( $product_ids ) ) {
+		$popular = wc_get_products( array(
+			'limit'    => 8,
+			'status'   => 'publish',
+			'orderby'  => 'popularity',
+			'order'    => 'DESC',
+			'exclude'  => $cart_ids,
+			'return'   => 'ids',
+		) );
+		$product_ids = $popular;
+	}
+
+	// Exclude products already in cart
+	$product_ids = array_diff( $product_ids, $cart_ids );
+	$product_ids = array_slice( $product_ids, 0, 8 );
+
+	if ( empty( $product_ids ) ) {
+		return;
+	}
+	?>
+	<div class="flyout-recs">
+		<span class="flyout-recs__title"><?php esc_html_e( 'Mund te ju pelqeje', 'lesnamax' ); ?></span>
+		<div class="flyout-recs__track">
+			<?php foreach ( $product_ids as $pid ) :
+				$product = wc_get_product( $pid );
+				if ( ! $product || ! $product->is_visible() ) {
+					continue;
+				}
+				$image_url = wp_get_attachment_image_url( $product->get_image_id(), 'lesnamax-product-thumb' );
+				if ( ! $image_url ) {
+					$image_url = wc_placeholder_img_src( 'lesnamax-product-thumb' );
+				}
+			?>
+				<div class="flyout-rec-card">
+					<a href="<?php echo esc_url( get_permalink( $pid ) ); ?>" class="flyout-rec-card__image">
+						<img src="<?php echo esc_url( $image_url ); ?>" alt="<?php echo esc_attr( $product->get_name() ); ?>">
+					</a>
+					<div class="flyout-rec-card__info">
+						<a href="<?php echo esc_url( get_permalink( $pid ) ); ?>" class="flyout-rec-card__name"><?php echo esc_html( $product->get_name() ); ?></a>
+						<span class="flyout-rec-card__price"><?php echo wp_kses_post( $product->get_price_html() ); ?></span>
+					</div>
+					<?php if ( $product->is_in_stock() && $product->is_type( 'simple' ) ) : ?>
+						<button type="button" class="flyout-rec-card__add product-card__add-to-cart" data-product-id="<?php echo esc_attr( $pid ); ?>" aria-label="<?php esc_attr_e( 'Shto ne shporte', 'lesnamax' ); ?>">+</button>
+					<?php endif; ?>
+				</div>
+			<?php endforeach; ?>
+		</div>
+	</div>
+	<?php
+}
+
+/**
+ * AJAX Update Cart Item Quantity.
+ */
+function lesnamax_ajax_update_cart_item() {
+	check_ajax_referer( 'lesnamax_ajax_nonce', 'nonce' );
+
+	$cart_key = isset( $_POST['cart_key'] ) ? sanitize_text_field( wp_unslash( $_POST['cart_key'] ) ) : '';
+	$quantity = isset( $_POST['quantity'] ) ? absint( $_POST['quantity'] ) : 0;
+
+	if ( empty( $cart_key ) ) {
+		wp_send_json_error( array( 'message' => __( 'Artikull i pavlefshem.', 'lesnamax' ) ) );
+	}
+
+	if ( $quantity === 0 ) {
+		WC()->cart->remove_cart_item( $cart_key );
+	} else {
+		WC()->cart->set_quantity( $cart_key, $quantity );
+	}
+
+	ob_start();
+	lesnamax_render_cart_drawer_items();
+	$body_html = ob_get_clean();
+
+	ob_start();
+	lesnamax_render_cart_drawer_footer();
+	$footer_html = ob_get_clean();
+
+	wp_send_json_success( array(
+		'body'       => $body_html,
+		'footer'     => $footer_html,
+		'cart_count' => WC()->cart->get_cart_contents_count(),
+	) );
+}
+add_action( 'wp_ajax_lesnamax_update_cart_item', 'lesnamax_ajax_update_cart_item' );
+add_action( 'wp_ajax_nopriv_lesnamax_update_cart_item', 'lesnamax_ajax_update_cart_item' );
+
+/**
+ * AJAX Get Wishlist Products.
+ */
+function lesnamax_ajax_get_wishlist_products() {
+	check_ajax_referer( 'lesnamax_ajax_nonce', 'nonce' );
+
+	$product_ids = isset( $_POST['product_ids'] ) ? json_decode( sanitize_text_field( wp_unslash( $_POST['product_ids'] ) ), true ) : array();
+
+	if ( ! is_array( $product_ids ) || empty( $product_ids ) ) {
+		wp_send_json_success( array(
+			'html' => '<div class="flyout-drawer__empty"><p>' . esc_html__( 'Lista e deshirave eshte bosh.', 'lesnamax' ) . '</p></div>',
+		) );
+	}
+
+	$product_ids = array_map( 'absint', $product_ids );
+
+	ob_start();
+	foreach ( $product_ids as $product_id ) {
+		$product = wc_get_product( $product_id );
+		if ( ! $product || ! $product->is_visible() ) {
+			continue;
+		}
+
+		$image_url = wp_get_attachment_image_url( $product->get_image_id(), 'lesnamax-product-thumb' );
+		if ( ! $image_url ) {
+			$image_url = wc_placeholder_img_src( 'lesnamax-product-thumb' );
+		}
+		$product_link = get_permalink( $product_id );
+		?>
+		<div class="flyout-item" data-product-id="<?php echo esc_attr( $product_id ); ?>">
+			<a href="<?php echo esc_url( $product_link ); ?>" class="flyout-item__image">
+				<img src="<?php echo esc_url( $image_url ); ?>" alt="<?php echo esc_attr( $product->get_name() ); ?>">
+			</a>
+			<div class="flyout-item__details">
+				<a href="<?php echo esc_url( $product_link ); ?>" class="flyout-item__name"><?php echo esc_html( $product->get_name() ); ?></a>
+				<div class="flyout-item__price"><?php echo wp_kses_post( $product->get_price_html() ); ?></div>
+				<?php if ( $product->is_in_stock() && $product->is_type( 'simple' ) ) : ?>
+					<button type="button" class="btn btn--sm btn--primary flyout-wishlist-add-to-cart" data-product-id="<?php echo esc_attr( $product_id ); ?>">
+						<?php esc_html_e( 'Shto ne Shporte', 'lesnamax' ); ?>
+					</button>
+				<?php endif; ?>
+			</div>
+			<button type="button" class="flyout-item__remove flyout-wishlist-remove" data-product-id="<?php echo esc_attr( $product_id ); ?>" aria-label="<?php esc_attr_e( 'Hiq', 'lesnamax' ); ?>">
+				&times;
+			</button>
+		</div>
+		<?php
+	}
+	$html = ob_get_clean();
+
+	if ( empty( trim( $html ) ) ) {
+		$html = '<div class="flyout-drawer__empty"><p>' . esc_html__( 'Lista e deshirave eshte bosh.', 'lesnamax' ) . '</p></div>';
+	}
+
+	wp_send_json_success( array( 'html' => $html ) );
+}
+add_action( 'wp_ajax_lesnamax_get_wishlist_products', 'lesnamax_ajax_get_wishlist_products' );
+add_action( 'wp_ajax_nopriv_lesnamax_get_wishlist_products', 'lesnamax_ajax_get_wishlist_products' );

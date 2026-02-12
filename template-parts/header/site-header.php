@@ -49,16 +49,16 @@ defined( 'ABSPATH' ) || exit;
 				</a>
 
 				<!-- Wishlist -->
-				<a href="#" class="header-icon-link header-wishlist" id="header-wishlist" aria-label="<?php esc_attr_e( 'Lista e deshirave', 'lesnamax' ); ?>">
+				<button type="button" class="header-icon-link header-wishlist" id="header-wishlist" aria-label="<?php esc_attr_e( 'Lista e deshirave', 'lesnamax' ); ?>">
 					<?php lesnamax_icon( 'heart' ); ?>
 					<span class="header-icon-count wishlist-count" data-count="<?php echo esc_attr( lesnamax_wishlist_count() ); ?>"><?php echo esc_html( lesnamax_wishlist_count() ); ?></span>
-				</a>
+				</button>
 
 				<!-- Cart -->
-				<a href="<?php echo esc_url( wc_get_cart_url() ); ?>" class="header-icon-link header-cart" id="header-cart" aria-label="<?php esc_attr_e( 'Shporta', 'lesnamax' ); ?>">
+				<button type="button" class="header-icon-link header-cart" id="header-cart" aria-label="<?php esc_attr_e( 'Shporta', 'lesnamax' ); ?>">
 					<?php lesnamax_icon( 'cart' ); ?>
 					<span class="header-icon-count cart-count"><?php echo esc_html( lesnamax_cart_count() ); ?></span>
-				</a>
+				</button>
 			<?php endif; ?>
 
 			<!-- Mobile Menu Toggle -->

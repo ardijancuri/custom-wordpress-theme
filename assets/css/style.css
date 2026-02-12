@@ -744,7 +744,7 @@ h4 { font-size: var(--font-size-lg); }
 .hero-slider {
 	position: relative;
 	overflow: hidden;
-	margin-bottom: var(--space-2xl);
+	margin-bottom: var(--space-md);
 	cursor: grab;
 	user-select: none;
 }
@@ -1912,7 +1912,363 @@ h4 { font-size: var(--font-size-lg); }
 }
 
 /* --------------------------------------------------------------------------
-   28. 404 Page
+   28. Flyout Drawers (Cart & Wishlist)
+   -------------------------------------------------------------------------- */
+.flyout-overlay {
+	position: fixed;
+	inset: 0;
+	background-color: rgba(0, 0, 0, 0.5);
+	z-index: var(--z-overlay);
+	opacity: 0;
+	visibility: hidden;
+	transition: opacity var(--transition-base), visibility var(--transition-base);
+}
+
+.flyout-overlay.is-active {
+	opacity: 1;
+	visibility: visible;
+}
+
+.flyout-drawer--right {
+	position: fixed;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	width: 400px;
+	max-width: 90vw;
+	background-color: var(--color-bg);
+	z-index: var(--z-modal);
+	transform: translateX(100%);
+	transition: transform var(--transition-base);
+	display: flex;
+	flex-direction: column;
+}
+
+.flyout-overlay.is-active .flyout-drawer--right {
+	transform: translateX(0);
+}
+
+.flyout-drawer__header {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	padding: var(--space-md) var(--space-lg);
+	border-bottom: 1px solid var(--color-border-light);
+	flex-shrink: 0;
+}
+
+.flyout-drawer__header h3 {
+	font-size: var(--font-size-lg);
+	font-weight: var(--font-weight-bold);
+	margin: 0;
+}
+
+.flyout-drawer__close {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 36px;
+	height: 36px;
+	color: var(--color-text);
+	transition: color var(--transition-fast);
+}
+
+.flyout-drawer__close:hover {
+	color: var(--color-primary);
+}
+
+.flyout-drawer__body {
+	flex: 1;
+	overflow-y: auto;
+	padding: var(--space-md) var(--space-lg);
+}
+
+.flyout-drawer__footer {
+	flex-shrink: 0;
+	padding: var(--space-md) var(--space-lg);
+	border-top: 1px solid var(--color-border-light);
+}
+
+.flyout-drawer__empty {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	gap: var(--space-md);
+	min-height: 200px;
+	color: var(--color-text-muted);
+	font-size: var(--font-size-base);
+	text-align: center;
+}
+
+/* Flyout Drawer Total */
+.flyout-drawer__total {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	padding-bottom: var(--space-md);
+	margin-bottom: var(--space-md);
+	font-size: var(--font-size-base);
+	font-weight: var(--font-weight-medium);
+}
+
+.flyout-drawer__total-amount {
+	font-size: var(--font-size-lg);
+	font-weight: var(--font-weight-bold);
+	color: var(--color-dark);
+}
+
+.btn--block {
+	display: flex;
+	width: 100%;
+	text-align: center;
+}
+
+.flyout-drawer__footer .btn--block + .btn--block {
+	margin-top: var(--space-sm);
+}
+
+/* Flyout Item */
+.flyout-item {
+	display: flex;
+	align-items: flex-start;
+	gap: var(--space-md);
+	padding: var(--space-md) 0;
+	border-bottom: 1px solid var(--color-border-light);
+	position: relative;
+}
+
+.flyout-item:last-child {
+	border-bottom: none;
+}
+
+.flyout-item__image {
+	flex-shrink: 0;
+	width: 70px;
+	height: 70px;
+}
+
+.flyout-item__image img {
+	width: 100%;
+	height: 100%;
+	object-fit: contain;
+	border-radius: var(--radius-sm);
+	background-color: var(--color-bg-light);
+}
+
+.flyout-item__details {
+	flex: 1;
+	min-width: 0;
+}
+
+.flyout-item__name {
+	display: block;
+	font-size: var(--font-size-sm);
+	font-weight: var(--font-weight-medium);
+	color: var(--color-text);
+	margin-bottom: var(--space-xs);
+	display: -webkit-box;
+	-webkit-line-clamp: 2;
+	-webkit-box-orient: vertical;
+	overflow: hidden;
+}
+
+.flyout-item__name:hover {
+	color: var(--color-primary);
+}
+
+.flyout-item__price {
+	font-size: var(--font-size-sm);
+	font-weight: var(--font-weight-bold);
+	color: var(--color-dark);
+	margin-bottom: var(--space-sm);
+}
+
+.flyout-item__quantity {
+	display: inline-flex;
+	align-items: center;
+	border: 1px solid var(--color-border);
+	border-radius: var(--radius-sm);
+}
+
+.flyout-qty-btn {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 28px;
+	height: 28px;
+	font-size: var(--font-size-md);
+	color: var(--color-text);
+	transition: background-color var(--transition-fast);
+}
+
+.flyout-qty-btn:hover {
+	background-color: var(--color-bg-light);
+}
+
+.flyout-qty-value {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	min-width: 28px;
+	height: 28px;
+	font-size: var(--font-size-sm);
+	font-weight: var(--font-weight-medium);
+	border-left: 1px solid var(--color-border);
+	border-right: 1px solid var(--color-border);
+}
+
+.flyout-item__remove {
+	position: absolute;
+	top: var(--space-md);
+	right: 0;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 24px;
+	height: 24px;
+	font-size: var(--font-size-lg);
+	color: var(--color-text-muted);
+	transition: color var(--transition-fast);
+	line-height: 1;
+}
+
+.flyout-item__remove:hover {
+	color: var(--color-error);
+}
+
+/* Wishlist add-to-cart in drawer */
+.flyout-wishlist-add-to-cart {
+	margin-top: var(--space-xs);
+}
+
+/* Flyout Drawer - Recommendations Slider */
+.flyout-recs {
+	margin-bottom: var(--space-md);
+	padding-bottom: var(--space-md);
+	border-bottom: 1px solid var(--color-border-light);
+}
+
+.flyout-recs__title {
+	display: block;
+	font-size: var(--font-size-sm);
+	font-weight: var(--font-weight-bold);
+	color: var(--color-dark);
+	margin-bottom: var(--space-sm);
+	text-transform: uppercase;
+	letter-spacing: 0.3px;
+}
+
+.flyout-recs__track {
+	display: flex;
+	gap: var(--space-sm);
+	overflow-x: auto;
+	scroll-behavior: smooth;
+	-webkit-overflow-scrolling: touch;
+	scrollbar-width: none;
+	padding-bottom: var(--space-xs);
+}
+
+.flyout-recs__track::-webkit-scrollbar {
+	display: none;
+}
+
+.flyout-rec-card {
+	flex: 0 0 120px;
+	position: relative;
+	background-color: var(--color-white);
+	border: 1px solid var(--color-border-light);
+	border-radius: var(--radius-sm);
+	overflow: hidden;
+	transition: box-shadow var(--transition-fast);
+}
+
+.flyout-rec-card:hover {
+	box-shadow: var(--shadow-sm);
+}
+
+.flyout-rec-card__image {
+	display: block;
+	width: 100%;
+	aspect-ratio: 1;
+	background-color: var(--color-white);
+}
+
+.flyout-rec-card__image img {
+	width: 100%;
+	height: 100%;
+	object-fit: contain;
+	padding: 4px;
+}
+
+.flyout-rec-card__info {
+	padding: var(--space-xs);
+}
+
+.flyout-rec-card__name {
+	display: block;
+	font-size: 10px;
+	font-weight: var(--font-weight-medium);
+	color: var(--color-text);
+	line-height: 1.3;
+	display: -webkit-box;
+	-webkit-line-clamp: 2;
+	-webkit-box-orient: vertical;
+	overflow: hidden;
+	margin-bottom: 2px;
+}
+
+.flyout-rec-card__name:hover {
+	color: var(--color-primary);
+}
+
+.flyout-rec-card__price {
+	font-size: var(--font-size-sm);
+	font-weight: var(--font-weight-bold);
+	color: var(--color-dark);
+}
+
+.flyout-rec-card__price del {
+	color: var(--color-text-muted);
+	font-weight: var(--font-weight-normal);
+}
+
+.flyout-rec-card__price ins {
+	text-decoration: none;
+}
+
+.flyout-rec-card__add.flyout-rec-card__add {
+	position: absolute;
+	top: 4px;
+	right: 4px;
+	width: 26px;
+	height: 26px;
+	flex: 0 0 26px;
+	padding: 0;
+	gap: 0;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background-color: var(--color-primary);
+	color: var(--color-white);
+	border-radius: var(--radius-full);
+	font-size: var(--font-size-base);
+	font-weight: var(--font-weight-bold);
+	line-height: 1;
+	opacity: 0;
+	transition: opacity var(--transition-fast);
+}
+
+.flyout-rec-card:hover .flyout-rec-card__add {
+	opacity: 1;
+}
+
+.flyout-rec-card__add:hover {
+	background-color: var(--color-primary-dark);
+}
+
+/* --------------------------------------------------------------------------
+   29. 404 Page
    -------------------------------------------------------------------------- */
 .page-404 {
 	text-align: center;

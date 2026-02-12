@@ -455,6 +455,12 @@
 		left: 10px;
 		max-width: none;
 	}
+
+	/* Flyout drawer - full width on small phones */
+	.flyout-drawer--right {
+		width: 100vw;
+		max-width: 100vw;
+	}
 }
 
 /* --------------------------------------------------------------------------
@@ -591,6 +597,7 @@
 	.site-footer,
 	.mobile-nav-overlay,
 	.cart-notification,
+	.flyout-overlay,
 	.shop-sidebar,
 	.product-card__actions {
 		display: none !important;

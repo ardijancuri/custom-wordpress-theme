@@ -50,8 +50,8 @@
 						// Update cart count
 						updateCartCount(data.data.cart_count);
 
-						// Show notification
-						showCartNotification(data.data.message || lesnamaxAjax.i18n.added);
+						// Refresh cart drawer content and open it
+						refreshAndOpenCartDrawer();
 
 						// Trigger WC cart fragments refresh
 						if (typeof jQuery !== 'undefined') {
@@ -87,7 +87,7 @@
 	}
 
 	/**
-	 * Show cart notification toast.
+	 * Show cart notification toast (fallback).
 	 */
 	function showCartNotification(message) {
 		var notification = document.getElementById('cart-notification');
@@ -103,6 +103,34 @@
 		setTimeout(function () {
 			notification.classList.remove('is-visible');
 		}, 4000);
+	}
+
+	/**
+	 * Refresh cart drawer content via AJAX, then open the drawer.
+	 */
+	function refreshAndOpenCartDrawer() {
+		var formData = new FormData();
+		formData.append('action', 'lesnamax_get_cart_drawer');
+		formData.append('nonce', lesnamaxAjax.nonce);
+
+		fetch(lesnamaxAjax.ajaxUrl, {
+			method: 'POST',
+			body: formData
+		})
+			.then(function (r) { return r.json(); })
+			.then(function (data) {
+				if (data.success) {
+					var body = document.getElementById('cart-drawer-body');
+					var footer = document.getElementById('cart-drawer-footer');
+					if (body) body.innerHTML = data.data.body;
+					if (footer) footer.innerHTML = data.data.footer;
+				}
+
+				// Open the drawer
+				if (typeof window.lesnamaxOpenCartDrawer === 'function') {
+					window.lesnamaxOpenCartDrawer();
+				}
+			});
 	}
 
 	document.addEventListener('DOMContentLoaded', initAjaxCart);

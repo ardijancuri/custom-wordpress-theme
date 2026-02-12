@@ -94,6 +94,17 @@ add_filter( 'woocommerce_breadcrumb_defaults', 'lesnamax_wc_breadcrumb_defaults'
 function lesnamax_cart_fragments( $fragments ) {
 	$count = WC()->cart->get_cart_contents_count();
 	$fragments['.cart-count'] = '<span class="header-icon-count cart-count">' . esc_html( $count ) . '</span>';
+
+	// Cart drawer body
+	ob_start();
+	lesnamax_render_cart_drawer_items();
+	$fragments['#cart-drawer-body'] = '<div class="flyout-drawer__body" id="cart-drawer-body">' . ob_get_clean() . '</div>';
+
+	// Cart drawer footer
+	ob_start();
+	lesnamax_render_cart_drawer_footer();
+	$fragments['#cart-drawer-footer'] = '<div class="flyout-drawer__footer" id="cart-drawer-footer">' . ob_get_clean() . '</div>';
+
 	return $fragments;
 }
 add_filter( 'woocommerce_add_to_cart_fragments', 'lesnamax_cart_fragments' );
