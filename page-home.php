@@ -24,9 +24,8 @@ get_header(); ?>
 
 	<div class="container">
 		<?php get_template_part( 'template-parts/promo-banners' ); ?>
+		<?php get_template_part( 'template-parts/category-links' ); ?>
 	</div>
-
-	<?php get_template_part( 'template-parts/category-links' ); ?>
 
 	<div class="container">
 		<?php get_template_part( 'template-parts/by-room' ); ?>

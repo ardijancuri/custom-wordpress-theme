@@ -34,16 +34,12 @@ if ( ! $has_links ) {
 	return;
 }
 ?>
-<section class="section">
-	<div class="container">
-		<div class="category-links">
-			<?php foreach ( $links as $link ) : ?>
-				<?php if ( ! empty( $link['label'] ) ) : ?>
-					<a href="<?php echo esc_url( $link['url'] ); ?>" class="category-link">
-						<?php echo esc_html( $link['label'] ); ?>
-					</a>
-				<?php endif; ?>
-			<?php endforeach; ?>
-		</div>
-	</div>
-</section>
+<div class="category-links">
+	<?php foreach ( $links as $link ) : ?>
+		<?php if ( ! empty( $link['label'] ) ) : ?>
+			<a href="<?php echo esc_url( $link['url'] ); ?>" class="category-link">
+				<?php echo esc_html( $link['label'] ); ?>
+			</a>
+		<?php endif; ?>
+	<?php endforeach; ?>
+</div>
