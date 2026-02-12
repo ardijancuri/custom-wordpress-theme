@@ -51,15 +51,17 @@ if ( empty( $featured_products ) ) {
 ?>
 <section class="section featured-products">
 	<?php if ( ! empty( $categories ) && ! is_wp_error( $categories ) ) : ?>
-		<div class="category-tabs">
-			<button class="category-tab is-active" data-category="all">
-				<span class="category-tab__label"><?php esc_html_e( 'Te gjitha', 'lesnamax' ); ?></span>
-			</button>
-			<?php foreach ( $categories as $cat ) : ?>
-				<button class="category-tab" data-category="<?php echo esc_attr( $cat->slug ); ?>">
-					<span class="category-tab__label"><?php echo esc_html( $cat->name ); ?></span>
+		<div class="category-tabs-wrapper">
+			<div class="category-tabs">
+				<button class="category-tab is-active" data-category="all">
+					<span class="category-tab__label"><?php esc_html_e( 'Te gjitha', 'lesnamax' ); ?></span>
 				</button>
-			<?php endforeach; ?>
+				<?php foreach ( $categories as $cat ) : ?>
+					<button class="category-tab" data-category="<?php echo esc_attr( $cat->slug ); ?>">
+						<span class="category-tab__label"><?php echo esc_html( $cat->name ); ?></span>
+					</button>
+				<?php endforeach; ?>
+			</div>
 		</div>
 	<?php endif; ?>
 
