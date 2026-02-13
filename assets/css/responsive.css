@@ -54,8 +54,12 @@
 		max-width: 350px;
 	}
 
-	.header-icons .header-icon-link:not(.header-cart) {
+	.header-icons .header-icon-link:not(.header-cart):not(.header-wishlist) {
 		display: none;
+	}
+
+	.header-icons {
+		gap: var(--space-sm);
 	}
 
 	.mobile-menu-toggle {
