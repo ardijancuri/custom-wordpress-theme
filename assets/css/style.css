@@ -1082,6 +1082,16 @@ h4 { font-size: var(--font-size-lg); }
 	text-decoration: line-through;
 }
 
+@media (max-width: 767px) {
+	.product-card__price .price-current {
+		font-size: var(--font-size-lg, 1.1rem);
+	}
+
+	.price-original {
+		font-size: var(--font-size-base, 1rem);
+	}
+}
+
 /* Product Card Actions */
 .product-card__actions {
 	display: flex;
