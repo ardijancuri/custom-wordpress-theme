@@ -456,6 +456,14 @@ h4 { font-size: var(--font-size-lg); }
 	color: var(--color-text-muted);
 }
 
+.header-search__input::-webkit-search-cancel-button {
+	-webkit-appearance: none;
+	width: 18px;
+	height: 18px;
+	background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2300BCD4' stroke-width='2.5' stroke-linecap='round'%3E%3Cline x1='18' y1='6' x2='6' y2='18'/%3E%3Cline x1='6' y1='6' x2='18' y2='18'/%3E%3C/svg%3E") center/contain no-repeat;
+	cursor: pointer;
+}
+
 .header-search__btn {
 	display: flex;
 	align-items: center;
@@ -496,7 +504,12 @@ h4 { font-size: var(--font-size-lg); }
 	align-items: center;
 	gap: var(--space-md);
 	padding: 10px 16px;
+	border-bottom: 1px solid var(--color-border-light);
 	transition: background-color var(--transition-fast);
+}
+
+.search-result-item:last-child {
+	border-bottom: none;
 }
 
 .search-result-item:hover {
@@ -512,6 +525,10 @@ h4 { font-size: var(--font-size-lg); }
 
 .search-result-item__info {
 	flex: 1;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: var(--space-sm);
 }
 
 .search-result-item__name {
@@ -524,6 +541,24 @@ h4 { font-size: var(--font-size-lg); }
 	font-size: var(--font-size-sm);
 	color: var(--color-primary);
 	font-weight: var(--font-weight-bold);
+	white-space: nowrap;
+	text-align: right;
+}
+
+.search-result-item__price del {
+	color: var(--color-text-muted);
+	font-weight: var(--font-weight-normal);
+}
+
+.search-no-results {
+	padding: var(--space-lg) var(--space-md);
+	text-align: center;
+	color: var(--color-text-muted);
+	font-size: var(--font-size-sm);
+}
+
+.search-no-results p {
+	margin: 0;
 }
 
 /* Header Icons */
