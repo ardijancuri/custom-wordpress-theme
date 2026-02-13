@@ -291,3 +291,20 @@ function lesnamax_cart_coupon_auto_open_js() {
 	<?php
 }
 add_action( 'wp_footer', 'lesnamax_cart_coupon_auto_open_js' );
+
+/**
+ * Route product search queries to the WooCommerce archive template.
+ *
+ * WooCommerce's template loader does not intercept ?s= searches,
+ * so we handle it here to reuse archive-product.php's search UI.
+ */
+function lesnamax_product_search_template( $template ) {
+	if ( is_search() && 'product' === get_query_var( 'post_type' ) ) {
+		$new_template = locate_template( 'woocommerce/archive-product.php' );
+		if ( $new_template ) {
+			return $new_template;
+		}
+	}
+	return $template;
+}
+add_filter( 'template_include', 'lesnamax_product_search_template' );

@@ -68,7 +68,18 @@ function lesnamax_ajax_search_products() {
 		) );
 	}
 
+	$search_url = add_query_arg( array(
+		's'         => $query,
+		'post_type' => 'product',
+	), home_url( '/' ) );
+
 	ob_start();
+	?>
+	<div class="search-results-header">
+		<span class="search-results-header__title"><?php printf( esc_html__( 'Produktet (%d)', 'lesnamax' ), count( $products ) ); ?></span>
+		<a href="<?php echo esc_url( $search_url ); ?>" class="search-results-header__link"><?php esc_html_e( 'Shfaq te gjitha rezultatet', 'lesnamax' ); ?></a>
+	</div>
+	<?php
 	foreach ( $products as $product ) {
 		$image_url = wp_get_attachment_image_url( $product->get_image_id(), 'lesnamax-product-thumb' );
 		if ( ! $image_url ) {

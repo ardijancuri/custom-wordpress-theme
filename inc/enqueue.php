@@ -118,7 +118,7 @@ function lesnamax_scripts() {
 	}
 
 	// Shop filters (shop/archive + single product for recently viewed tracking)
-	if ( class_exists( 'WooCommerce' ) && ( is_shop() || is_product_category() || is_product_tag() || is_product() ) ) {
+	if ( class_exists( 'WooCommerce' ) && ( is_shop() || is_product_category() || is_product_tag() || is_search() || is_product() ) ) {
 		wp_enqueue_script(
 			'lesnamax-filters',
 			LESNAMAX_URI . '/assets/js/filters.js',
