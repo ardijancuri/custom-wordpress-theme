@@ -850,7 +850,7 @@ h4 { font-size: var(--font-size-lg); }
 
 .categories-mega-item__name {
 	font-size: var(--font-size-sm);
-	font-weight: var(--font-weight-semibold);
+	font-weight: var(--font-weight-medium);
 	color: var(--color-text);
 	text-transform: uppercase;
 	letter-spacing: 0.03em;
