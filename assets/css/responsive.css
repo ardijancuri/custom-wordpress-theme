@@ -76,6 +76,10 @@
 		display: none;
 	}
 
+	.categories-dropdown-panel {
+		display: none !important;
+	}
+
 	/* Shop Layout */
 	.shop-layout {
 		grid-template-columns: 1fr;

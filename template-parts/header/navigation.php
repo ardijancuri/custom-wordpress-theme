@@ -17,6 +17,39 @@ defined( 'ABSPATH' ) || exit;
 				<?php lesnamax_icon( 'chevron-down' ); ?>
 			</button>
 
+			<!-- Categories Dropdown Panel -->
+			<?php if ( class_exists( 'WooCommerce' ) ) :
+				$mega_categories = get_terms( array(
+					'taxonomy'   => 'product_cat',
+					'hide_empty' => false,
+					'parent'     => 0,
+					'exclude'    => array( get_option( 'default_product_cat' ) ),
+				) );
+				if ( ! empty( $mega_categories ) && ! is_wp_error( $mega_categories ) ) :
+			?>
+			<div class="categories-dropdown-panel" id="categories-dropdown-panel">
+				<div class="container">
+					<div class="categories-mega-grid">
+						<?php foreach ( $mega_categories as $cat ) :
+							$thumb_id  = get_term_meta( $cat->term_id, 'thumbnail_id', true );
+							$thumb_url = $thumb_id ? wp_get_attachment_url( $thumb_id ) : wc_placeholder_img_src();
+							$cat_link  = get_term_link( $cat );
+						?>
+						<a href="<?php echo esc_url( $cat_link ); ?>" class="categories-mega-item">
+							<img
+								class="categories-mega-item__image"
+								src="<?php echo esc_url( $thumb_url ); ?>"
+								alt="<?php echo esc_attr( $cat->name ); ?>"
+								loading="lazy"
+							>
+							<span class="categories-mega-item__name"><?php echo esc_html( $cat->name ); ?></span>
+						</a>
+						<?php endforeach; ?>
+					</div>
+				</div>
+			</div>
+			<?php endif; endif; ?>
+
 			<!-- Main Menu -->
 			<?php
 			if ( has_nav_menu( 'primary' ) ) {
