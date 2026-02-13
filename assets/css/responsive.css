@@ -3,6 +3,11 @@
    Mobile-first breakpoints
    ========================================================================== */
 
+/* Mobile Sort & Filter Controls - hidden on desktop */
+.mobile-shop-controls {
+	display: none;
+}
+
 /* --------------------------------------------------------------------------
    Max 1200px - Large tablets / small desktops
    -------------------------------------------------------------------------- */
@@ -84,11 +89,97 @@
 
 	.shop-sidebar.is-open {
 		display: block;
-		padding: var(--space-lg);
+		padding: var(--space-md);
 		background: var(--color-bg);
 		border: 1px solid var(--color-border);
-		border-radius: var(--radius-md);
-		margin-bottom: var(--space-lg);
+		border-top: none;
+		border-radius: 0;
+		margin-bottom: 0;
+	}
+
+	.shop-sidebar .filter-group {
+		margin-bottom: 0;
+		padding-bottom: 0;
+	}
+
+	.shop-sidebar .filter-group__title {
+		font-size: var(--font-size-sm);
+		padding: var(--space-md) 0;
+		margin-bottom: 0;
+	}
+
+	.shop-sidebar .filter-group__list {
+		gap: var(--space-xs);
+	}
+
+	.shop-header {
+		margin-bottom: 0;
+		border-bottom: none;
+		padding-bottom: 0;
+	}
+
+	/* Mobile Sort & Filter Controls */
+	.mobile-shop-controls {
+		display: flex;
+		border-top: 1px solid var(--color-border);
+	}
+
+	.mobile-shop-controls__btn {
+		flex: 1;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		gap: var(--space-xs);
+		padding: 12px var(--space-md);
+		background: var(--color-bg);
+		border: 1px solid var(--color-border);
+		border-top: none;
+		font-size: var(--font-size-sm);
+		font-weight: var(--font-weight-semibold);
+		text-transform: uppercase;
+		letter-spacing: 0.05em;
+		color: var(--color-text);
+		cursor: pointer;
+		transition: all var(--transition-fast);
+	}
+
+	.mobile-shop-controls__btn:first-child {
+		border-right: none;
+	}
+
+	.mobile-shop-controls__btn .icon svg {
+		width: 14px;
+		height: 14px;
+		transition: transform var(--transition-fast);
+	}
+
+	.mobile-shop-controls__btn.is-active {
+		background: var(--color-bg-light);
+		color: var(--color-primary);
+	}
+
+	.mobile-shop-controls__btn.is-active .icon svg {
+		transform: rotate(180deg);
+	}
+
+	.shop-controls {
+		display: none;
+	}
+
+	.shop-controls.is-open {
+		display: flex;
+		padding: var(--space-md);
+		padding-top: var(--space-lg);
+		border: 1px solid var(--color-border);
+		border-top: none;
+	}
+
+	.shop-products {
+		margin-top: var(--space-md);
+	}
+
+	.view-toggle {
+		display: none;
 	}
 
 	/* Single Product */
@@ -730,26 +821,3 @@
 	}
 }
 
-/* --------------------------------------------------------------------------
-   Filter Toggle Button (mobile)
-   -------------------------------------------------------------------------- */
-.filter-toggle-btn {
-	display: none;
-	width: 100%;
-	padding: 10px 20px;
-	background-color: var(--color-bg-light);
-	border: 1px solid var(--color-border);
-	border-radius: var(--radius-md);
-	font-size: var(--font-size-base);
-	font-weight: var(--font-weight-medium);
-	color: var(--color-text);
-	cursor: pointer;
-	margin-bottom: var(--space-md);
-	text-align: center;
-}
-
-@media (max-width: 992px) {
-	.filter-toggle-btn {
-		display: block;
-	}
-}

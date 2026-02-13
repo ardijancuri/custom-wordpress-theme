@@ -46,6 +46,18 @@ get_header(); ?>
 
 			<!-- Products Area -->
 			<div class="shop-content">
+				<!-- Mobile Sort & Filter Controls -->
+				<div class="mobile-shop-controls">
+					<button class="mobile-shop-controls__btn" id="mobile-sort-toggle" type="button">
+						<?php esc_html_e( 'Sort', 'lesnamax' ); ?>
+						<?php lesnamax_icon( 'chevron-down' ); ?>
+					</button>
+					<button class="mobile-shop-controls__btn" id="mobile-filter-toggle" type="button">
+						<?php esc_html_e( 'Filter', 'lesnamax' ); ?>
+						<?php lesnamax_icon( 'chevron-down' ); ?>
+					</button>
+				</div>
+
 				<!-- Shop Controls -->
 				<div class="shop-controls">
 					<div class="shop-controls__left">

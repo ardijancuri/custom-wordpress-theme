@@ -112,6 +112,48 @@
 			});
 		}
 
+		// ---- Mobile Sort & Filter Toggles ----
+		var mobileSortBtn = document.getElementById('mobile-sort-toggle');
+		var mobileFilterBtn = document.getElementById('mobile-filter-toggle');
+		var shopControls = document.querySelector('.shop-controls');
+		var mobileControls = document.querySelector('.mobile-shop-controls');
+
+		// Move sidebar into shop-content after mobile controls so it opens below
+		if (mobileControls && sidebar && window.innerWidth <= 992) {
+			mobileControls.after(sidebar);
+
+			// Collapse all filter groups by default on mobile
+			sidebar.querySelectorAll('.filter-group').forEach(function (group) {
+				group.classList.add('is-collapsed');
+			});
+		}
+
+		if (mobileSortBtn && shopControls) {
+			mobileSortBtn.addEventListener('click', function () {
+				var isOpen = shopControls.classList.toggle('is-open');
+				mobileSortBtn.classList.toggle('is-active', isOpen);
+
+				// Close filter panel if open
+				if (isOpen && sidebar.classList.contains('is-open')) {
+					sidebar.classList.remove('is-open');
+					if (mobileFilterBtn) mobileFilterBtn.classList.remove('is-active');
+				}
+			});
+		}
+
+		if (mobileFilterBtn && sidebar) {
+			mobileFilterBtn.addEventListener('click', function () {
+				var isOpen = sidebar.classList.toggle('is-open');
+				mobileFilterBtn.classList.toggle('is-active', isOpen);
+
+				// Close sort panel if open
+				if (isOpen && shopControls && shopControls.classList.contains('is-open')) {
+					shopControls.classList.remove('is-open');
+					if (mobileSortBtn) mobileSortBtn.classList.remove('is-active');
+				}
+			});
+		}
+
 		// ---- Recently Visited Products ----
 		renderRecentlyViewed();
 
