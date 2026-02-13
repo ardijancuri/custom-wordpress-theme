@@ -42,6 +42,7 @@ get_header(); ?>
 
 					<!-- Product Gallery -->
 					<div class="product-gallery">
+						<?php lesnamax_product_badge(); ?>
 						<?php
 						$attachment_ids = $product->get_gallery_image_ids();
 						$main_image_id  = $product->get_image_id();
@@ -85,6 +86,15 @@ get_header(); ?>
 
 					<!-- Product Details -->
 					<div class="product-details">
+						<?php
+						$product_cats = get_the_terms( $product_id, 'product_cat' );
+						if ( $product_cats && ! is_wp_error( $product_cats ) ) :
+							$primary_cat = $product_cats[0];
+						?>
+							<a href="<?php echo esc_url( get_term_link( $primary_cat ) ); ?>" class="product-details__category">
+								<?php echo esc_html( $primary_cat->name ); ?>
+							</a>
+						<?php endif; ?>
 						<h1 class="product-details__title"><?php the_title(); ?></h1>
 
 						<!-- Product Meta Table -->
@@ -117,15 +127,18 @@ get_header(); ?>
 
 							<?php if ( $product->get_stock_quantity() !== null ) : ?>
 								<div class="product-meta-row">
-									<span class="product-meta-label"><?php esc_html_e( 'Ngjyra', 'lesnamax' ); ?></span>
+									<span class="product-meta-label"><?php esc_html_e( 'Stoku', 'lesnamax' ); ?></span>
 									<span class="product-meta-value"><?php echo esc_html( $product->get_stock_quantity() ); ?> <?php esc_html_e( 'ne stok', 'lesnamax' ); ?></span>
 								</div>
 							<?php endif; ?>
 						</div>
 
+						<!-- Availability -->
+						<?php lesnamax_product_availability(); ?>
+
 						<!-- Price -->
 						<div class="product-price-large">
-							<span class="price-label"><?php esc_html_e( 'Cmimi', 'lesnamax' ); ?></span>
+							<span class="price-label"><?php esc_html_e( 'Çmimi', 'lesnamax' ); ?></span>
 							<?php if ( $product->is_on_sale() ) : ?>
 								<del><?php echo wp_kses_post( wc_price( $product->get_regular_price() ) ); ?></del>
 								<ins><?php echo wp_kses_post( wc_price( $product->get_sale_price() ) ); ?></ins>
@@ -136,14 +149,6 @@ get_header(); ?>
 
 						<!-- Actions -->
 						<div class="product-actions">
-							<button
-								class="product-card__wishlist"
-								data-product-id="<?php echo esc_attr( $product_id ); ?>"
-								aria-label="<?php esc_attr_e( 'Shto ne listen e deshirave', 'lesnamax' ); ?>"
-							>
-								<?php lesnamax_icon( 'heart' ); ?>
-							</button>
-
 							<?php if ( $product->is_purchasable() && $product->is_in_stock() ) : ?>
 								<button
 									class="btn btn--primary ajax-add-to-cart"
@@ -156,6 +161,14 @@ get_header(); ?>
 							<?php else : ?>
 								<span class="btn btn--outline"><?php esc_html_e( 'Nuk ka stok', 'lesnamax' ); ?></span>
 							<?php endif; ?>
+
+							<button
+								class="product-card__wishlist"
+								data-product-id="<?php echo esc_attr( $product_id ); ?>"
+								aria-label="<?php esc_attr_e( 'Shto ne listen e deshirave', 'lesnamax' ); ?>"
+							>
+								<?php lesnamax_icon( 'heart' ); ?>
+							</button>
 						</div>
 					</div>
 
@@ -163,8 +176,6 @@ get_header(); ?>
 
 				<!-- Product Tabs Section -->
 				<div class="product-tabs-section">
-					<h2 class="product-tabs-section__title"><?php esc_html_e( 'Informacione rreth produktit', 'lesnamax' ); ?></h2>
-
 					<div class="product-tabs">
 						<div class="product-tabs__nav">
 							<button class="product-tab__trigger is-active" data-tab="description">

@@ -68,8 +68,8 @@ get_header(); ?>
 						$orderby_options = array(
 							'menu_order' => esc_html__( 'By default', 'lesnamax' ),
 							'date'       => esc_html__( 'Te rejat', 'lesnamax' ),
-							'price'      => esc_html__( 'Cmimi: ulet ne larte', 'lesnamax' ),
-							'price-desc' => esc_html__( 'Cmimi: larte ne ulet', 'lesnamax' ),
+							'price'      => esc_html__( 'Çmimi: ulet ne larte', 'lesnamax' ),
+							'price-desc' => esc_html__( 'Çmimi: larte ne ulet', 'lesnamax' ),
 							'popularity' => esc_html__( 'Popullariteti', 'lesnamax' ),
 							'rating'     => esc_html__( 'Vleresimi', 'lesnamax' ),
 						);

@@ -40,7 +40,7 @@ if ( $min_price === $max_price ) {
 <!-- Price Filter -->
 <div class="filter-group filter-group--price">
 	<h3 class="filter-group__title">
-		<?php esc_html_e( 'Cmimi', 'lesnamax' ); ?>
+		<?php esc_html_e( 'Çmimi', 'lesnamax' ); ?>
 		<?php lesnamax_icon( 'chevron-down' ); ?>
 	</h3>
 	<div class="filter-group__list">
