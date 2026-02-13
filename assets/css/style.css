@@ -783,9 +783,13 @@ h4 { font-size: var(--font-size-lg); }
 .hero-slider {
 	position: relative;
 	overflow: hidden;
-	margin-bottom: var(--space-md);
+	margin-bottom: 0;
 	cursor: grab;
 	user-select: none;
+}
+
+.hero-slider + .container > .by-categories {
+	padding-top: var(--space-lg);
 }
 
 .hero-slider__track {
