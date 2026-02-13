@@ -229,10 +229,12 @@ function lesnamax_ajax_filter_products() {
 
 	// Pagination
 	$pagination = paginate_links( array(
-		'total'   => $query->max_num_pages,
-		'current' => $args['paged'],
-		'format'  => '?paged=%#%',
-		'type'    => 'plain',
+		'total'     => $query->max_num_pages,
+		'current'   => $args['paged'],
+		'format'    => '?paged=%#%',
+		'type'      => 'plain',
+		'prev_text' => lesnamax_get_icon( 'chevron-left' ),
+		'next_text' => lesnamax_get_icon( 'chevron-right' ),
 	) );
 
 	wp_reset_postdata();
@@ -511,3 +513,55 @@ function lesnamax_ajax_get_wishlist_products() {
 }
 add_action( 'wp_ajax_lesnamax_get_wishlist_products', 'lesnamax_ajax_get_wishlist_products' );
 add_action( 'wp_ajax_nopriv_lesnamax_get_wishlist_products', 'lesnamax_ajax_get_wishlist_products' );
+
+/**
+ * AJAX Homepage Tab Products.
+ */
+function lesnamax_ajax_homepage_tab_products() {
+	check_ajax_referer( 'lesnamax_ajax_nonce', 'nonce' );
+
+	$category = isset( $_POST['category'] ) ? sanitize_text_field( wp_unslash( $_POST['category'] ) ) : 'all';
+
+	if ( 'all' === $category ) {
+		$products = wc_get_products( array(
+			'limit'    => 8,
+			'status'   => 'publish',
+			'featured' => true,
+			'orderby'  => 'date',
+			'order'    => 'DESC',
+		) );
+
+		if ( empty( $products ) ) {
+			$products = wc_get_products( array(
+				'limit'   => 8,
+				'status'  => 'publish',
+				'orderby' => 'date',
+				'order'   => 'DESC',
+			) );
+		}
+	} else {
+		$products = wc_get_products( array(
+			'limit'    => 8,
+			'status'   => 'publish',
+			'category' => array( $category ),
+			'orderby'  => 'date',
+			'order'    => 'DESC',
+		) );
+	}
+
+	ob_start();
+	if ( ! empty( $products ) ) {
+		foreach ( $products as $product_object ) {
+			$GLOBALS['product'] = $product_object;
+			get_template_part( 'template-parts/product-card' );
+		}
+		wp_reset_postdata();
+	} else {
+		echo '<p class="no-products">' . esc_html__( 'Asnje produkt nuk u gjet.', 'lesnamax' ) . '</p>';
+	}
+	$html = ob_get_clean();
+
+	wp_send_json_success( array( 'html' => $html ) );
+}
+add_action( 'wp_ajax_lesnamax_homepage_tab_products', 'lesnamax_ajax_homepage_tab_products' );
+add_action( 'wp_ajax_nopriv_lesnamax_homepage_tab_products', 'lesnamax_ajax_homepage_tab_products' );

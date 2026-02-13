@@ -121,8 +121,8 @@ get_header(); ?>
 				<div class="shop-pagination">
 					<?php
 					the_posts_pagination( array(
-						'prev_text' => '&laquo;',
-						'next_text' => '&raquo;',
+						'prev_text' => lesnamax_get_icon( 'chevron-left' ),
+						'next_text' => lesnamax_get_icon( 'chevron-right' ),
 					) );
 					?>
 				</div>

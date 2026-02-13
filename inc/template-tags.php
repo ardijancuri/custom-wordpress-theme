@@ -182,6 +182,15 @@ function lesnamax_icon( $name, $class = '' ) {
 }
 
 /**
+ * Return inline SVG icon markup (non-echoing version).
+ */
+function lesnamax_get_icon( $name, $class = '' ) {
+	ob_start();
+	lesnamax_icon( $name, $class );
+	return ob_get_clean();
+}
+
+/**
  * Breadcrumb wrapper for WooCommerce.
  */
 function lesnamax_breadcrumbs() {

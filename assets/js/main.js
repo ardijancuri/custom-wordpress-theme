@@ -344,26 +344,40 @@
 	 */
 	function initCategoryTabs() {
 		var tabs = document.querySelectorAll('.category-tab');
-		var panels = document.querySelectorAll('.category-tab-panel');
+		var grid = document.querySelector('.featured-products .products-grid');
 
-		if (tabs.length === 0) return;
+		if (tabs.length === 0 || !grid) return;
 
 		tabs.forEach(function (tab) {
 			tab.addEventListener('click', function () {
-				var target = this.getAttribute('data-category');
+				var category = this.getAttribute('data-category');
 
 				// Update active tab
 				tabs.forEach(function (t) { t.classList.remove('is-active'); });
 				this.classList.add('is-active');
 
-				// Show/hide panels
-				panels.forEach(function (panel) {
-					if (panel.getAttribute('data-category') === target || target === 'all') {
-						panel.classList.add('is-active');
-					} else {
-						panel.classList.remove('is-active');
-					}
-				});
+				// Fetch products via AJAX
+				grid.classList.add('is-loading');
+
+				var formData = new FormData();
+				formData.append('action', 'lesnamax_homepage_tab_products');
+				formData.append('nonce', lesnamaxAjax.nonce);
+				formData.append('category', category);
+
+				fetch(lesnamaxAjax.ajaxUrl, {
+					method: 'POST',
+					body: formData,
+				})
+					.then(function (r) { return r.json(); })
+					.then(function (data) {
+						grid.classList.remove('is-loading');
+						if (data.success) {
+							grid.innerHTML = data.data.html;
+						}
+					})
+					.catch(function () {
+						grid.classList.remove('is-loading');
+					});
 			});
 		});
 	}
