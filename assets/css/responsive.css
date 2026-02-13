@@ -354,7 +354,8 @@
 	}
 
 	.product-card__add-to-cart {
-		padding: 6px 10px;
+		height: 30px;
+		padding: 0 10px;
 		font-size: var(--font-size-xs);
 	}
 
