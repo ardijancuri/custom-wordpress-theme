@@ -15,12 +15,12 @@
 			var btn = e.target.closest('.product-card__add-to-cart, .ajax-add-to-cart');
 			if (!btn) return;
 
-			e.preventDefault();
-
 			var productId = btn.getAttribute('data-product-id');
 			var quantity = btn.getAttribute('data-quantity') || 1;
 
 			if (!productId) return;
+
+			e.preventDefault();
 
 			// Prevent double-click
 			if (btn.classList.contains('is-loading')) return;

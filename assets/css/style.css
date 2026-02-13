@@ -132,6 +132,10 @@ a:hover {
 	color: var(--color-primary);
 }
 
+ins {
+	text-decoration: none;
+}
+
 ul, ol {
 	list-style: none;
 }
@@ -1115,7 +1119,8 @@ h4 { font-size: var(--font-size-lg); }
 	align-items: center;
 	justify-content: center;
 	gap: var(--space-xs);
-	padding: 8px 16px;
+	height: 36px;
+	padding: 0 16px;
 	background-color: var(--color-primary);
 	color: var(--color-white);
 	border-radius: 0;
