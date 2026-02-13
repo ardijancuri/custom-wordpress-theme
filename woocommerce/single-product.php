@@ -154,7 +154,7 @@ get_header(); ?>
 									<?php esc_html_e( 'Shto ne shporte', 'lesnamax' ); ?>
 								</button>
 							<?php else : ?>
-								<span class="btn btn--outline"><?php esc_html_e( 'Jashte stokut', 'lesnamax' ); ?></span>
+								<span class="btn btn--outline"><?php esc_html_e( 'Nuk ka stok', 'lesnamax' ); ?></span>
 							<?php endif; ?>
 						</div>
 					</div>

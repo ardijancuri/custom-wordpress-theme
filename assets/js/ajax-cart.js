@@ -133,5 +133,8 @@
 			});
 	}
 
+	// Expose globally so other scripts (e.g. wishlist drawer) can refresh the cart drawer
+	window.lesnamaxRefreshAndOpenCartDrawer = refreshAndOpenCartDrawer;
+
 	document.addEventListener('DOMContentLoaded', initAjaxCart);
 })();

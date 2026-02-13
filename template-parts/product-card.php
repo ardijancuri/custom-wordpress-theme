@@ -39,6 +39,15 @@ $image_url     = $product_image ? $product_image[0] : wc_placeholder_img_src( 'l
 
 	<!-- Body -->
 	<div class="product-card__body">
+		<!-- Category -->
+		<?php
+		$product_cats = get_the_terms( $product_id, 'product_cat' );
+		if ( $product_cats && ! is_wp_error( $product_cats ) ) :
+			$primary_cat = $product_cats[0];
+		?>
+			<span class="product-card__category"><?php echo esc_html( $primary_cat->name ); ?></span>
+		<?php endif; ?>
+
 		<!-- Title -->
 		<h3 class="product-card__title">
 			<a href="<?php echo esc_url( $product_link ); ?>"><?php echo esc_html( $product_title ); ?></a>
@@ -53,11 +62,9 @@ $image_url     = $product_image ? $product_image[0] : wc_placeholder_img_src( 'l
 		<!-- Price -->
 		<div class="product-card__price">
 			<?php if ( $product->is_on_sale() ) : ?>
-				<span class="price-label"><?php esc_html_e( 'Shitje ne ekspozite', 'lesnamax' ); ?></span>
 				<span class="price-original"><?php echo wp_kses_post( wc_price( $product->get_regular_price() ) ); ?></span>
 				<span class="price-current"><?php echo wp_kses_post( wc_price( $product->get_sale_price() ) ); ?></span>
 			<?php else : ?>
-				<span class="price-label"><?php esc_html_e( 'Shitje ne ekspozite', 'lesnamax' ); ?></span>
 				<span class="price-current"><?php echo wp_kses_post( wc_price( $product->get_price() ) ); ?></span>
 			<?php endif; ?>
 		</div>

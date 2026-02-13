@@ -671,6 +671,21 @@
 								c.setAttribute('data-count', data.data.cart_count);
 							});
 
+							// Silently refresh cart drawer content (don't open it)
+							var fd = new FormData();
+							fd.append('action', 'lesnamax_get_cart_drawer');
+							fd.append('nonce', lesnamaxAjax.nonce);
+							fetch(lesnamaxAjax.ajaxUrl, { method: 'POST', body: fd })
+								.then(function (r) { return r.json(); })
+								.then(function (res) {
+									if (res.success) {
+										var cartBody = document.getElementById('cart-drawer-body');
+										var cartFooter = document.getElementById('cart-drawer-footer');
+										if (cartBody) cartBody.innerHTML = res.data.body;
+										if (cartFooter) cartFooter.innerHTML = res.data.footer;
+									}
+								});
+
 							// Refresh cart fragments
 							if (typeof jQuery !== 'undefined') {
 								jQuery(document.body).trigger('wc_fragment_refresh');

@@ -970,14 +970,21 @@ h4 { font-size: var(--font-size-lg); }
 }
 
 .product-card__body {
-	padding: var(--space-md);
+	padding: var(--space-sm) var(--space-md);
+}
+
+.product-card__category {
+	display: block;
+	font-size: var(--font-size-xs);
+	font-weight: var(--font-weight-light);
+	color: var(--color-text-muted);
+	margin-bottom: var(--space-2xs, 2px);
 }
 
 .product-card__title {
-	font-size: var(--font-size-sm);
+	font-size: var(--font-size-md);
 	font-weight: var(--font-weight-medium);
 	color: var(--color-text);
-	margin-bottom: var(--space-xs);
 	display: -webkit-box;
 	-webkit-line-clamp: 2;
 	-webkit-box-orient: vertical;
@@ -997,7 +1004,7 @@ h4 { font-size: var(--font-size-lg); }
 .product-swatches {
 	display: flex;
 	gap: 4px;
-	margin-bottom: var(--space-sm);
+	margin-bottom: var(--space-2xs, 4px);
 }
 
 .color-swatch {
@@ -1019,7 +1026,7 @@ h4 { font-size: var(--font-size-lg); }
 	align-items: center;
 	gap: 4px;
 	font-size: var(--font-size-xs);
-	margin-bottom: var(--space-xs);
+	margin-bottom: var(--space-2xs, 4px);
 }
 
 .availability-dot {
@@ -1047,24 +1054,26 @@ h4 { font-size: var(--font-size-lg); }
 /* Price */
 .product-card__price {
 	display: flex;
-	align-items: center;
-	gap: var(--space-sm);
-	margin-bottom: var(--space-sm);
+	flex-wrap: wrap;
+	align-items: baseline;
+	gap: var(--space-2xs, 2px) var(--space-sm);
+	margin-bottom: var(--space-2xs, 4px);
 }
 
 .price-label {
+	width: 100%;
 	font-size: var(--font-size-xs);
 	color: var(--color-text-muted);
 }
 
-.price-current {
-	font-size: var(--font-size-base);
-	font-weight: var(--font-weight-bold);
-	color: var(--color-dark);
+.product-card__price .price-current {
+	font-size: var(--font-size-xl, 1.2rem);
+	font-weight: var(--font-weight-regular);
+	color: var(--color-primary);
 }
 
 .price-original {
-	font-size: var(--font-size-sm);
+	font-size: var(--font-size-lg);
 	color: var(--color-text-muted);
 	text-decoration: line-through;
 }
@@ -1074,8 +1083,7 @@ h4 { font-size: var(--font-size-lg); }
 	display: flex;
 	align-items: center;
 	gap: var(--space-sm);
-	padding-top: var(--space-sm);
-	border-top: 1px solid var(--color-border-light);
+	padding-top: var(--space-xs);
 }
 
 .product-card__wishlist {
@@ -1084,7 +1092,6 @@ h4 { font-size: var(--font-size-lg); }
 	justify-content: center;
 	width: 36px;
 	height: 36px;
-	border-radius: var(--radius-full);
 	border: 1px solid var(--color-border);
 	color: var(--color-text-light);
 	transition: all var(--transition-fast);
