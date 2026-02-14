@@ -15,6 +15,7 @@ $categories = get_terms( array(
 	'taxonomy'   => 'product_cat',
 	'hide_empty' => false,
 	'number'     => 12,
+	'parent'     => 0,
 	'exclude'    => array( get_option( 'default_product_cat' ) ),
 ) );
 
