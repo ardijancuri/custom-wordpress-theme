@@ -52,7 +52,7 @@ function lesnamax_ajax_search_products() {
 	$query = isset( $_POST['query'] ) ? sanitize_text_field( wp_unslash( $_POST['query'] ) ) : '';
 
 	if ( empty( $query ) || strlen( $query ) < 3 ) {
-		wp_send_json_error( array( 'message' => __( 'Kerko me se paku 3 shkronja.', 'lesnamax' ) ) );
+		wp_send_json_error( array( 'message' => __( 'Kërko me se paku 3 shkronja.', 'lesnamax' ) ) );
 	}
 
 	$products = wc_get_products( array(
@@ -77,7 +77,7 @@ function lesnamax_ajax_search_products() {
 	?>
 	<div class="search-results-header">
 		<span class="search-results-header__title"><?php printf( esc_html__( 'Produktet (%d)', 'lesnamax' ), count( $products ) ); ?></span>
-		<a href="<?php echo esc_url( $search_url ); ?>" class="search-results-header__link"><?php esc_html_e( 'Shfaq te gjitha rezultatet', 'lesnamax' ); ?></a>
+		<a href="<?php echo esc_url( $search_url ); ?>" class="search-results-header__link"><?php esc_html_e( 'Shfaq të gjitha rezultatet', 'lesnamax' ); ?></a>
 	</div>
 	<?php
 	foreach ( $products as $product ) {
@@ -391,7 +391,7 @@ function lesnamax_render_cart_drawer_recommendations() {
 	?>
 	<div class="flyout-recs">
 		<div class="flyout-recs__header">
-			<span class="flyout-recs__title"><?php esc_html_e( 'Mund te ju pelqeje', 'lesnamax' ); ?></span>
+			<span class="flyout-recs__title"><?php esc_html_e( 'Mund te ju pëlqeje', 'lesnamax' ); ?></span>
 			<div class="flyout-recs__arrows">
 				<button type="button" class="flyout-recs__arrow flyout-recs__arrow--prev" aria-label="<?php esc_attr_e( 'Mbrapa', 'lesnamax' ); ?>">
 					<?php lesnamax_icon( 'chevron-left' ); ?>

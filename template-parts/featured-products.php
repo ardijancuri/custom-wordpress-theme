@@ -54,7 +54,7 @@ if ( empty( $featured_products ) ) {
 		<div class="category-tabs-wrapper">
 			<div class="category-tabs">
 				<button class="category-tab is-active" data-category="all">
-					<span class="category-tab__label"><?php esc_html_e( 'Te gjitha', 'lesnamax' ); ?></span>
+					<span class="category-tab__label"><?php esc_html_e( 'Të gjitha', 'lesnamax' ); ?></span>
 				</button>
 				<?php foreach ( $categories as $cat ) : ?>
 					<button class="category-tab" data-category="<?php echo esc_attr( $cat->slug ); ?>">

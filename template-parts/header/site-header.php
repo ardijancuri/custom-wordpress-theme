@@ -20,7 +20,7 @@ defined( 'ABSPATH' ) || exit;
 				<input
 					type="search"
 					class="header-search__input"
-					placeholder="<?php esc_attr_e( 'Kerko produkt?', 'lesnamax' ); ?>"
+					placeholder="<?php esc_attr_e( 'Kërko produkt?', 'lesnamax' ); ?>"
 					value="<?php echo get_search_query(); ?>"
 					name="s"
 					autocomplete="off"
@@ -28,7 +28,7 @@ defined( 'ABSPATH' ) || exit;
 				<?php if ( class_exists( 'WooCommerce' ) ) : ?>
 					<input type="hidden" name="post_type" value="product">
 				<?php endif; ?>
-				<button type="submit" class="header-search__btn" aria-label="<?php esc_attr_e( 'Kerko', 'lesnamax' ); ?>">
+				<button type="submit" class="header-search__btn" aria-label="<?php esc_attr_e( 'Kërko', 'lesnamax' ); ?>">
 					<?php lesnamax_icon( 'search' ); ?>
 				</button>
 			</form>
