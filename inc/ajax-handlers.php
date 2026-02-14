@@ -341,7 +341,7 @@ function lesnamax_render_cart_drawer_footer() {
 	lesnamax_render_cart_drawer_recommendations();
 	?>
 	<div class="flyout-drawer__total">
-		<span><?php esc_html_e( 'Nentotali', 'lesnamax' ); ?></span>
+		<span><?php esc_html_e( 'Nëntotali', 'lesnamax' ); ?></span>
 		<span class="flyout-drawer__total-amount"><?php echo wp_kses_post( $cart->get_cart_subtotal() ); ?></span>
 	</div>
 	<a href="<?php echo esc_url( wc_get_cart_url() ); ?>" class="btn btn--outline btn--block"><?php esc_html_e( 'Shiko Shporten', 'lesnamax' ); ?></a>
