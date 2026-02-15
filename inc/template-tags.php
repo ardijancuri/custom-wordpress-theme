@@ -61,7 +61,7 @@ function lesnamax_product_badge() {
 			printf( '<span class="product-badge product-badge--sale">-%s%%</span>', esc_html( $percent ) );
 		}
 	} elseif ( lesnamax_is_new_product( $product ) ) {
-		echo '<span class="product-badge product-badge--new">' . esc_html__( 'E RE', 'lesnamax' ) . '</span>';
+		echo '<span class="product-badge product-badge--new">' . esc_html__( 'RISI', 'lesnamax' ) . '</span>';
 	}
 }
 
