@@ -724,6 +724,13 @@
 	margin: 0 auto !important;
 }
 
+/* Hide WooCommerce block elements that JS will replace — prevents flash */
+.wp-block-woocommerce-empty-cart-block > hr,
+.wp-block-woocommerce-empty-cart-block > h2:not(.wc-block-cart__empty-cart__title),
+.wp-block-woocommerce-empty-cart-block > .wc-block-grid {
+	display: none !important;
+}
+
 /* Replace the WooCommerce sad-face icon on .with-empty-cart-icon::before */
 .wp-block-woocommerce-empty-cart-block h2.with-empty-cart-icon::before {
 	content: '' !important;
