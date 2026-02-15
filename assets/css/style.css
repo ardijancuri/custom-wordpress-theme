@@ -820,12 +820,8 @@ h4 { font-size: var(--font-size-lg); }
 	text-transform: uppercase;
 	letter-spacing: 0.03em;
 	background-color: rgba(0, 0, 0, 0.45);
-	transition: background-color var(--transition-fast);
 }
 
-.mega-menu-card:hover .mega-menu-card__label {
-	background-color: rgba(0, 0, 0, 0.65);
-}
 
 /* Text-only fallback (no image) */
 .mega-menu-card--text-only {
@@ -843,7 +839,7 @@ h4 { font-size: var(--font-size-lg); }
 }
 
 .mega-menu-card--text-only:hover .mega-menu-card__label {
-	color: var(--color-primary);
+	color: var(--color-text);
 }
 
 /* Categories Dropdown Panel */
