@@ -697,13 +697,105 @@
 	background-color: var(--color-text) !important;
 }
 
-/* Empty cart */
-.wc-block-cart--is-empty .wc-block-cart__empty-cart__title {
-	font-size: var(--font-size-xl);
-	font-weight: var(--font-weight-bold);
-	color: var(--color-dark);
-	text-align: center;
+/* ==========================================================================
+   Empty Cart Page
+   ========================================================================== */
+
+/*
+ * DOM structure (WooCommerce block editor):
+ *
+ * .wp-block-woocommerce-cart.alignwide
+ *   └─ .wp-block-woocommerce-empty-cart-block
+ *        ├─ h2.with-empty-cart-icon.wc-block-cart__empty-cart__title
+ *        ├─ [.lesnamax-empty-cart-button — injected via PHP]
+ *        ├─ hr.is-style-dots
+ *        ├─ h2 "New in store"
+ *        └─ .wc-block-grid.wp-block-woocommerce-product-new
+ */
+
+/* Empty cart block container */
+.wp-block-woocommerce-empty-cart-block {
+	display: flex !important;
+	flex-direction: column !important;
+	align-items: center !important;
+	text-align: center !important;
+	padding: var(--space-2xl) var(--container-padding) 0 !important;
+	max-width: var(--container-width) !important;
+	margin: 0 auto !important;
 }
+
+/* Replace the WooCommerce sad-face icon on .with-empty-cart-icon::before */
+.wp-block-woocommerce-empty-cart-block h2.with-empty-cart-icon::before {
+	content: '' !important;
+	display: block !important;
+	width: 64px !important;
+	height: 64px !important;
+	margin: 0 auto var(--space-lg) !important;
+	background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23b0b0b0' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z'/%3E%3Cline x1='3' y1='6' x2='21' y2='6'/%3E%3Cpath d='M16 10a4 4 0 01-8 0'/%3E%3C/svg%3E") !important;
+	background-repeat: no-repeat !important;
+	background-position: center !important;
+	background-size: contain !important;
+	background-color: transparent !important;
+	border-radius: 0 !important;
+	font-size: 0 !important;
+	color: transparent !important;
+	-webkit-text-fill-color: transparent !important;
+}
+
+/* Title: "Your cart is currently empty!" */
+.wp-block-woocommerce-empty-cart-block h2.wc-block-cart__empty-cart__title {
+	font-size: var(--font-size-xl) !important;
+	font-weight: var(--font-weight-bold) !important;
+	color: var(--color-dark) !important;
+	text-align: center !important;
+	margin-bottom: var(--space-lg) !important;
+	font-family: var(--font-primary) !important;
+}
+
+/* "Go to shop" button injected via PHP */
+.lesnamax-empty-cart-button {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	padding: 12px 36px;
+	font-size: var(--font-size-md);
+	font-weight: var(--font-weight-bold);
+	font-family: var(--font-primary);
+	background-color: var(--color-primary);
+	color: var(--color-white);
+	border: none;
+	border-radius: 0;
+	text-decoration: none;
+	cursor: pointer;
+	transition: background-color var(--transition-fast);
+	margin-bottom: var(--space-lg);
+}
+
+.lesnamax-empty-cart-button:hover {
+	background-color: var(--color-primary-dark);
+	color: var(--color-white);
+}
+
+/* Theme's product cards injected into empty cart via JS */
+.lesnamax-empty-cart-products {
+	width: 100%;
+	padding-top: var(--space-lg);
+	padding-bottom: var(--space-2xl);
+	border-top: 1px solid var(--color-border-light);
+	text-align: left;
+}
+
+.lesnamax-empty-cart-products__title {
+	font-size: var(--font-size-lg) !important;
+	font-weight: var(--font-weight-bold) !important;
+	color: var(--color-dark) !important;
+	text-align: center !important;
+	margin-bottom: var(--space-lg) !important;
+	font-family: var(--font-primary) !important;
+}
+
+/* The .products-grid and .product-card styles are inherited from style.css
+   and responsive.css — no overrides needed since we use the real template. */
 
 /* --------------------------------------------------------------------------
    Checkout Page
@@ -858,7 +950,7 @@
 .woocommerce #payment {
 	background: var(--color-bg-light);
 	padding: var(--space-xl);
-	border-radius: var(--radius-md);
+	border-radius: 0;
 }
 
 .woocommerce #payment .payment_methods {
@@ -871,7 +963,7 @@
 	padding: var(--space-md);
 	margin-bottom: var(--space-sm);
 	border: 1px solid var(--color-border);
-	border-radius: var(--radius-md);
+	border-radius: 0;
 	background: var(--color-bg);
 }
 
@@ -884,7 +976,7 @@
 	padding: var(--space-md);
 	margin-top: var(--space-sm);
 	background: var(--color-bg-light);
-	border-radius: var(--radius-sm);
+	border-radius: 0;
 	font-size: var(--font-size-sm);
 	color: var(--color-text-light);
 }

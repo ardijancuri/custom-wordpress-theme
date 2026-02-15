@@ -237,6 +237,124 @@ function lesnamax_wishlist_js() {
 add_action( 'wp_footer', 'lesnamax_wishlist_js' );
 
 /**
+ * Override the empty cart page: inject a "Go to shop" button and replace the
+ * WooCommerce block product grid with the theme's own product-card template.
+ */
+function lesnamax_empty_cart_override() {
+	if ( ! is_cart() ) {
+		return;
+	}
+
+	$shop_url = get_permalink( wc_get_page_id( 'shop' ) );
+
+	// Render newest products using the theme's product-card template.
+	$products = wc_get_products( array(
+		'limit'   => 4,
+		'orderby' => 'date',
+		'order'   => 'DESC',
+		'status'  => 'publish',
+		'stock_status' => 'instock',
+	) );
+
+	ob_start();
+	if ( ! empty( $products ) ) : ?>
+		<div class="lesnamax-empty-cart-products">
+			<h2 class="lesnamax-empty-cart-products__title"><?php esc_html_e( 'New in store', 'lesnamax' ); ?></h2>
+			<div class="products-grid">
+				<?php foreach ( $products as $product_obj ) :
+					$GLOBALS['product'] = $product_obj;
+					get_template_part( 'template-parts/product-card' );
+				endforeach;
+				wp_reset_postdata(); ?>
+			</div>
+		</div>
+	<?php endif;
+	$products_html = ob_get_clean();
+	?>
+	<script>
+	(function() {
+		'use strict';
+		var productsHTML = <?php echo wp_json_encode( $products_html ); ?>;
+		var shopURL = <?php echo wp_json_encode( esc_url( $shop_url ) ); ?>;
+		var btnLabel = <?php echo wp_json_encode( esc_html__( 'Shko në dyqan', 'lesnamax' ) ); ?>;
+
+		function transformEmptyCart() {
+			var emptyBlock = document.querySelector('.wp-block-woocommerce-empty-cart-block');
+			if (!emptyBlock) return false;
+			if (emptyBlock.getAttribute('data-lesnamax-done')) return true;
+			emptyBlock.setAttribute('data-lesnamax-done', '1');
+
+			// Add "Go to shop" button after the title
+			var title = emptyBlock.querySelector('.wc-block-cart__empty-cart__title');
+			if (title) {
+				var btn = document.createElement('a');
+				btn.href = shopURL;
+				btn.className = 'lesnamax-empty-cart-button';
+				btn.textContent = btnLabel;
+				title.insertAdjacentElement('afterend', btn);
+			}
+
+			// Remove the WooCommerce block product grid, separator, and "New in store" heading
+			var hr = emptyBlock.querySelector('hr');
+			if (hr) hr.remove();
+			var headings = emptyBlock.querySelectorAll('h2:not(.wc-block-cart__empty-cart__title)');
+			headings.forEach(function(h) { h.remove(); });
+			var blockGrid = emptyBlock.querySelector('.wc-block-grid');
+			if (blockGrid) blockGrid.remove();
+
+			// Inject theme's product cards
+			if (productsHTML) {
+				var wrapper = document.createElement('div');
+				wrapper.innerHTML = productsHTML;
+				while (wrapper.firstChild) {
+					emptyBlock.appendChild(wrapper.firstChild);
+				}
+			}
+
+			return true;
+		}
+
+		function init() {
+			if (!transformEmptyCart()) {
+				var obs = new MutationObserver(function(m, o) {
+					if (transformEmptyCart()) o.disconnect();
+				});
+				obs.observe(document.body, { childList: true, subtree: true });
+				setTimeout(function() { obs.disconnect(); }, 10000);
+			}
+		}
+
+		if (document.readyState === 'loading') {
+			document.addEventListener('DOMContentLoaded', init);
+		} else {
+			init();
+		}
+	})();
+	</script>
+	<?php
+}
+add_action( 'wp_footer', 'lesnamax_empty_cart_override' );
+
+/**
+ * Remove state/county field from checkout.
+ */
+function lesnamax_remove_checkout_state_field( $fields ) {
+	unset( $fields['billing']['billing_state'] );
+	unset( $fields['shipping']['shipping_state'] );
+	return $fields;
+}
+add_filter( 'woocommerce_checkout_fields', 'lesnamax_remove_checkout_state_field' );
+
+/**
+ * Also hide state from block-based checkout via locale defaults.
+ */
+add_filter( 'woocommerce_get_country_locale_default', function( $locale ) {
+	$locale['state']['hidden']   = true;
+	$locale['state']['required'] = false;
+	return $locale;
+});
+
+/**
  * Auto-open coupon form on block-based cart page.
  */
 function lesnamax_cart_coupon_auto_open_js() {
