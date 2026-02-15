@@ -615,9 +615,24 @@
 		height: 16px;
 	}
 
+	/* Product title */
+	.product-details__title {
+		font-size: var(--font-size-2xl);
+	}
+
 	/* Product tabs section */
 	.product-tabs-section {
 		padding: var(--space-lg) 0;
+	}
+
+	.product-tabs-section__title {
+		font-size: var(--font-size-lg);
+		margin-bottom: var(--space-md);
+	}
+
+	/* Product details panel */
+	.product-details {
+		padding: var(--space-lg);
 	}
 
 	.product-tabs__nav {

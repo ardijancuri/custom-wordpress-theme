@@ -37,6 +37,9 @@ get_header(); ?>
 
 			<div id="product-<?php echo esc_attr( $product_id ); ?>" <?php wc_product_class( '', $product ); ?>>
 
+				<!-- Product Title -->
+				<h1 class="product-details__title"><?php the_title(); ?></h1>
+
 				<!-- Main Product Layout -->
 				<div class="single-product-layout">
 
@@ -86,16 +89,16 @@ get_header(); ?>
 
 					<!-- Product Details -->
 					<div class="product-details">
-						<?php
-						$product_cats = get_the_terms( $product_id, 'product_cat' );
-						if ( $product_cats && ! is_wp_error( $product_cats ) ) :
-							$primary_cat = $product_cats[0];
-						?>
-							<a href="<?php echo esc_url( get_term_link( $primary_cat ) ); ?>" class="product-details__category">
-								<?php echo esc_html( $primary_cat->name ); ?>
-							</a>
-						<?php endif; ?>
-						<h1 class="product-details__title"><?php the_title(); ?></h1>
+						<!-- SKU & Availability -->
+						<div class="product-stock-info">
+							<?php if ( $product->get_sku() ) : ?>
+								<div class="product-meta-row">
+									<span class="product-meta-label"><?php esc_html_e( 'SKU', 'lesnamax' ); ?></span>
+									<span class="product-meta-value"><?php echo esc_html( $product->get_sku() ); ?></span>
+								</div>
+							<?php endif; ?>
+							<?php lesnamax_product_availability(); ?>
+						</div>
 
 						<?php if ( $product->get_short_description() ) : ?>
 							<div class="product-details__excerpt">
@@ -104,24 +107,7 @@ get_header(); ?>
 						<?php endif; ?>
 
 						<!-- Product Meta Table -->
-						<!-- Availability -->
-						<?php lesnamax_product_availability(); ?>
-
 						<div class="product-meta-table">
-							<?php if ( $product->get_stock_quantity() !== null ) : ?>
-								<div class="product-meta-row">
-									<span class="product-meta-label"><?php esc_html_e( 'Stoku', 'lesnamax' ); ?></span>
-									<span class="product-meta-value"><?php echo esc_html( $product->get_stock_quantity() ); ?> <?php esc_html_e( 'ne stok', 'lesnamax' ); ?></span>
-								</div>
-							<?php endif; ?>
-
-							<?php if ( $product->get_sku() ) : ?>
-								<div class="product-meta-row">
-									<span class="product-meta-label"><?php esc_html_e( 'SKU', 'lesnamax' ); ?></span>
-									<span class="product-meta-value"><?php echo esc_html( $product->get_sku() ); ?></span>
-								</div>
-							<?php endif; ?>
-
 							<?php
 							// Custom attributes (Material, Color, etc.)
 							$attributes = $product->get_attributes();
@@ -195,78 +181,17 @@ get_header(); ?>
 
 				</div>
 
-				<!-- Product Tabs Section -->
+				<!-- Product Info Section -->
 				<div class="product-tabs-section">
-					<div class="product-tabs">
-						<div class="product-tabs__nav">
-							<button class="product-tab__trigger is-active" data-tab="description">
-								<?php esc_html_e( 'Pershkrimi i plote', 'lesnamax' ); ?>
-							</button>
-							<button class="product-tab__trigger" data-tab="category-products">
-								<?php esc_html_e( 'Tipat ne kete kategori', 'lesnamax' ); ?>
-							</button>
-						</div>
-
-						<!-- Description Tab -->
-						<div class="product-tab__panel is-active" data-tab="description">
-							<div class="product-tab__content">
-								<div class="product-description">
-									<?php the_content(); ?>
-								</div>
-								<div class="tech-info">
-									<h3 class="tech-info__title"><?php esc_html_e( 'INFORMACIONE TEKNIKE', 'lesnamax' ); ?></h3>
-									<?php if ( $product->get_weight() ) : ?>
-										<p><strong><?php esc_html_e( 'Pesha:', 'lesnamax' ); ?></strong> <?php echo esc_html( $product->get_weight() . ' ' . get_option( 'woocommerce_weight_unit' ) ); ?></p>
-									<?php endif; ?>
-									<?php if ( $product->get_dimensions( false ) ) :
-										$dimensions = $product->get_dimensions( false );
-									?>
-										<?php if ( $dimensions['length'] ) : ?>
-											<p><strong><?php esc_html_e( 'Gjatesia:', 'lesnamax' ); ?></strong> <?php echo esc_html( $dimensions['length'] . ' ' . get_option( 'woocommerce_dimension_unit' ) ); ?></p>
-										<?php endif; ?>
-										<?php if ( $dimensions['width'] ) : ?>
-											<p><strong><?php esc_html_e( 'Gjeresia:', 'lesnamax' ); ?></strong> <?php echo esc_html( $dimensions['width'] . ' ' . get_option( 'woocommerce_dimension_unit' ) ); ?></p>
-										<?php endif; ?>
-										<?php if ( $dimensions['height'] ) : ?>
-											<p><strong><?php esc_html_e( 'Lartesia:', 'lesnamax' ); ?></strong> <?php echo esc_html( $dimensions['height'] . ' ' . get_option( 'woocommerce_dimension_unit' ) ); ?></p>
-										<?php endif; ?>
-									<?php endif; ?>
-								</div>
-							</div>
-						</div>
-
-						<!-- Category Products Tab -->
-						<div class="product-tab__panel" data-tab="category-products">
-							<?php
-							$terms = get_the_terms( $product_id, 'product_cat' );
-							if ( $terms && ! is_wp_error( $terms ) ) {
-								$category  = $terms[0];
-								$cat_products = wc_get_products( array(
-									'limit'    => 4,
-									'status'   => 'publish',
-									'category' => array( $category->slug ),
-									'exclude'  => array( $product_id ),
-									'orderby'  => 'rand',
-								) );
-
-								if ( ! empty( $cat_products ) ) {
-									echo '<div class="products-grid">';
-									foreach ( $cat_products as $cat_product ) {
-										$GLOBALS['product'] = $cat_product;
-										get_template_part( 'template-parts/product-card' );
-									}
-									echo '</div>';
-									wp_reset_postdata();
-								}
-							}
-							?>
-						</div>
+					<h2 class="product-tabs-section__title"><?php esc_html_e( 'Informacione rreth produktit', 'lesnamax' ); ?></h2>
+					<div class="product-description">
+						<?php the_content(); ?>
 					</div>
 				</div>
 
 				<!-- Related Products -->
 				<div class="related-products">
-					<h2 class="related-products__title"><?php esc_html_e( 'Produkte te ngjajshme', 'lesnamax' ); ?></h2>
+					<h2 class="related-products__title"><?php esc_html_e( 'Produkte të ngjashme', 'lesnamax' ); ?></h2>
 					<?php
 					$related_ids = wc_get_related_products( $product_id, 4 );
 					if ( ! empty( $related_ids ) ) {
@@ -298,7 +223,7 @@ get_header(); ?>
 					if ( ! empty( $more_products ) ) :
 				?>
 					<div class="related-products">
-						<h2 class="related-products__title"><?php esc_html_e( 'Tjera ne kete kategori', 'lesnamax' ); ?></h2>
+						<h2 class="related-products__title"><?php esc_html_e( 'Tjera në këtë kategori', 'lesnamax' ); ?></h2>
 						<div class="products-grid">
 							<?php
 							foreach ( $more_products as $more_product ) {
