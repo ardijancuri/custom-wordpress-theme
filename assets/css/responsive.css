@@ -594,16 +594,65 @@
 
 	/* Price large on single product */
 	.product-price-large {
-		font-size: var(--font-size-xl);
+		font-size: var(--font-size-2xl);
 	}
 
 	/* Product actions on single product */
 	.product-actions {
-		flex-direction: column;
+		flex-direction: row;
 	}
 
-	.product-actions .btn--primary {
-		width: 100%;
+	.product-actions .btn--primary,
+	.product-actions .btn--outline {
+		flex: 1;
+		padding: 10px 16px;
+		font-size: var(--font-size-sm);
+	}
+
+	.product-actions .btn--primary .icon svg,
+	.product-actions .btn--outline .icon svg {
+		width: 16px;
+		height: 16px;
+	}
+
+	/* Product tabs section */
+	.product-tabs-section {
+		padding: var(--space-lg) 0;
+	}
+
+	.product-tabs__nav {
+		gap: 0;
+	}
+
+	.product-tab__trigger {
+		flex: 1;
+		text-align: center;
+		font-size: var(--font-size-sm);
+		padding: var(--space-sm) var(--space-xs);
+	}
+
+	.product-tab__content {
+		grid-template-columns: 1fr;
+		gap: var(--space-lg);
+	}
+
+	/* Tech info */
+	.tech-info {
+		padding: var(--space-md);
+	}
+
+	.tech-info__title {
+		font-size: var(--font-size-sm);
+	}
+
+	/* Related products */
+	.related-products {
+		padding: var(--space-lg) 0;
+	}
+
+	.related-products__title {
+		font-size: var(--font-size-lg);
+		margin-bottom: var(--space-md);
 	}
 
 	/* Shop header */

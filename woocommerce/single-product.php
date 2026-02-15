@@ -104,7 +104,17 @@ get_header(); ?>
 						<?php endif; ?>
 
 						<!-- Product Meta Table -->
+						<!-- Availability -->
+						<?php lesnamax_product_availability(); ?>
+
 						<div class="product-meta-table">
+							<?php if ( $product->get_stock_quantity() !== null ) : ?>
+								<div class="product-meta-row">
+									<span class="product-meta-label"><?php esc_html_e( 'Stoku', 'lesnamax' ); ?></span>
+									<span class="product-meta-value"><?php echo esc_html( $product->get_stock_quantity() ); ?> <?php esc_html_e( 'ne stok', 'lesnamax' ); ?></span>
+								</div>
+							<?php endif; ?>
+
 							<?php if ( $product->get_sku() ) : ?>
 								<div class="product-meta-row">
 									<span class="product-meta-label"><?php esc_html_e( 'SKU', 'lesnamax' ); ?></span>
@@ -130,17 +140,7 @@ get_header(); ?>
 									<span class="product-meta-value"><?php echo esc_html( $value ); ?></span>
 								</div>
 							<?php endforeach; ?>
-
-							<?php if ( $product->get_stock_quantity() !== null ) : ?>
-								<div class="product-meta-row">
-									<span class="product-meta-label"><?php esc_html_e( 'Stoku', 'lesnamax' ); ?></span>
-									<span class="product-meta-value"><?php echo esc_html( $product->get_stock_quantity() ); ?> <?php esc_html_e( 'ne stok', 'lesnamax' ); ?></span>
-								</div>
-							<?php endif; ?>
 						</div>
-
-						<!-- Availability -->
-						<?php lesnamax_product_availability(); ?>
 
 						<!-- Price -->
 						<div class="product-price-large">
