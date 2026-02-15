@@ -135,7 +135,7 @@ function lesnamax_product_availability() {
 	$stock_status = $product->get_stock_status();
 	$class        = 'instock' === $stock_status ? 'available' : 'unavailable';
 	$text         = 'instock' === $stock_status
-		? esc_html__( 'Ne stok', 'lesnamax' )
+		? esc_html__( 'Në stok', 'lesnamax' )
 		: esc_html__( 'Nuk ka stok', 'lesnamax' );
 
 	printf(
