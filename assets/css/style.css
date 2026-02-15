@@ -827,18 +827,23 @@ h4 { font-size: var(--font-size-lg); }
 	background-color: rgba(0, 0, 0, 0.65);
 }
 
-/* Text-only fallback */
-.mega-menu-card--text .mega-menu-card__label {
+/* Text-only fallback (no image) */
+.mega-menu-card--text-only {
+	display: flex;
+	align-items: center;
+}
+
+.mega-menu-card--text-only .mega-menu-card__label {
 	position: static;
 	color: var(--color-text);
 	background-color: transparent;
-	border-left-color: var(--color-primary);
-	padding: var(--space-md) var(--space-sm);
+	border-left: 3px solid var(--color-primary);
+	padding: var(--space-xs) var(--space-sm);
+	font-size: var(--font-size-sm);
 }
 
-.mega-menu-card--text:hover .mega-menu-card__label {
+.mega-menu-card--text-only:hover .mega-menu-card__label {
 	color: var(--color-primary);
-	background-color: transparent;
 }
 
 /* Categories Dropdown Panel */

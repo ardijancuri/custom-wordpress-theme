@@ -75,10 +75,8 @@ class LesnaMax_Mega_Menu_Walker extends Walker_Nav_Menu {
 				$output .= '</div>';
 				$output .= "</a>\n";
 			} else {
-				$output .= "{$indent}<a href=\"" . esc_url( $cat_link ) . "\" class=\"mega-menu-card mega-menu-card--text\">";
-				$output .= '<div class="mega-menu-card__image-wrap mega-menu-card__image-wrap--placeholder">';
+				$output .= "{$indent}<a href=\"" . esc_url( $cat_link ) . "\" class=\"mega-menu-card mega-menu-card--text-only\">";
 				$output .= '<span class="mega-menu-card__label">' . esc_html( $cat->name ) . '</span>';
-				$output .= '</div>';
 				$output .= "</a>\n";
 			}
 		}
@@ -210,14 +208,12 @@ class LesnaMax_Mega_Menu_Walker extends Walker_Nav_Menu {
 					$output .= '</div>';
 					$output .= '</a>';
 				} else {
-					$output .= $indent . '<a href="' . esc_url( $atts['href'] ) . '" class="mega-menu-card mega-menu-card--text">';
-					$output .= '<div class="mega-menu-card__image-wrap mega-menu-card__image-wrap--placeholder">';
+					$output .= $indent . '<a href="' . esc_url( $atts['href'] ) . '" class="mega-menu-card mega-menu-card--text-only">';
 					$output .= '<span class="mega-menu-card__label">' . esc_html( $title ) . '</span>';
-					$output .= '</div>';
 					$output .= '</a>';
 				}
 			} else {
-				$output .= $indent . '<a href="' . esc_url( $atts['href'] ) . '" class="mega-menu-card mega-menu-card--text">';
+				$output .= $indent . '<a href="' . esc_url( $atts['href'] ) . '" class="mega-menu-card mega-menu-card--text-only">';
 				$output .= '<span class="mega-menu-card__label">' . esc_html( $title ) . '</span>';
 				$output .= '</a>';
 			}
