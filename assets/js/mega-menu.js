@@ -14,7 +14,7 @@
 		var categoriesTrigger = document.getElementById('nav-categories-trigger');
 		var categoriesPanel = document.getElementById('categories-dropdown-panel');
 		var showDelay = 200;
-		var hideDelay = 300;
+		var hideDelay = 100;
 
 		function closeCategoriesPanel() {
 			if (categoriesPanel && categoriesPanel.classList.contains('is-active')) {

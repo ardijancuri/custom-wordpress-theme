@@ -33,8 +33,8 @@
 		gap: 0;
 	}
 
-	.mega-menu-list {
-		grid-template-columns: repeat(3, 1fr);
+	.mega-menu-subcategories {
+		grid-template-columns: repeat(4, 1fr);
 	}
 
 	.by-room-grid {
@@ -254,9 +254,9 @@
 		grid-column: span 2;
 	}
 
-	/* Mega Menu - show as stacked */
-	.mega-menu-list {
-		grid-template-columns: repeat(2, 1fr);
+	/* Mega Menu - 3 columns on tablet */
+	.mega-menu-subcategories {
+		grid-template-columns: repeat(3, 1fr);
 	}
 
 	/* Checkout */
