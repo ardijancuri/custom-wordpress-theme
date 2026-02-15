@@ -97,6 +97,12 @@ get_header(); ?>
 						<?php endif; ?>
 						<h1 class="product-details__title"><?php the_title(); ?></h1>
 
+						<?php if ( $product->get_short_description() ) : ?>
+							<div class="product-details__excerpt">
+								<?php echo wp_kses_post( $product->get_short_description() ); ?>
+							</div>
+						<?php endif; ?>
+
 						<!-- Product Meta Table -->
 						<div class="product-meta-table">
 							<?php if ( $product->get_sku() ) : ?>
@@ -156,7 +162,7 @@ get_header(); ?>
 									data-quantity="1"
 								>
 									<?php lesnamax_icon( 'cart' ); ?>
-									<?php esc_html_e( 'Shto ne shporte', 'lesnamax' ); ?>
+									<?php esc_html_e( 'Shto në shportë', 'lesnamax' ); ?>
 								</button>
 							<?php else : ?>
 								<span class="btn btn--outline"><?php esc_html_e( 'Nuk ka stok', 'lesnamax' ); ?></span>
@@ -165,11 +171,26 @@ get_header(); ?>
 							<button
 								class="product-card__wishlist"
 								data-product-id="<?php echo esc_attr( $product_id ); ?>"
-								aria-label="<?php esc_attr_e( 'Shto ne listen e deshirave', 'lesnamax' ); ?>"
+								aria-label="<?php esc_attr_e( 'Shto në listën e dëshirave', 'lesnamax' ); ?>"
 							>
 								<?php lesnamax_icon( 'heart' ); ?>
 							</button>
 						</div>
+
+						<!-- Product Categories -->
+						<?php
+						$all_product_cats = get_the_terms( $product_id, 'product_cat' );
+						if ( $all_product_cats && ! is_wp_error( $all_product_cats ) ) :
+							$cat_links = array();
+							foreach ( $all_product_cats as $cat ) {
+								$cat_links[] = '<a href="' . esc_url( get_term_link( $cat ) ) . '">' . esc_html( $cat->name ) . '</a>';
+							}
+						?>
+							<div class="product-categories-line">
+								<span class="product-categories-line__label"><?php esc_html_e( 'Kategorië:', 'lesnamax' ); ?></span>
+								<?php echo wp_kses_post( implode( ', ', $cat_links ) ); ?>
+							</div>
+						<?php endif; ?>
 					</div>
 
 				</div>

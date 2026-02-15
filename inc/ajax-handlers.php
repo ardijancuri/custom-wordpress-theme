@@ -421,7 +421,7 @@ function lesnamax_render_cart_drawer_recommendations() {
 						<span class="flyout-rec-card__price"><?php echo wp_kses_post( $product->get_price_html() ); ?></span>
 					</div>
 					<?php if ( $product->is_in_stock() && $product->is_type( 'simple' ) ) : ?>
-						<button type="button" class="flyout-rec-card__add product-card__add-to-cart" data-product-id="<?php echo esc_attr( $pid ); ?>" aria-label="<?php esc_attr_e( 'Shto ne shporte', 'lesnamax' ); ?>">+</button>
+						<button type="button" class="flyout-rec-card__add product-card__add-to-cart" data-product-id="<?php echo esc_attr( $pid ); ?>" aria-label="<?php esc_attr_e( 'Shto në shportë', 'lesnamax' ); ?>">+</button>
 					<?php endif; ?>
 				</div>
 			<?php endforeach; ?>

@@ -74,7 +74,7 @@ $image_url     = $product_image ? $product_image[0] : wc_placeholder_img_src( 'l
 			<button
 				class="product-card__wishlist"
 				data-product-id="<?php echo esc_attr( $product_id ); ?>"
-				aria-label="<?php esc_attr_e( 'Shto ne listen e deshirave', 'lesnamax' ); ?>"
+				aria-label="<?php esc_attr_e( 'Shto në listën e dëshirave', 'lesnamax' ); ?>"
 			>
 				<?php lesnamax_icon( 'heart' ); ?>
 			</button>
@@ -84,7 +84,7 @@ $image_url     = $product_image ? $product_image[0] : wc_placeholder_img_src( 'l
 					class="product-card__add-to-cart ajax-add-to-cart"
 					data-product-id="<?php echo esc_attr( $product_id ); ?>"
 					data-quantity="1"
-					aria-label="<?php echo esc_attr( sprintf( __( 'Shto %s ne shporte', 'lesnamax' ), $product_title ) ); ?>"
+					aria-label="<?php echo esc_attr( sprintf( __( 'Shto %s në shportë', 'lesnamax' ), $product_title ) ); ?>"
 				>
 					<?php lesnamax_icon( 'cart' ); ?>
 				</button>
