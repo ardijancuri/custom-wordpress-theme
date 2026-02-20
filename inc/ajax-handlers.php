@@ -391,7 +391,7 @@ function lesnamax_render_cart_drawer_recommendations() {
 	?>
 	<div class="flyout-recs">
 		<div class="flyout-recs__header">
-			<span class="flyout-recs__title"><?php esc_html_e( 'Mund te ju pëlqeje', 'lesnamax' ); ?></span>
+			<span class="flyout-recs__title"><?php esc_html_e( 'Mund të ju pëlqejë', 'lesnamax' ); ?></span>
 			<div class="flyout-recs__arrows">
 				<button type="button" class="flyout-recs__arrow flyout-recs__arrow--prev" aria-label="<?php esc_attr_e( 'Mbrapa', 'lesnamax' ); ?>">
 					<?php lesnamax_icon( 'chevron-left' ); ?>
@@ -476,7 +476,7 @@ function lesnamax_ajax_get_wishlist_products() {
 
 	if ( ! is_array( $product_ids ) || empty( $product_ids ) ) {
 		wp_send_json_success( array(
-			'html' => '<div class="flyout-drawer__empty"><p>' . esc_html__( 'Lista e deshirave eshte bosh.', 'lesnamax' ) . '</p></div>',
+			'html' => '<div class="flyout-drawer__empty"><p>' . esc_html__( 'Lista e Dëshirave eshte bosh.', 'lesnamax' ) . '</p></div>',
 		) );
 	}
 
@@ -517,7 +517,7 @@ function lesnamax_ajax_get_wishlist_products() {
 	$html = ob_get_clean();
 
 	if ( empty( trim( $html ) ) ) {
-		$html = '<div class="flyout-drawer__empty"><p>' . esc_html__( 'Lista e deshirave eshte bosh.', 'lesnamax' ) . '</p></div>';
+		$html = '<div class="flyout-drawer__empty"><p>' . esc_html__( 'Lista e Dëshirave eshte bosh.', 'lesnamax' ) . '</p></div>';
 	}
 
 	wp_send_json_success( array( 'html' => $html ) );

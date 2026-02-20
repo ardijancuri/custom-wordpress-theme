@@ -345,16 +345,23 @@
 	function initCategoryTabs() {
 		var tabs = document.querySelectorAll('.category-tab');
 		var grid = document.querySelector('.featured-products .products-grid');
+		var viewAllBtn = document.querySelector('.featured-products__view-all');
 
 		if (tabs.length === 0 || !grid) return;
 
 		tabs.forEach(function (tab) {
 			tab.addEventListener('click', function () {
 				var category = this.getAttribute('data-category');
+				var url = this.getAttribute('data-url');
 
 				// Update active tab
 				tabs.forEach(function (t) { t.classList.remove('is-active'); });
 				this.classList.add('is-active');
+
+				// Update view all button URL
+				if (viewAllBtn && url) {
+					viewAllBtn.setAttribute('href', url);
+				}
 
 				// Fetch products via AJAX
 				grid.classList.add('is-loading');
@@ -550,7 +557,7 @@
 			if (!body) return;
 
 			if (list.length === 0 || typeof lesnamaxAjax === 'undefined') {
-				body.innerHTML = '<div class="flyout-drawer__empty"><p>' + (lesnamaxAjax && lesnamaxAjax.i18n && lesnamaxAjax.i18n.wishlistEmpty ? lesnamaxAjax.i18n.wishlistEmpty : 'Lista e deshirave eshte bosh.') + '</p></div>';
+				body.innerHTML = '<div class="flyout-drawer__empty"><p>' + (lesnamaxAjax && lesnamaxAjax.i18n && lesnamaxAjax.i18n.wishlistEmpty ? lesnamaxAjax.i18n.wishlistEmpty : 'Lista e Dëshirave eshte bosh.') + '</p></div>';
 				return;
 			}
 
@@ -635,7 +642,7 @@
 				if (list.length === 0) {
 					var body = document.getElementById('wishlist-drawer-body');
 					if (body) {
-						body.innerHTML = '<div class="flyout-drawer__empty"><p>' + (lesnamaxAjax && lesnamaxAjax.i18n && lesnamaxAjax.i18n.wishlistEmpty ? lesnamaxAjax.i18n.wishlistEmpty : 'Lista e deshirave eshte bosh.') + '</p></div>';
+						body.innerHTML = '<div class="flyout-drawer__empty"><p>' + (lesnamaxAjax && lesnamaxAjax.i18n && lesnamaxAjax.i18n.wishlistEmpty ? lesnamaxAjax.i18n.wishlistEmpty : 'Lista e Dëshirave eshte bosh.') + '</p></div>';
 					}
 				}
 			}

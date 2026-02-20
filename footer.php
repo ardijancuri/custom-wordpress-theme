@@ -33,16 +33,16 @@ defined( 'ABSPATH' ) || exit;
 
 <!-- Wishlist Drawer -->
 <div class="flyout-overlay" id="wishlist-drawer-overlay">
-	<div class="flyout-drawer flyout-drawer--right" id="wishlist-drawer" role="dialog" aria-label="<?php esc_attr_e( 'Lista e Deshirave', 'lesnamax' ); ?>">
+	<div class="flyout-drawer flyout-drawer--right" id="wishlist-drawer" role="dialog" aria-label="<?php esc_attr_e( 'Lista e Dëshirave', 'lesnamax' ); ?>">
 		<div class="flyout-drawer__header">
-			<h3><?php esc_html_e( 'Lista e Deshirave', 'lesnamax' ); ?></h3>
+			<h3><?php esc_html_e( 'Lista e Dëshirave', 'lesnamax' ); ?></h3>
 			<button type="button" class="flyout-drawer__close" aria-label="<?php esc_attr_e( 'Mbyll', 'lesnamax' ); ?>">
 				<?php lesnamax_icon( 'close' ); ?>
 			</button>
 		</div>
 		<div class="flyout-drawer__body" id="wishlist-drawer-body">
 			<div class="flyout-drawer__empty">
-				<p><?php esc_html_e( 'Lista e deshirave eshte bosh.', 'lesnamax' ); ?></p>
+				<p><?php esc_html_e( 'Lista e Dëshirave eshte bosh.', 'lesnamax' ); ?></p>
 			</div>
 		</div>
 	</div>

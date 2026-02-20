@@ -49,7 +49,7 @@ defined( 'ABSPATH' ) || exit;
 				</a>
 
 				<!-- Wishlist -->
-				<button type="button" class="header-icon-link header-wishlist" id="header-wishlist" aria-label="<?php esc_attr_e( 'Lista e deshirave', 'lesnamax' ); ?>">
+				<button type="button" class="header-icon-link header-wishlist" id="header-wishlist" aria-label="<?php esc_attr_e( 'Lista e Dëshirave', 'lesnamax' ); ?>">
 					<?php lesnamax_icon( 'heart' ); ?>
 					<span class="header-icon-count wishlist-count" data-count="<?php echo esc_attr( lesnamax_wishlist_count() ); ?>"><?php echo esc_html( lesnamax_wishlist_count() ); ?></span>
 				</button>

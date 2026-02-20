@@ -1115,6 +1115,27 @@ h4 { font-size: var(--font-size-lg); }
 	gap: var(--space-lg);
 }
 
+.featured-products__cta {
+	text-align: center;
+	margin-top: var(--space-xl);
+}
+
+.featured-products__view-all {
+	display: inline-block;
+	padding: 14px 56px;
+	font-size: var(--font-size-base);
+	text-transform: uppercase;
+	letter-spacing: 0.5px;
+	background-color: #000;
+	color: var(--color-white);
+	border-color: #000;
+}
+
+.featured-products__view-all:hover {
+	background-color: transparent;
+	color: #000;
+}
+
 .product-card {
 	background: var(--color-bg);
 	border: 1px solid var(--color-border-light);

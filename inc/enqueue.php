@@ -101,7 +101,7 @@ function lesnamax_scripts() {
 				'added'          => esc_html__( 'Shtuar ne shporte', 'lesnamax' ),
 				'error'          => esc_html__( 'Gabim. Provoni perseri.', 'lesnamax' ),
 				'viewCart'       => esc_html__( 'Shiko shporten', 'lesnamax' ),
-				'wishlistEmpty'  => esc_html__( 'Lista e deshirave eshte bosh.', 'lesnamax' ),
+				'wishlistEmpty'  => esc_html__( 'Lista e Dëshirave eshte bosh.', 'lesnamax' ),
 			),
 		) );
 	}

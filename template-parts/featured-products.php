@@ -53,11 +53,11 @@ if ( empty( $featured_products ) ) {
 	<?php if ( ! empty( $categories ) && ! is_wp_error( $categories ) ) : ?>
 		<div class="category-tabs-wrapper">
 			<div class="category-tabs">
-				<button class="category-tab is-active" data-category="all">
+				<button class="category-tab is-active" data-category="all" data-url="<?php echo esc_url( wc_get_page_permalink( 'shop' ) ); ?>">
 					<span class="category-tab__label"><?php esc_html_e( 'Të gjitha', 'lesnamax' ); ?></span>
 				</button>
 				<?php foreach ( $categories as $cat ) : ?>
-					<button class="category-tab" data-category="<?php echo esc_attr( $cat->slug ); ?>">
+					<button class="category-tab" data-category="<?php echo esc_attr( $cat->slug ); ?>" data-url="<?php echo esc_url( get_term_link( $cat ) ); ?>">
 						<span class="category-tab__label"><?php echo esc_html( $cat->name ); ?></span>
 					</button>
 				<?php endforeach; ?>
@@ -74,5 +74,11 @@ if ( empty( $featured_products ) ) {
 		}
 		wp_reset_postdata();
 		?>
+	</div>
+
+	<div class="featured-products__cta">
+		<a href="<?php echo esc_url( wc_get_page_permalink( 'shop' ) ); ?>" class="btn btn--outline featured-products__view-all">
+			<?php esc_html_e( 'Shiko Të Gjitha', 'lesnamax' ); ?>
+		</a>
 	</div>
 </section>
