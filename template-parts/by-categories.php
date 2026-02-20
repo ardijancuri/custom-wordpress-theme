@@ -23,11 +23,7 @@ if ( empty( $categories ) || is_wp_error( $categories ) ) {
 	return;
 }
 ?>
-<?php $by_categories_title = get_theme_mod( 'lesnamax_by_categories_title', 'By categories' ); ?>
 <section class="section by-categories">
-	<?php if ( $by_categories_title ) : ?>
-		<h2 class="section-title"><?php echo esc_html( $by_categories_title ); ?></h2>
-	<?php endif; ?>
 	<div class="categories-carousel">
 		<div class="categories-carousel__track">
 			<?php foreach ( $categories as $category ) :

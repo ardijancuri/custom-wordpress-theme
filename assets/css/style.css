@@ -1542,7 +1542,7 @@ h4 { font-size: var(--font-size-lg); }
    20. Product Sliders
    -------------------------------------------------------------------------- */
 .product-slider {
-	margin-bottom: var(--space-2xl);
+	margin-bottom: var(--space-3xl);
 }
 
 .product-slider__header {
@@ -1554,6 +1554,10 @@ h4 { font-size: var(--font-size-lg); }
 
 .product-slider__header .section-title {
 	margin-bottom: 0;
+}
+
+.product-slider__header .section-title::after {
+	display: none;
 }
 
 .product-slider__carousel {
@@ -1603,7 +1607,7 @@ h4 { font-size: var(--font-size-lg); }
 	display: block;
 	font-size: var(--font-size-xs);
 	color: var(--color-text-muted);
-	text-decoration: underline;
+	text-decoration: none;
 	margin-bottom: 2px;
 }
 

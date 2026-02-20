@@ -37,11 +37,6 @@ get_header(); ?>
 			'title'         => get_theme_mod( 'lesnamax_slider_1_title', 'By room' ),
 			'category_slug' => get_theme_mod( 'lesnamax_slider_1_category', '' ),
 		) );
-
-		get_template_part( 'template-parts/product-slider', null, array(
-			'title'         => get_theme_mod( 'lesnamax_slider_2_title', 'By categories' ),
-			'category_slug' => get_theme_mod( 'lesnamax_slider_2_category', '' ),
-		) );
 		?>
 	</div>
 
