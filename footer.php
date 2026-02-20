@@ -42,7 +42,7 @@ defined( 'ABSPATH' ) || exit;
 		</div>
 		<div class="flyout-drawer__body" id="wishlist-drawer-body">
 			<div class="flyout-drawer__empty">
-				<p><?php esc_html_e( 'Lista e Dëshirave eshte bosh.', 'lesnamax' ); ?></p>
+				<p><?php esc_html_e( 'Lista e Dëshirave është bosh.', 'lesnamax' ); ?></p>
 			</div>
 		</div>
 	</div>

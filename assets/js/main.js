@@ -557,7 +557,7 @@
 			if (!body) return;
 
 			if (list.length === 0 || typeof lesnamaxAjax === 'undefined') {
-				body.innerHTML = '<div class="flyout-drawer__empty"><p>' + (lesnamaxAjax && lesnamaxAjax.i18n && lesnamaxAjax.i18n.wishlistEmpty ? lesnamaxAjax.i18n.wishlistEmpty : 'Lista e Dëshirave eshte bosh.') + '</p></div>';
+				body.innerHTML = '<div class="flyout-drawer__empty"><p>' + (lesnamaxAjax && lesnamaxAjax.i18n && lesnamaxAjax.i18n.wishlistEmpty ? lesnamaxAjax.i18n.wishlistEmpty : 'Lista e Dëshirave është bosh.') + '</p></div>';
 				return;
 			}
 
@@ -642,7 +642,7 @@
 				if (list.length === 0) {
 					var body = document.getElementById('wishlist-drawer-body');
 					if (body) {
-						body.innerHTML = '<div class="flyout-drawer__empty"><p>' + (lesnamaxAjax && lesnamaxAjax.i18n && lesnamaxAjax.i18n.wishlistEmpty ? lesnamaxAjax.i18n.wishlistEmpty : 'Lista e Dëshirave eshte bosh.') + '</p></div>';
+						body.innerHTML = '<div class="flyout-drawer__empty"><p>' + (lesnamaxAjax && lesnamaxAjax.i18n && lesnamaxAjax.i18n.wishlistEmpty ? lesnamaxAjax.i18n.wishlistEmpty : 'Lista e Dëshirave është bosh.') + '</p></div>';
 					}
 				}
 			}

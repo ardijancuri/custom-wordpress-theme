@@ -98,10 +98,10 @@ function lesnamax_scripts() {
 			'nonce'     => wp_create_nonce( 'lesnamax_ajax_nonce' ),
 			'cartUrl'   => wc_get_cart_url(),
 			'i18n'      => array(
-				'added'          => esc_html__( 'Shtuar ne shporte', 'lesnamax' ),
-				'error'          => esc_html__( 'Gabim. Provoni perseri.', 'lesnamax' ),
-				'viewCart'       => esc_html__( 'Shiko shporten', 'lesnamax' ),
-				'wishlistEmpty'  => esc_html__( 'Lista e Dëshirave eshte bosh.', 'lesnamax' ),
+				'added'          => esc_html__( 'Shtuar në shportë', 'lesnamax' ),
+				'error'          => esc_html__( 'Gabim. Provoni përsëri.', 'lesnamax' ),
+				'viewCart'       => esc_html__( 'Shiko shportën', 'lesnamax' ),
+				'wishlistEmpty'  => esc_html__( 'Lista e Dëshirave është bosh.', 'lesnamax' ),
 			),
 		) );
 	}

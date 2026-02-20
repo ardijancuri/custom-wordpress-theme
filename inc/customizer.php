@@ -402,6 +402,28 @@ function lesnamax_customize_register( $wp_customize ) {
 		'type'    => 'text',
 	) );
 
+	$wp_customize->add_setting( 'lesnamax_social_facebook', array(
+		'default'           => '#',
+		'sanitize_callback' => 'esc_url_raw',
+	) );
+
+	$wp_customize->add_control( 'lesnamax_social_facebook', array(
+		'label'   => __( 'Facebook URL', 'lesnamax' ),
+		'section' => 'lesnamax_newsletter',
+		'type'    => 'url',
+	) );
+
+	$wp_customize->add_setting( 'lesnamax_social_instagram', array(
+		'default'           => '#',
+		'sanitize_callback' => 'esc_url_raw',
+	) );
+
+	$wp_customize->add_control( 'lesnamax_social_instagram', array(
+		'label'   => __( 'Instagram URL', 'lesnamax' ),
+		'section' => 'lesnamax_newsletter',
+		'type'    => 'url',
+	) );
+
 	// ---- FOOTER ----
 	$wp_customize->add_section( 'lesnamax_footer', array(
 		'title'    => __( 'Footer Settings', 'lesnamax' ),

@@ -1563,7 +1563,8 @@ h4 { font-size: var(--font-size-lg); }
    20. Product Sliders
    -------------------------------------------------------------------------- */
 .product-slider {
-	margin-bottom: var(--space-3xl);
+	padding: var(--space-2xl) 0;
+	margin-bottom: var(--space-xl);
 }
 
 .product-slider__header {
@@ -1575,6 +1576,7 @@ h4 { font-size: var(--font-size-lg); }
 
 .product-slider__header .section-title {
 	margin-bottom: 0;
+	font-size: var(--font-size-2xl);
 }
 
 .product-slider__header .section-title::after {
@@ -1698,13 +1700,14 @@ h4 { font-size: var(--font-size-lg); }
 	justify-content: space-between;
 	gap: var(--space-2xl);
 	padding: var(--space-3xl) 0;
+	overflow: hidden;
 }
 
 .newsletter-section__content {
 	display: flex;
 	align-items: center;
 	gap: var(--space-lg);
-	flex-shrink: 0;
+	min-width: 0;
 }
 
 .newsletter-section__icon {
@@ -1746,7 +1749,7 @@ h4 { font-size: var(--font-size-lg); }
 	display: flex;
 	align-items: center;
 	gap: var(--space-xl);
-	flex-shrink: 0;
+	min-width: 0;
 }
 
 .newsletter-section__form {
@@ -1764,6 +1767,7 @@ h4 { font-size: var(--font-size-lg); }
 .newsletter-section__form input[type="email"],
 .newsletter-fallback-form input[type="email"] {
 	width: 250px;
+	max-width: 100%;
 	padding: 14px var(--space-lg);
 	border: none;
 	border-radius: 0;
@@ -1954,7 +1958,7 @@ h4 { font-size: var(--font-size-lg); }
 
 .footer-bottom a {
 	color: var(--color-primary);
-	text-decoration: none;
+	text-decoration: underline;
 }
 
 /* --------------------------------------------------------------------------

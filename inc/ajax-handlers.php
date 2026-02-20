@@ -290,7 +290,7 @@ function lesnamax_render_cart_drawer_items() {
 
 	if ( empty( $cart_items ) ) {
 		echo '<div class="flyout-drawer__empty">';
-		echo '<p>' . esc_html__( 'Shporta juaj eshte bosh.', 'lesnamax' ) . '</p>';
+		echo '<p>' . esc_html__( 'Shporta juaj është bosh.', 'lesnamax' ) . '</p>';
 		echo '<a href="' . esc_url( get_permalink( wc_get_page_id( 'shop' ) ) ) . '" class="btn btn--primary">' . esc_html__( 'Bli Tani', 'lesnamax' ) . '</a>';
 		echo '</div>';
 		return;
@@ -344,8 +344,8 @@ function lesnamax_render_cart_drawer_footer() {
 		<span><?php esc_html_e( 'Nëntotali', 'lesnamax' ); ?></span>
 		<span class="flyout-drawer__total-amount"><?php echo wp_kses_post( $cart->get_cart_subtotal() ); ?></span>
 	</div>
-	<a href="<?php echo esc_url( wc_get_cart_url() ); ?>" class="btn btn--outline btn--block"><?php esc_html_e( 'Shiko Shporten', 'lesnamax' ); ?></a>
-	<a href="<?php echo esc_url( wc_get_checkout_url() ); ?>" class="btn btn--primary btn--block"><?php esc_html_e( 'Vazhdo me Pagesen', 'lesnamax' ); ?></a>
+	<a href="<?php echo esc_url( wc_get_cart_url() ); ?>" class="btn btn--outline btn--block"><?php esc_html_e( 'Shiko Shportën', 'lesnamax' ); ?></a>
+	<a href="<?php echo esc_url( wc_get_checkout_url() ); ?>" class="btn btn--primary btn--block"><?php esc_html_e( 'Vazhdo me Pagesën', 'lesnamax' ); ?></a>
 	<?php
 }
 
@@ -476,7 +476,7 @@ function lesnamax_ajax_get_wishlist_products() {
 
 	if ( ! is_array( $product_ids ) || empty( $product_ids ) ) {
 		wp_send_json_success( array(
-			'html' => '<div class="flyout-drawer__empty"><p>' . esc_html__( 'Lista e Dëshirave eshte bosh.', 'lesnamax' ) . '</p></div>',
+			'html' => '<div class="flyout-drawer__empty"><p>' . esc_html__( 'Lista e Dëshirave është bosh.', 'lesnamax' ) . '</p></div>',
 		) );
 	}
 
@@ -517,7 +517,7 @@ function lesnamax_ajax_get_wishlist_products() {
 	$html = ob_get_clean();
 
 	if ( empty( trim( $html ) ) ) {
-		$html = '<div class="flyout-drawer__empty"><p>' . esc_html__( 'Lista e Dëshirave eshte bosh.', 'lesnamax' ) . '</p></div>';
+		$html = '<div class="flyout-drawer__empty"><p>' . esc_html__( 'Lista e Dëshirave është bosh.', 'lesnamax' ) . '</p></div>';
 	}
 
 	wp_send_json_success( array( 'html' => $html ) );
