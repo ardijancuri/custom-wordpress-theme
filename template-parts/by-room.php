@@ -25,7 +25,7 @@ if ( empty( $rooms ) ) {
 }
 ?>
 <section class="section by-room">
-	<h2 class="section-title"><?php esc_html_e( 'By room', 'lesnamax' ); ?></h2>
+	<h2 class="section-title"><?php echo esc_html( get_theme_mod( 'lesnamax_rooms_title', 'By room' ) ); ?></h2>
 
 	<div class="by-room-grid">
 		<?php foreach ( $rooms as $room ) : ?>

@@ -701,6 +701,38 @@
 	}
 
 	/**
+	 * Product Sliders
+	 */
+	function initProductSliders() {
+		document.querySelectorAll('.product-slider__carousel').forEach(function (carousel) {
+			var track = carousel.querySelector('.product-slider__track');
+			var prevBtn = carousel.querySelector('.product-slider__arrow--prev');
+			var nextBtn = carousel.querySelector('.product-slider__arrow--next');
+
+			if (!track) return;
+
+			function getScrollAmount() {
+				var card = track.querySelector('.product-slider__card');
+				if (!card) return 300;
+				var gap = parseInt(getComputedStyle(track).gap) || 16;
+				return card.offsetWidth + gap;
+			}
+
+			if (prevBtn) {
+				prevBtn.addEventListener('click', function () {
+					track.scrollBy({ left: -getScrollAmount(), behavior: 'smooth' });
+				});
+			}
+
+			if (nextBtn) {
+				nextBtn.addEventListener('click', function () {
+					track.scrollBy({ left: getScrollAmount(), behavior: 'smooth' });
+				});
+			}
+		});
+	}
+
+	/**
 	 * Initialize all
 	 */
 	document.addEventListener('DOMContentLoaded', function () {
@@ -710,6 +742,7 @@
 		initHeroSlider();
 		initCategoriesCarousel();
 		initCategoryTabs();
+		initProductSliders();
 		initCartDrawer();
 		initWishlistDrawer();
 	});
