@@ -1143,6 +1143,8 @@ h4 { font-size: var(--font-size-lg); }
 	overflow: hidden;
 	transition: box-shadow var(--transition-base);
 	position: relative;
+	display: flex;
+	flex-direction: column;
 }
 
 .product-card:hover {
@@ -1170,6 +1172,9 @@ h4 { font-size: var(--font-size-lg); }
 
 .product-card__body {
 	padding: var(--space-sm) var(--space-md);
+	display: flex;
+	flex-direction: column;
+	flex: 1;
 }
 
 .product-card__category {
@@ -1264,7 +1269,8 @@ h4 { font-size: var(--font-size-lg); }
 	flex-wrap: wrap;
 	align-items: baseline;
 	gap: var(--space-2xs, 2px) var(--space-sm);
-	margin-top: var(--space-sm);
+	margin-top: auto;
+	padding-top: var(--space-sm);
 	margin-bottom: var(--space-sm);
 }
 
