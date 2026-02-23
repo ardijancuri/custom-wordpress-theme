@@ -15,10 +15,6 @@ get_header(); ?>
 	<?php get_template_part( 'template-parts/hero-slider' ); ?>
 
 	<div class="container">
-		<?php get_template_part( 'template-parts/by-categories' ); ?>
-	</div>
-
-	<div class="container">
 		<?php get_template_part( 'template-parts/featured-products' ); ?>
 	</div>
 
@@ -28,13 +24,9 @@ get_header(); ?>
 	</div>
 
 	<div class="container">
-		<?php get_template_part( 'template-parts/by-room' ); ?>
-	</div>
-
-	<div class="container">
 		<?php
 		get_template_part( 'template-parts/product-slider', null, array(
-			'title'         => get_theme_mod( 'lesnamax_slider_1_title', 'By room' ),
+			'title'         => get_theme_mod( 'lesnamax_slider_1_title', '' ),
 			'category_slug' => get_theme_mod( 'lesnamax_slider_1_category', '' ),
 		) );
 		?>

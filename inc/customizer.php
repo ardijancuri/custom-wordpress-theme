@@ -249,77 +249,9 @@ function lesnamax_customize_register( $wp_customize ) {
 		) );
 	}
 
-	// ---- BY CATEGORIES SECTION ----
-	$wp_customize->add_section( 'lesnamax_by_categories', array(
-		'title'    => __( 'By Categories Section', 'lesnamax' ),
-		'priority' => 37,
-	) );
-
-	$wp_customize->add_setting( 'lesnamax_by_categories_title', array(
-		'default'           => 'By categories',
-		'sanitize_callback' => 'sanitize_text_field',
-	) );
-
-	$wp_customize->add_control( 'lesnamax_by_categories_title', array(
-		'label'   => __( 'Section Title', 'lesnamax' ),
-		'section' => 'lesnamax_by_categories',
-		'type'    => 'text',
-	) );
-
-	// ---- BY ROOM SECTION ----
-	$wp_customize->add_section( 'lesnamax_rooms', array(
-		'title'    => __( 'By Room Section', 'lesnamax' ),
-		'priority' => 38,
-	) );
-
-	$wp_customize->add_setting( 'lesnamax_rooms_title', array(
-		'default'           => 'By room',
-		'sanitize_callback' => 'sanitize_text_field',
-	) );
-
-	$wp_customize->add_control( 'lesnamax_rooms_title', array(
-		'label'   => __( 'Section Title', 'lesnamax' ),
-		'section' => 'lesnamax_rooms',
-		'type'    => 'text',
-	) );
-
-	for ( $i = 1; $i <= 8; $i++ ) {
-		$wp_customize->add_setting( "lesnamax_room_{$i}_image", array(
-			'default'           => '',
-			'sanitize_callback' => 'esc_url_raw',
-		) );
-
-		$wp_customize->add_control( new WP_Customize_Image_Control( $wp_customize, "lesnamax_room_{$i}_image", array(
-			'label'   => sprintf( __( 'Room %d Image', 'lesnamax' ), $i ),
-			'section' => 'lesnamax_rooms',
-		) ) );
-
-		$wp_customize->add_setting( "lesnamax_room_{$i}_name", array(
-			'default'           => '',
-			'sanitize_callback' => 'sanitize_text_field',
-		) );
-
-		$wp_customize->add_control( "lesnamax_room_{$i}_name", array(
-			'label'   => sprintf( __( 'Room %d Name', 'lesnamax' ), $i ),
-			'section' => 'lesnamax_rooms',
-			'type'    => 'text',
-		) );
-
-		$wp_customize->add_setting( "lesnamax_room_{$i}_link", array(
-			'default'           => '#',
-			'sanitize_callback' => 'esc_url_raw',
-		) );
-
-		$wp_customize->add_control( "lesnamax_room_{$i}_link", array(
-			'label'   => sprintf( __( 'Room %d Link', 'lesnamax' ), $i ),
-			'section' => 'lesnamax_rooms',
-			'type'    => 'url',
-		) );
-	}
-
-	// ---- PRODUCT SLIDERS ----
+	// ---- PRODUCT SLIDER ----
 	$wp_customize->add_section( 'lesnamax_product_sliders', array(
-		'title'    => __( 'Product Sliders', 'lesnamax' ),
+		'title'    => __( 'Product Slider', 'lesnamax' ),
 		'priority' => 39,
 	) );
 
@@ -339,30 +271,28 @@ function lesnamax_customize_register( $wp_customize ) {
 		}
 	}
 
-	for ( $i = 1; $i <= 2; $i++ ) {
-		$wp_customize->add_setting( "lesnamax_slider_{$i}_title", array(
-			'default'           => $i === 1 ? 'By room' : 'By categories',
-			'sanitize_callback' => 'sanitize_text_field',
-		) );
+	$wp_customize->add_setting( 'lesnamax_slider_1_title', array(
+		'default'           => '',
+		'sanitize_callback' => 'sanitize_text_field',
+	) );
 
-		$wp_customize->add_control( "lesnamax_slider_{$i}_title", array(
-			'label'   => sprintf( __( 'Slider %d Title', 'lesnamax' ), $i ),
-			'section' => 'lesnamax_product_sliders',
-			'type'    => 'text',
-		) );
+	$wp_customize->add_control( 'lesnamax_slider_1_title', array(
+		'label'   => __( 'Slider Title', 'lesnamax' ),
+		'section' => 'lesnamax_product_sliders',
+		'type'    => 'text',
+	) );
 
-		$wp_customize->add_setting( "lesnamax_slider_{$i}_category", array(
-			'default'           => '',
-			'sanitize_callback' => 'sanitize_text_field',
-		) );
+	$wp_customize->add_setting( 'lesnamax_slider_1_category', array(
+		'default'           => '',
+		'sanitize_callback' => 'sanitize_text_field',
+	) );
 
-		$wp_customize->add_control( "lesnamax_slider_{$i}_category", array(
-			'label'   => sprintf( __( 'Slider %d Category', 'lesnamax' ), $i ),
-			'section' => 'lesnamax_product_sliders',
-			'type'    => 'select',
-			'choices' => $slider_cat_choices,
-		) );
-	}
+	$wp_customize->add_control( 'lesnamax_slider_1_category', array(
+		'label'   => __( 'Slider Category', 'lesnamax' ),
+		'section' => 'lesnamax_product_sliders',
+		'type'    => 'select',
+		'choices' => $slider_cat_choices,
+	) );
 
 	// ---- NEWSLETTER ----
 	$wp_customize->add_section( 'lesnamax_newsletter', array(
