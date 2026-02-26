@@ -411,6 +411,70 @@ function lesnamax_cart_coupon_auto_open_js() {
 add_action( 'wp_footer', 'lesnamax_cart_coupon_auto_open_js' );
 
 /**
+ * Auto-open order summary on block-based checkout page.
+ */
+function lesnamax_checkout_order_summary_auto_open_js() {
+	if ( ! is_checkout() || is_wc_endpoint_url( 'order-received' ) ) {
+		return;
+	}
+	?>
+	<script>
+	(function() {
+		'use strict';
+
+		function openOrderSummary() {
+			// New WooCommerce Blocks markup.
+			var title = document.querySelector('.wc-block-components-checkout-order-summary__title');
+			var content = document.querySelector('.wc-block-components-checkout-order-summary__content');
+
+			// Fallback for older panel markup.
+			if (!title) {
+				title = document.querySelector('.wc-block-components-checkout-order-summary .wc-block-components-panel__button');
+				content = document.querySelector('.wc-block-components-checkout-order-summary .wc-block-components-panel__content');
+			}
+
+			if (!title) return false;
+
+			var expanded = title.getAttribute('aria-expanded') === 'true';
+			if (!expanded) {
+				title.click();
+			}
+
+			title.setAttribute('aria-expanded', 'true');
+			title.classList.add('is-open');
+
+			if (content) {
+				content.hidden = false;
+			}
+
+			return true;
+		}
+
+		function init() {
+			if (openOrderSummary()) return;
+
+			// Blocks render asynchronously via React; retry briefly.
+			var observer = new MutationObserver(function(mutations, obs) {
+				if (openOrderSummary()) {
+					obs.disconnect();
+				}
+			});
+			observer.observe(document.body, { childList: true, subtree: true });
+			setTimeout(function() { observer.disconnect(); }, 10000);
+		}
+
+		if (document.readyState === 'loading') {
+			document.addEventListener('DOMContentLoaded', init);
+		} else {
+			init();
+		}
+	})();
+	</script>
+	<?php
+}
+add_action( 'wp_footer', 'lesnamax_checkout_order_summary_auto_open_js' );
+
+/**
  * Route product search queries to the WooCommerce archive template.
  *
  * WooCommerce's template loader does not intercept ?s= searches,
