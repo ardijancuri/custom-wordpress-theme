@@ -457,6 +457,16 @@
 	display: none;
 }
 
+/* Hide product description text on cart page (keep variation/meta lines). */
+.woocommerce-cart .wc-block-cart .wc-block-components-product-metadata__description {
+	display: none;
+}
+
+/* Hide product badges in cart items. */
+.woocommerce-cart .wc-block-cart .wc-block-components-product-badge {
+	display: none !important;
+}
+
 /* Quantity + remove wrapper */
 .wc-block-cart-item__quantity {
 	display: flex;
@@ -1538,6 +1548,16 @@
 .wc-block-checkout .wc-block-components-order-summary-item__individual-price {
 	font-size: var(--font-size-sm);
 	color: var(--color-text-muted);
+}
+
+/* Hide product description text in checkout order summary items. */
+.woocommerce-checkout .wc-block-checkout .wc-block-components-product-metadata__description {
+	display: none;
+}
+
+/* Hide product badges in checkout order summary items. */
+.woocommerce-checkout .wc-block-checkout .wc-block-components-product-badge {
+	display: none !important;
 }
 
 /* Reuse totals styles from cart (subtotal, shipping, total rows) */
