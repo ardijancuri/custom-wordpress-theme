@@ -1296,6 +1296,8 @@
 .wc-block-checkout .wc-block-components-radio-control__option {
 	display: flex;
 	align-items: flex-start;
+	flex-direction: row-reverse;
+	justify-content: space-between;
 	gap: var(--space-sm);
 	padding: 14px 16px;
 	background-color: var(--color-white);
@@ -1311,8 +1313,8 @@
 
 .wc-block-checkout .wc-block-components-radio-control__option:focus-within {
 	border-color: var(--color-primary);
-	box-shadow: 0 0 0 2px var(--color-primary-light);
-	outline: none;
+	box-shadow: none;
+	outline: 0;
 }
 
 .wc-block-checkout .wc-block-components-radio-control__option:has(input:checked) {
@@ -1338,33 +1340,90 @@
 .wc-block-checkout .wc-block-components-radio-control__option-layout {
 	display: flex;
 	align-items: flex-start;
-	justify-content: space-between;
+	justify-content: flex-end;
 	gap: var(--space-sm);
 	flex: 1;
 	min-width: 0;
+	margin-right: 0;
+	text-align: right;
 }
 
 .wc-block-checkout .wc-block-components-radio-control__label-group {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-end;
+	width: 100%;
 	min-width: 0;
+	text-align: right;
 }
 
 .wc-block-checkout .wc-block-components-radio-control__secondary-label,
 .wc-block-checkout .wc-block-components-radio-control__option-layout > *:last-child {
-	margin-left: auto;
-	flex-shrink: 0;
-	white-space: nowrap;
+	margin-left: 0;
+	flex-shrink: 1;
+	white-space: normal;
 	font-size: var(--font-size-sm);
 	color: var(--color-text);
 	font-weight: var(--font-weight-medium);
 	text-align: right;
 }
 
+.wc-block-checkout .wc-block-components-radio-control__label-group .wc-block-components-radio-control__label,
+.wc-block-checkout .wc-block-components-radio-control__label-group .wc-block-components-radio-control__secondary-label {
+	display: block;
+	width: 100%;
+	text-align: right;
+}
+
+/* Payment method section: keep labels and accordion content right-aligned on all devices. */
+.wc-block-checkout .wc-block-checkout__payment-method .wc-block-components-radio-control__label-group {
+	align-items: flex-end;
+	text-align: right;
+}
+
+.wc-block-checkout .wc-block-checkout__payment-method .wc-block-components-payment-method-label,
+.wc-block-checkout .wc-block-checkout__payment-method .wc-block-components-radio-control__label,
+.wc-block-checkout .wc-block-checkout__payment-method .wc-block-components-radio-control-accordion-content,
+.wc-block-checkout .wc-block-checkout__payment-method .wc-block-components-radio-control-accordion-content > div {
+	text-align: left;
+}
+
+.wc-block-components-radio-control-accordion-content > div {
+	padding-top: 16px !important;
+}
+
+.wc-block-checkout .wc-block-checkout__payment-method .wc-block-components-radio-control__option-layout {
+	width: 100% !important;
+	justify-content: flex-end !important;
+}
+
+.wc-block-checkout .wc-block-checkout__payment-method .wc-block-components-radio-control__label-group {
+	width: 100% !important;
+	align-items: flex-end !important;
+	text-align: right !important;
+}
+
+.wc-block-checkout .wc-block-checkout__payment-method .wc-block-components-radio-control__label,
+.wc-block-checkout .wc-block-checkout__payment-method .wc-block-components-payment-method-label,
+.wc-block-checkout .wc-block-checkout__payment-method .wc-block-components-radio-control__secondary-label {
+	display: block !important;
+	width: 100% !important;
+	text-align: right !important;
+}
+
 .wc-block-checkout .wc-block-components-radio-control__input {
 	width: 20px;
 	height: 20px;
 	flex: 0 0 20px;
-	margin: 1px 0 0;
+	margin: 1px 0 0 var(--space-sm);
 	accent-color: var(--color-primary);
+}
+
+.wc-block-checkout .wc-block-components-radio-control .wc-block-components-radio-control__input:focus,
+.wc-block-checkout .wc-block-components-radio-control .wc-block-components-radio-control__input:focus-visible {
+	outline: none !important;
+	outline-offset: 0 !important;
+	box-shadow: none !important;
 }
 
 /* Payment notice banners */
@@ -1708,15 +1767,16 @@
 
 	.wc-block-checkout .wc-block-components-radio-control__secondary-label,
 	.wc-block-checkout .wc-block-components-radio-control__option-layout > *:last-child {
-		margin-left: 28px;
+		margin-left: 0;
 		white-space: normal;
-		text-align: left;
+		text-align: right;
 	}
 }
 
 @media (max-width: 480px) {
 	.wc-block-checkout .wc-block-components-radio-control__option-layout {
 		flex-direction: column;
+		align-items: flex-end;
 		gap: 6px;
 	}
 
