@@ -649,8 +649,8 @@
 
 	/* Floating chat button */
 	.floating-messenger-btn {
-		right: 16px;
-		bottom: 16px;
+		right: 20px;
+		bottom: 32px;
 		width: 56px;
 		height: 56px;
 	}

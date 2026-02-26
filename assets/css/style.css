@@ -3107,8 +3107,8 @@ h4 { font-size: var(--font-size-lg); }
    -------------------------------------------------------------------------- */
 .floating-messenger-btn {
 	position: fixed;
-	right: 24px;
-	bottom: 24px;
+	right: 28px;
+	bottom: 48px;
 	width: 64px;
 	height: 64px;
 	border-radius: var(--radius-full);
