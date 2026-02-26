@@ -425,6 +425,24 @@ function lesnamax_customize_register( $wp_customize ) {
 		'section' => 'lesnamax_footer',
 		'type'    => 'textarea',
 	) );
+
+	// ---- FLOATING CHAT BUTTON ----
+	$wp_customize->add_section( 'lesnamax_floating_chat', array(
+		'title'    => __( 'Floating Chat Button', 'lesnamax' ),
+		'priority' => 92,
+	) );
+
+	$wp_customize->add_setting( 'lesnamax_messenger_link', array(
+		'default'           => '',
+		'sanitize_callback' => 'esc_url_raw',
+	) );
+
+	$wp_customize->add_control( 'lesnamax_messenger_link', array(
+		'label'       => __( 'Messenger Link', 'lesnamax' ),
+		'description' => __( 'Paste your Facebook Messenger link (e.g. https://m.me/yourpage).', 'lesnamax' ),
+		'section'     => 'lesnamax_floating_chat',
+		'type'        => 'url',
+	) );
 }
 add_action( 'customize_register', 'lesnamax_customize_register' );
 

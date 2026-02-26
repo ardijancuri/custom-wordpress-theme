@@ -3103,6 +3103,38 @@ h4 { font-size: var(--font-size-lg); }
 }
 
 /* --------------------------------------------------------------------------
+   Floating Chat Button
+   -------------------------------------------------------------------------- */
+.floating-messenger-btn {
+	position: fixed;
+	right: 24px;
+	bottom: 24px;
+	width: 64px;
+	height: 64px;
+	border-radius: var(--radius-full);
+	background-color: var(--color-primary);
+	color: var(--color-white);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	box-shadow: var(--shadow-lg);
+	z-index: 350;
+	transition: transform var(--transition-fast), background-color var(--transition-fast);
+}
+
+.floating-messenger-btn:hover {
+	background-color: var(--color-primary-dark);
+	color: var(--color-white);
+	transform: translateY(-2px);
+}
+
+.floating-messenger-btn svg {
+	width: 32px;
+	height: 32px;
+	fill: currentColor;
+}
+
+/* --------------------------------------------------------------------------
    29. 404 Page
    -------------------------------------------------------------------------- */
 .page-404 {

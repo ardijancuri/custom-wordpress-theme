@@ -647,6 +647,19 @@
 		aspect-ratio: 5 / 2;
 	}
 
+	/* Floating chat button */
+	.floating-messenger-btn {
+		right: 16px;
+		bottom: 16px;
+		width: 56px;
+		height: 56px;
+	}
+
+	.floating-messenger-btn svg {
+		width: 28px;
+		height: 28px;
+	}
+
 	.hero-slide__title {
 		font-size: var(--font-size-2xl);
 	}
@@ -1078,6 +1091,7 @@
 	.mobile-nav-overlay,
 	.cart-notification,
 	.flyout-overlay,
+	.floating-messenger-btn,
 	.shop-sidebar,
 	.product-card__actions {
 		display: none !important;

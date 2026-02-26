@@ -12,6 +12,23 @@ defined( 'ABSPATH' ) || exit;
 
 </div><!-- #page -->
 
+<?php
+$messenger_link = esc_url( get_theme_mod( 'lesnamax_messenger_link', '' ) );
+if ( ! empty( $messenger_link ) ) :
+?>
+<a
+	href="<?php echo esc_url( $messenger_link ); ?>"
+	class="floating-messenger-btn"
+	target="_blank"
+	rel="noopener noreferrer"
+	aria-label="<?php esc_attr_e( 'Chat on Messenger', 'lesnamax' ); ?>"
+>
+	<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+		<path d="M6 3h14a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H8l-6 3.5V16H2V5a2 2 0 0 1 2-2z"></path>
+	</svg>
+</a>
+<?php endif; ?>
+
 <?php if ( class_exists( 'WooCommerce' ) ) : ?>
 <!-- Cart Drawer -->
 <div class="flyout-overlay" id="cart-drawer-overlay">
