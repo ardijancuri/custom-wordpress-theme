@@ -21,7 +21,7 @@ defined( 'ABSPATH' ) || exit;
 			<?php if ( class_exists( 'WooCommerce' ) ) :
 				$mega_categories = get_terms( array(
 					'taxonomy'   => 'product_cat',
-					'hide_empty' => false,
+					'hide_empty' => true,
 					'parent'     => 0,
 					'exclude'    => array( get_option( 'default_product_cat' ) ),
 				) );
