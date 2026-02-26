@@ -39,6 +39,9 @@ if ( empty( $slides ) ) {
 <section class="hero-slider" aria-label="<?php esc_attr_e( 'Slider kryesor', 'lesnamax' ); ?>">
 	<div class="hero-slider__track">
 		<?php foreach ( $slides as $index => $slide ) : ?>
+			<?php
+			$has_overlay_content = ! empty( $slide['title'] ) || ! empty( $slide['subtitle'] ) || ! empty( $slide['button_text'] );
+			?>
 			<div class="hero-slide">
 				<a href="<?php echo esc_url( $slide['link'] ); ?>" class="hero-slide__link">
 					<img
@@ -47,21 +50,23 @@ if ( empty( $slides ) ) {
 						alt="<?php echo esc_attr( $slide['title'] ); ?>"
 						<?php echo $index > 0 ? 'loading="lazy"' : ''; ?>
 					>
-					<div class="hero-slide__overlay">
-						<div class="container">
-							<div class="hero-slide__content">
-								<?php if ( ! empty( $slide['title'] ) ) : ?>
-									<h2 class="hero-slide__title"><?php echo esc_html( $slide['title'] ); ?></h2>
-								<?php endif; ?>
-								<?php if ( ! empty( $slide['subtitle'] ) ) : ?>
-									<p class="hero-slide__subtitle"><?php echo esc_html( $slide['subtitle'] ); ?></p>
-								<?php endif; ?>
-								<?php if ( ! empty( $slide['button_text'] ) ) : ?>
-									<span class="btn btn--primary hero-slide__btn"><?php echo esc_html( $slide['button_text'] ); ?></span>
-								<?php endif; ?>
+					<?php if ( $has_overlay_content ) : ?>
+						<div class="hero-slide__overlay">
+							<div class="container">
+								<div class="hero-slide__content">
+									<?php if ( ! empty( $slide['title'] ) ) : ?>
+										<h2 class="hero-slide__title"><?php echo esc_html( $slide['title'] ); ?></h2>
+									<?php endif; ?>
+									<?php if ( ! empty( $slide['subtitle'] ) ) : ?>
+										<p class="hero-slide__subtitle"><?php echo esc_html( $slide['subtitle'] ); ?></p>
+									<?php endif; ?>
+									<?php if ( ! empty( $slide['button_text'] ) ) : ?>
+										<span class="btn btn--primary hero-slide__btn"><?php echo esc_html( $slide['button_text'] ); ?></span>
+									<?php endif; ?>
+								</div>
 							</div>
 						</div>
-					</div>
+					<?php endif; ?>
 				</a>
 			</div>
 		<?php endforeach; ?>

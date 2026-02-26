@@ -409,7 +409,8 @@
 
 	/* Hero Slider */
 	.hero-slide__image {
-		height: 300px;
+		height: auto;
+		aspect-ratio: 5 / 2;
 	}
 
 	.hero-slide__title {
@@ -642,7 +643,8 @@
 
 	/* Hero */
 	.hero-slide__image {
-		height: 220px;
+		height: auto;
+		aspect-ratio: 5 / 2;
 	}
 
 	.hero-slide__title {
@@ -1128,4 +1130,3 @@
 		height: 200px;
 	}
 }
-
