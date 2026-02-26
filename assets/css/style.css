@@ -1308,6 +1308,15 @@ h4 { font-size: var(--font-size-lg); }
 	align-items: center;
 	gap: var(--space-sm);
 	padding-top: var(--space-xs);
+	padding-bottom: var(--space-xs);
+}
+
+.product-card__actions .product-card__add-to-cart {
+	order: 1;
+}
+
+.product-card__actions .product-card__wishlist {
+	order: 2;
 }
 
 .product-card__wishlist {

@@ -117,6 +117,28 @@ function lesnamax_customize_register( $wp_customize ) {
 		'type'    => 'text',
 	) );
 
+	$wp_customize->add_setting( 'lesnamax_announcement_bg_color', array(
+		'default'           => '#00BCD4',
+		'sanitize_callback' => 'sanitize_hex_color',
+		'transport'         => 'postMessage',
+	) );
+
+	$wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'lesnamax_announcement_bg_color', array(
+		'label'   => __( 'Announcement Background Color', 'lesnamax' ),
+		'section' => 'lesnamax_announcement',
+	) ) );
+
+	$wp_customize->add_setting( 'lesnamax_announcement_text_color', array(
+		'default'           => '#FFFFFF',
+		'sanitize_callback' => 'sanitize_hex_color',
+		'transport'         => 'postMessage',
+	) );
+
+	$wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'lesnamax_announcement_text_color', array(
+		'label'   => __( 'Announcement Text Color', 'lesnamax' ),
+		'section' => 'lesnamax_announcement',
+	) ) );
+
 	// ---- HERO SLIDER ----
 	$wp_customize->add_section( 'lesnamax_hero', array(
 		'title'    => __( 'Hero Slider', 'lesnamax' ),
@@ -437,6 +459,23 @@ function lesnamax_brand_colors_css() {
 		$logo_css .= '@media(max-width:576px){.site-logo img,.custom-logo{max-height:' . $logo_mobile . 'px;}}';
 		printf( '<style id="lesnamax-logo-size">%s</style>', $logo_css );
 	}
+
+	$announcement_bg_color   = sanitize_hex_color( get_theme_mod( 'lesnamax_announcement_bg_color', '#00BCD4' ) );
+	$announcement_text_color = sanitize_hex_color( get_theme_mod( 'lesnamax_announcement_text_color', '#FFFFFF' ) );
+
+	if ( ! $announcement_bg_color ) {
+		$announcement_bg_color = '#00BCD4';
+	}
+
+	if ( ! $announcement_text_color ) {
+		$announcement_text_color = '#FFFFFF';
+	}
+
+	if ( '#00BCD4' !== strtoupper( $announcement_bg_color ) || '#FFFFFF' !== strtoupper( $announcement_text_color ) ) {
+		$announcement_css  = '.announcement-bar{background-color:' . esc_attr( $announcement_bg_color ) . ';color:' . esc_attr( $announcement_text_color ) . ';}';
+		$announcement_css .= '.announcement-bar .announcement-bar__close,.announcement-bar a,.announcement-bar .icon{color:' . esc_attr( $announcement_text_color ) . ';}';
+		printf( '<style id="lesnamax-announcement-colors">%s</style>', $announcement_css );
+	}
 }
 add_action( 'wp_head', 'lesnamax_brand_colors_css', 100 );
 
@@ -490,6 +529,25 @@ function lesnamax_customize_preview_js() {
 		wp.customize( 'lesnamax_logo_height_desktop', function( v ) { v.bind( updateLogoSize ); } );
 		wp.customize( 'lesnamax_logo_height_tablet', function( v ) { v.bind( updateLogoSize ); } );
 		wp.customize( 'lesnamax_logo_height_mobile', function( v ) { v.bind( updateLogoSize ); } );
+
+		function updateAnnouncementColors() {
+			var bgColor = wp.customize( 'lesnamax_announcement_bg_color' ).get();
+			var textColor = wp.customize( 'lesnamax_announcement_text_color' ).get();
+			var style = document.getElementById( 'lesnamax-announcement-colors' );
+
+			if ( ! style ) {
+				style = document.createElement( 'style' );
+				style.id = 'lesnamax-announcement-colors';
+				document.head.appendChild( style );
+			}
+
+			style.textContent =
+				'.announcement-bar{background-color:' + bgColor + ';color:' + textColor + ';}' +
+				'.announcement-bar .announcement-bar__close,.announcement-bar a,.announcement-bar .icon{color:' + textColor + ';}';
+		}
+
+		wp.customize( 'lesnamax_announcement_bg_color', function( v ) { v.bind( updateAnnouncementColors ); } );
+		wp.customize( 'lesnamax_announcement_text_color', function( v ) { v.bind( updateAnnouncementColors ); } );
 	} )( jQuery );
 	";
 
