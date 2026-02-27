@@ -426,6 +426,38 @@ function lesnamax_customize_register( $wp_customize ) {
 		'type'    => 'textarea',
 	) );
 
+	$footer_columns = array(
+		1 => 'RRETH NESH',
+		2 => 'TEPIHE',
+		3 => 'KUZHINA',
+	);
+
+	foreach ( $footer_columns as $column_number => $default_title ) {
+		$wp_customize->add_setting( "lesnamax_footer_col{$column_number}_enabled", array(
+			'default'           => true,
+			'sanitize_callback' => 'wp_validate_boolean',
+		) );
+
+		$wp_customize->add_control( "lesnamax_footer_col{$column_number}_enabled", array(
+			/* translators: %d: footer column number. */
+			'label'   => sprintf( __( 'Enable Footer Menu Column %d', 'lesnamax' ), $column_number ),
+			'section' => 'lesnamax_footer',
+			'type'    => 'checkbox',
+		) );
+
+		$wp_customize->add_setting( "lesnamax_footer_col{$column_number}_title", array(
+			'default'           => $default_title,
+			'sanitize_callback' => 'sanitize_text_field',
+		) );
+
+		$wp_customize->add_control( "lesnamax_footer_col{$column_number}_title", array(
+			/* translators: %d: footer column number. */
+			'label'   => sprintf( __( 'Footer Menu Column %d Title', 'lesnamax' ), $column_number ),
+			'section' => 'lesnamax_footer',
+			'type'    => 'text',
+		) );
+	}
+
 	// ---- FLOATING CHAT BUTTON ----
 	$wp_customize->add_section( 'lesnamax_floating_chat', array(
 		'title'    => __( 'Floating Chat Button', 'lesnamax' ),
