@@ -23,9 +23,9 @@ $footer_col_3_title = (string) get_theme_mod( 'lesnamax_footer_col3_title', get_
 <footer class="site-footer" role="contentinfo">
 	<div class="container">
 		<div class="footer-grid">
-			<?php if ( $footer_col_1_enabled ) : ?>
-				<!-- Column 1 -->
-				<div class="footer-col">
+			<!-- Column 1 -->
+			<div class="footer-col<?php echo $footer_col_1_enabled ? '' : ' footer-col--disabled'; ?>"<?php echo $footer_col_1_enabled ? '' : ' aria-hidden="true"'; ?>>
+				<?php if ( $footer_col_1_enabled ) : ?>
 					<?php if ( '' !== trim( $footer_col_1_title ) ) : ?>
 						<h4 class="footer-col__title"><?php echo esc_html( $footer_col_1_title ); ?></h4>
 					<?php endif; ?>
@@ -48,12 +48,12 @@ $footer_col_3_title = (string) get_theme_mod( 'lesnamax_footer_col3_title', get_
 						<?php
 					}
 					?>
-				</div>
-			<?php endif; ?>
+				<?php endif; ?>
+			</div>
 
-			<?php if ( $footer_col_2_enabled ) : ?>
-				<!-- Column 2 -->
-				<div class="footer-col">
+			<!-- Column 2 -->
+			<div class="footer-col<?php echo $footer_col_2_enabled ? '' : ' footer-col--disabled'; ?>"<?php echo $footer_col_2_enabled ? '' : ' aria-hidden="true"'; ?>>
+				<?php if ( $footer_col_2_enabled ) : ?>
 					<?php if ( '' !== trim( $footer_col_2_title ) ) : ?>
 						<h4 class="footer-col__title"><?php echo esc_html( $footer_col_2_title ); ?></h4>
 					<?php endif; ?>
@@ -76,12 +76,12 @@ $footer_col_3_title = (string) get_theme_mod( 'lesnamax_footer_col3_title', get_
 						<?php
 					}
 					?>
-				</div>
-			<?php endif; ?>
+				<?php endif; ?>
+			</div>
 
-			<?php if ( $footer_col_3_enabled ) : ?>
-				<!-- Column 3 -->
-				<div class="footer-col">
+			<!-- Column 3 -->
+			<div class="footer-col<?php echo $footer_col_3_enabled ? '' : ' footer-col--disabled'; ?>"<?php echo $footer_col_3_enabled ? '' : ' aria-hidden="true"'; ?>>
+				<?php if ( $footer_col_3_enabled ) : ?>
 					<?php if ( '' !== trim( $footer_col_3_title ) ) : ?>
 						<h4 class="footer-col__title"><?php echo esc_html( $footer_col_3_title ); ?></h4>
 					<?php endif; ?>
@@ -104,8 +104,8 @@ $footer_col_3_title = (string) get_theme_mod( 'lesnamax_footer_col3_title', get_
 						<?php
 					}
 					?>
-				</div>
-			<?php endif; ?>
+				<?php endif; ?>
+			</div>
 
 			<!-- Column 4 - Contact -->
 			<div class="footer-col footer-contact">
