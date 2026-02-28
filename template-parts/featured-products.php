@@ -37,7 +37,7 @@ $categories = get_terms( array(
 	'exclude'    => array( get_option( 'default_product_cat' ) ),
 ) );
 
-// Featured products
+// Featured products (fill up to 8 with latest products if featured count is lower).
 $featured_products = wc_get_products( array(
 	'limit'    => 8,
 	'status'   => 'publish',
@@ -46,14 +46,25 @@ $featured_products = wc_get_products( array(
 	'order'    => 'DESC',
 ) );
 
-// Fallback: latest products if no featured
-if ( empty( $featured_products ) ) {
-	$featured_products = wc_get_products( array(
-		'limit'   => 8,
+if ( count( $featured_products ) < 8 ) {
+	$exclude_ids = array();
+	foreach ( $featured_products as $featured_product ) {
+		if ( $featured_product instanceof WC_Product ) {
+			$exclude_ids[] = $featured_product->get_id();
+		}
+	}
+
+	$extra_products = wc_get_products( array(
+		'limit'   => 8 - count( $featured_products ),
 		'status'  => 'publish',
+		'exclude' => $exclude_ids,
 		'orderby' => 'date',
 		'order'   => 'DESC',
 	) );
+
+	if ( ! empty( $extra_products ) ) {
+		$featured_products = array_merge( $featured_products, $extra_products );
+	}
 }
 ?>
 <section class="section featured-products">

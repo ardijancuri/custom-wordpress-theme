@@ -542,13 +542,25 @@ function lesnamax_ajax_homepage_tab_products() {
 			'order'    => 'DESC',
 		) );
 
-		if ( empty( $products ) ) {
-			$products = wc_get_products( array(
-				'limit'   => 8,
+		if ( count( $products ) < 8 ) {
+			$exclude_ids = array();
+			foreach ( $products as $featured_product ) {
+				if ( $featured_product instanceof WC_Product ) {
+					$exclude_ids[] = $featured_product->get_id();
+				}
+			}
+
+			$extra_products = wc_get_products( array(
+				'limit'   => 8 - count( $products ),
 				'status'  => 'publish',
+				'exclude' => $exclude_ids,
 				'orderby' => 'date',
 				'order'   => 'DESC',
 			) );
+
+			if ( ! empty( $extra_products ) ) {
+				$products = array_merge( $products, $extra_products );
+			}
 		}
 	} else {
 		$products = wc_get_products( array(
