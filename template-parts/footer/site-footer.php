@@ -12,13 +12,13 @@ $email   = get_theme_mod( 'lesnamax_footer_email', 'online.lesnamax@gmail.com' )
 $address = get_theme_mod( 'lesnamax_footer_address', 'Magjistralja Prishtine Fushe Kosove' );
 $hours   = get_theme_mod( 'lesnamax_footer_hours', 'E HENE - E PREMTE 08:00 - 20:00 / E SHTUNE - E DIEL 09:00 - 18:00' );
 
-$footer_col_1_enabled = wp_validate_boolean( get_theme_mod( 'lesnamax_footer_col1_enabled', true ) );
-$footer_col_2_enabled = wp_validate_boolean( get_theme_mod( 'lesnamax_footer_col2_enabled', true ) );
-$footer_col_3_enabled = wp_validate_boolean( get_theme_mod( 'lesnamax_footer_col3_enabled', true ) );
+$footer_col_1_enabled = wp_validate_boolean( get_theme_mod( 'lesnamax_footer_col1_enabled', get_theme_mod( 'lesnamax_footer_col_1_enabled', true ) ) );
+$footer_col_2_enabled = wp_validate_boolean( get_theme_mod( 'lesnamax_footer_col2_enabled', get_theme_mod( 'lesnamax_footer_col_2_enabled', true ) ) );
+$footer_col_3_enabled = wp_validate_boolean( get_theme_mod( 'lesnamax_footer_col3_enabled', get_theme_mod( 'lesnamax_footer_col_3_enabled', true ) ) );
 
-$footer_col_1_title = (string) get_theme_mod( 'lesnamax_footer_col1_title', 'RRETH NESH' );
-$footer_col_2_title = (string) get_theme_mod( 'lesnamax_footer_col2_title', 'TEPIHE' );
-$footer_col_3_title = (string) get_theme_mod( 'lesnamax_footer_col3_title', 'KUZHINA' );
+$footer_col_1_title = (string) get_theme_mod( 'lesnamax_footer_col1_title', get_theme_mod( 'lesnamax_footer_col_1_title', 'RRETH NESH' ) );
+$footer_col_2_title = (string) get_theme_mod( 'lesnamax_footer_col2_title', get_theme_mod( 'lesnamax_footer_col_2_title', 'TEPIHE' ) );
+$footer_col_3_title = (string) get_theme_mod( 'lesnamax_footer_col3_title', get_theme_mod( 'lesnamax_footer_col_3_title', 'KUZHINA' ) );
 ?>
 <footer class="site-footer" role="contentinfo">
 	<div class="container">

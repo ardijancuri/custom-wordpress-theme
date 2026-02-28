@@ -435,6 +435,8 @@ function lesnamax_customize_register( $wp_customize ) {
 	foreach ( $footer_columns as $column_number => $default_title ) {
 		$wp_customize->add_setting( "lesnamax_footer_col{$column_number}_enabled", array(
 			'default'           => true,
+			'type'              => 'theme_mod',
+			'capability'        => 'edit_theme_options',
 			'sanitize_callback' => 'wp_validate_boolean',
 		) );
 
@@ -447,6 +449,8 @@ function lesnamax_customize_register( $wp_customize ) {
 
 		$wp_customize->add_setting( "lesnamax_footer_col{$column_number}_title", array(
 			'default'           => $default_title,
+			'type'              => 'theme_mod',
+			'capability'        => 'edit_theme_options',
 			'sanitize_callback' => 'sanitize_text_field',
 		) );
 
