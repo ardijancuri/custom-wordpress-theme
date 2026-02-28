@@ -239,10 +239,26 @@ function lesnamax_ajax_filter_products() {
 	$html = ob_get_clean();
 
 	// Pagination
+	$base_url = '';
+	if ( ! empty( $filters['current_url'] ) ) {
+		$base_url = esc_url_raw( $filters['current_url'] );
+	}
+	if ( empty( $base_url ) ) {
+		$base_url = wp_get_referer();
+	}
+	if ( empty( $base_url ) ) {
+		$base_url = wc_get_page_permalink( 'shop' );
+	}
+
+	$base_url        = remove_query_arg( array( 'paged', 'product-page' ), $base_url );
+	$base_separator  = false === strpos( $base_url, '?' ) ? '?' : '&';
+	$pagination_base = $base_url . $base_separator . 'paged=%#%';
+
 	$pagination = paginate_links( array(
+		'base'      => $pagination_base,
 		'total'     => $query->max_num_pages,
 		'current'   => $args['paged'],
-		'format'    => '?paged=%#%',
+		'format'    => '',
 		'type'      => 'plain',
 		'prev_text' => lesnamax_get_icon( 'chevron-left' ),
 		'next_text' => lesnamax_get_icon( 'chevron-right' ),

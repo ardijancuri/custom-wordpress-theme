@@ -29,7 +29,7 @@
 		// Checkbox change handlers
 		sidebar.addEventListener('change', function (e) {
 			if (e.target.classList.contains('filter-item__checkbox')) {
-				applyFilters();
+				applyFilters(1);
 			}
 		});
 
@@ -49,13 +49,17 @@
 		// Sort change
 		var sortSelect = document.querySelector('.shop-sort-select');
 		if (sortSelect) {
-			sortSelect.addEventListener('change', applyFilters);
+			sortSelect.addEventListener('change', function () {
+				applyFilters(1);
+			});
 		}
 
 		// Per-page change
 		var perPageSelect = document.querySelector('.shop-perpage-select');
 		if (perPageSelect) {
-			perPageSelect.addEventListener('change', applyFilters);
+			perPageSelect.addEventListener('change', function () {
+				applyFilters(1);
+			});
 		}
 
 		// ---- Price Range Filter ----
@@ -96,7 +100,9 @@
 		function onPriceChange() {
 			updatePriceRangeUI();
 			clearTimeout(priceTimeout);
-			priceTimeout = setTimeout(applyFilters, 400);
+			priceTimeout = setTimeout(function () {
+				applyFilters(1);
+			}, 400);
 		}
 
 		if (priceMin && priceMax) {
@@ -157,8 +163,82 @@
 		// ---- Recently Visited Products ----
 		renderRecentlyViewed();
 
-		function applyFilters() {
+		// AJAX pagination links (prevents navigation to admin-ajax.php/?paged=...)
+		document.addEventListener('click', function (e) {
+			var pageLink = e.target.closest('.shop-pagination a.page-numbers');
+			if (!pageLink) return;
+
+			e.preventDefault();
+
+			var targetPage = getPageFromLink(pageLink);
+			if (!targetPage || targetPage < 1) {
+				targetPage = 1;
+			}
+
+			applyFilters(targetPage);
+
+			// Keep products visible after pagination change.
+			var top = productsContainer.getBoundingClientRect().top + window.pageYOffset - 140;
+			window.scrollTo({ top: Math.max(0, top), behavior: 'smooth' });
+		});
+
+		function getCurrentPage() {
+			var current = document.querySelector('.shop-pagination .page-numbers.current');
+			if (!current) return 1;
+
+			var page = parseInt(current.textContent.trim(), 10);
+			return isNaN(page) || page < 1 ? 1 : page;
+		}
+
+		function getPageFromLink(link) {
+			var dataPage = parseInt(link.getAttribute('data-page'), 10);
+			if (!isNaN(dataPage) && dataPage > 0) {
+				return dataPage;
+			}
+
+			var href = link.getAttribute('href') || '';
+			if (href) {
+				try {
+					var url = new URL(href, window.location.origin);
+					var paged = parseInt(url.searchParams.get('paged'), 10);
+					if (!isNaN(paged) && paged > 0) {
+						return paged;
+					}
+
+					var productPage = parseInt(url.searchParams.get('product-page'), 10);
+					if (!isNaN(productPage) && productPage > 0) {
+						return productPage;
+					}
+
+					var match = url.pathname.match(/\/page\/(\d+)\/?$/);
+					if (match && match[1]) {
+						return parseInt(match[1], 10);
+					}
+				} catch (err) {
+					// Ignore invalid URLs; fall through to class/text detection.
+				}
+			}
+
+			var currentPage = getCurrentPage();
+			if (link.classList.contains('next')) {
+				return currentPage + 1;
+			}
+			if (link.classList.contains('prev')) {
+				return Math.max(1, currentPage - 1);
+			}
+
+			var textPage = parseInt(link.textContent.trim(), 10);
+			return isNaN(textPage) || textPage < 1 ? 1 : textPage;
+		}
+
+		function applyFilters(page) {
 			var filters = {};
+			var currentPage = parseInt(page, 10);
+			if (isNaN(currentPage) || currentPage < 1) {
+				currentPage = 1;
+			}
+
+			filters.page = currentPage;
 
 			// Collect checked filters
 			var checkboxes = sidebar.querySelectorAll('.filter-item__checkbox:checked');
@@ -200,6 +280,9 @@
 			if (currentCategory) {
 				filters.category = currentCategory;
 			}
+
+			// Used by backend pagination generation to avoid admin-ajax.php links.
+			filters.current_url = window.location.href;
 
 			// Show loading state
 			productsContainer.classList.add('is-loading');
