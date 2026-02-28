@@ -346,8 +346,16 @@
 		var tabs = document.querySelectorAll('.category-tab');
 		var grid = document.querySelector('.featured-products .products-grid');
 		var viewAllBtn = document.querySelector('.featured-products__view-all');
+		var activeAllTab = document.querySelector('.category-tab[data-category="all"]');
+		var shopUrl = '';
 
 		if (tabs.length === 0 || !grid) return;
+		if (viewAllBtn) {
+			shopUrl = viewAllBtn.getAttribute('data-shop-url') || '';
+		}
+		if (!shopUrl && activeAllTab) {
+			shopUrl = activeAllTab.getAttribute('data-url') || '';
+		}
 
 		tabs.forEach(function (tab) {
 			tab.addEventListener('click', function () {
@@ -359,8 +367,11 @@
 				this.classList.add('is-active');
 
 				// Update view all button URL
-				if (viewAllBtn && url) {
-					viewAllBtn.setAttribute('href', url);
+				if (viewAllBtn) {
+					var targetUrl = (category === 'all' && shopUrl) ? shopUrl : url;
+					if (targetUrl) {
+						viewAllBtn.setAttribute('href', targetUrl);
+					}
 				}
 
 				// Fetch products via AJAX

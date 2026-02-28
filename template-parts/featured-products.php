@@ -11,6 +11,13 @@ if ( ! class_exists( 'WooCommerce' ) ) {
 	return;
 }
 
+$shop_page_id = wc_get_page_id( 'shop' );
+$shop_url     = $shop_page_id > 0 ? get_permalink( $shop_page_id ) : '';
+
+if ( empty( $shop_url ) || home_url( '/' ) === $shop_url ) {
+	$shop_url = home_url( '/shop/' );
+}
+
 // Get product categories with icons
 $category_icons = array(
 	'karrige'          => 'karrige.png',
@@ -53,7 +60,7 @@ if ( empty( $featured_products ) ) {
 	<?php if ( ! empty( $categories ) && ! is_wp_error( $categories ) ) : ?>
 		<div class="category-tabs-wrapper">
 			<div class="category-tabs">
-				<button class="category-tab is-active" data-category="all" data-url="<?php echo esc_url( wc_get_page_permalink( 'shop' ) ); ?>">
+				<button class="category-tab is-active" data-category="all" data-url="<?php echo esc_url( $shop_url ); ?>">
 					<span class="category-tab__label"><?php esc_html_e( 'Të gjitha', 'lesnamax' ); ?></span>
 				</button>
 				<?php foreach ( $categories as $cat ) : ?>
@@ -77,7 +84,7 @@ if ( empty( $featured_products ) ) {
 	</div>
 
 	<div class="featured-products__cta">
-		<a href="<?php echo esc_url( wc_get_page_permalink( 'shop' ) ); ?>" class="btn btn--outline featured-products__view-all">
+		<a href="<?php echo esc_url( $shop_url ); ?>" class="btn btn--outline featured-products__view-all" data-shop-url="<?php echo esc_url( $shop_url ); ?>">
 			<?php esc_html_e( 'Shiko Të Gjitha', 'lesnamax' ); ?>
 		</a>
 	</div>
